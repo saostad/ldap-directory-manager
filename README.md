@@ -13,4 +13,4 @@ the goal of this package is to:
 
 ### Api Documentations
 
-for full API documentation look at [API Website]()
+for full API documentation look at [API Website](https://saostad.github.io/ldap-studio/)
