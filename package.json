@@ -1,14 +1,13 @@
 {
-  "name": "create-ts-starter",
-  "version": "2.1.4",
-  "description": "Typescript Opinionated Starter / Boilerplate",
+  "name": "ldap-studio",
+  "version": "0.0.1",
+  "description": "schema-aware, type-safe LDAP client, written in typescript to create hight-level functionalities",
   "repository": {
     "type": "git",
-    "url": "https://github.com/saostad/node-typescript-starter.git"
+    "url": "https://github.com/saostad/ldap-studio.git"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "bin": "bin/setup",
   "scripts": {
     "format": "prettier --check \"src/**/*.ts\" --write",
     "lint": "eslint --ext \".ts,.js\" src --quiet",
@@ -19,15 +18,17 @@
     "tsc": "tsc",
     "tsc:watch": "tsc --watch",
     "prepublishOnly": "npm run tsc",
-    "prod": "node --unhandled-rejections=strict dist/index.js",
+    "prod": "node --unhandled-rejections=strict dist/app.js",
     "dev": "nodemon --watch dist --exec \"npm run prod\"",
     "start": "npm-run-all -p dev tsc:watch"
   },
   "keywords": [
-    "node",
+    "ldap",
     "typescript",
-    "boilerplate",
-    "starter"
+    "schema",
+    "schema-aware",
+    "client",
+    "high-level"
   ],
   "author": "Saeid Ostad",
   "license": "MIT",

@@ -5,3 +5,5 @@ docs
 
 src/app.ts
 dist/app.js
+dist/app.js.map
+dist/app.d.ts
