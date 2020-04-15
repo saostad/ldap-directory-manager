@@ -59,7 +59,7 @@
   },
   "dependencies": {
     "fast-node-logger": "^1.3.4",
-    "ldap-query-generator": "^0.2.1",
+    "ldap-query-generator": "^0.5.1",
     "ldap-schema-ts-generator": "^2.1.2",
     "ldap-ts-client": "^0.1.0"
   }

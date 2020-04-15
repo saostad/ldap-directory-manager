@@ -9,11 +9,13 @@ import {
   getSchemaNamingContext,
 } from "ldap-schema-ts-generator";
 
-import { Generator } from "ldap-query-generator";
+import { QueryGenerator } from "ldap-query-generator";
 import type { Logger } from "pino";
 import path from "path";
+import { User } from "./generated/interfaces";
+import { writeLog } from "fast-node-logger";
 
-interface FindInputOptions<T = any> {
+interface FindUserInputOptions<T = any> {
   attributes: Array<keyof T>;
 }
 interface InitOptions {
@@ -28,11 +30,13 @@ export class Studio {
   private client!: Client;
   private logger?: Logger;
   public baseDN: string;
+  public queryBuilder = QueryGenerator;
 
   constructor(config: IClientConfig) {
     this.config = config;
     this.baseDN = config.baseDN;
     this.client = new Client(config);
+    this.logger = config.logger;
     this.bind();
   }
 
@@ -61,6 +65,13 @@ export class Studio {
       useCachedInterfaces: true,
     },
   ) {
+    const outputFolder = path.join(
+      process.cwd(),
+      "src",
+      "generated",
+      "interfaces",
+    );
+
     if (generateInterfaces) {
       if (!useCachedInterfaces) {
         const options = {
@@ -80,25 +91,52 @@ export class Studio {
           objectClasses,
           options: {
             indexFile: true,
-            outputFolder: path.join(
-              process.cwd(),
-              "src",
-              "generated",
-              "interfaces",
-            ),
+            outputFolder,
             usePrettier: true,
           },
         });
       }
     }
+    return outputFolder;
   }
 
   /** @description return first found user */
-  public async find<T = any>(options?: FindInputOptions<T>) {
-    this.logger?.trace("find()");
-    await this.connect();
-    const generator = new Generator<T>({ logger: this.logger });
-    return generator.select(options?.attributes ?? ["*"]);
+  public async findUser(
+    criteria: string,
+    options?: FindUserInputOptions<User>,
+  ) {
+    try {
+      this.logger?.trace("findUser()");
+      await this.connect();
+      const qGen = new QueryGenerator<User>({
+        logger: this.logger,
+        scope: "sub",
+      });
+
+      const { query } = qGen
+        .where({ field: "userPrincipalName", criteria: criteria })
+        .whereAnd({ field: "objectClass", criteria: "user" })
+        .whereOr({ field: "objectClass", criteria: "person" })
+        .whereNot({ field: "objectClass", criteria: "computer" })
+        .whereNot({ field: "objectClass", criteria: "group" })
+        .select(["displayName", "userPrincipalName"]);
+
+      const data = await this.client.queryAttributes({
+        base: this.baseDN,
+        options: {
+          attributes: options?.attributes ?? (query.attributes as string[]),
+          filter: query.toString(),
+          scope: query.scope,
+          paged: true,
+        },
+      });
+
+      return data;
+    } catch (error) {
+      writeLog(error, { stdout: true });
+    } finally {
+      this.client.unbind();
+    }
   }
 
   // /** @deprecated will be remove in next major version. this functionality will be added to another package soon
