@@ -8,7 +8,7 @@ import { createLogger, writeLog } from "fast-node-logger";
 export async function main() {
   /** ready to use instance of logger */
   const logger = await createLogger({
-    level: "info",
+    level: "trace",
     prettyPrint: { colorize: true, translateTime: " yyyy-mm-dd HH:MM:ss" },
   });
 
@@ -25,13 +25,17 @@ export async function main() {
     useCachedInterfaces: true,
   });
 
-  const query = await st.findUser("*@kajimausa.com", {
+  const singleUser = await st.findFirstUser("*@kajimausa.com", {
     attributes: ["displayName", "userPrincipalName"],
   });
+  console.log(`File: app.ts,`, `Line: 31 => `, singleUser);
 
-  console.log(`File: app.ts,`, `Line: 31 => `, query);
+  const allUsers = await st.findUsers("*@kajimausa.com", {
+    attributes: ["displayName", "userPrincipalName"],
+  });
+  console.log(`File: app.ts,`, `Line: 31 => `, allUsers);
 
-  st.unbind();
+  await st.unbind();
 }
 
 main().catch((err: Error) => {

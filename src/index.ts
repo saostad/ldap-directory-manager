@@ -31,32 +31,14 @@ export class Studio {
   private logger?: Logger;
   public baseDN: string;
   public queryBuilder = QueryGenerator;
+  public unbind: () => Promise<void>;
 
   constructor(config: IClientConfig) {
     this.config = config;
     this.baseDN = config.baseDN;
     this.client = new Client(config);
     this.logger = config.logger;
-    this.bind();
-  }
-
-  public async bind() {
-    this.logger?.trace("bind()");
-    return this.client.bind();
-  }
-
-  public unbind() {
-    this.logger?.trace("unbind()");
-    this.client.unbind();
-  }
-
-  private async connect() {
-    this.logger?.trace("connect()");
-    if (this.client?.isConnected()) {
-      return this.client;
-    }
-    const client = await this.bind();
-    return client;
+    this.unbind = this.client.unbind;
   }
 
   public async init(
@@ -101,69 +83,76 @@ export class Studio {
   }
 
   /** @description return first found user */
-  public async findUser(
+  public async findFirstUser(
     criteria: string,
     options?: FindUserInputOptions<User>,
   ) {
-    try {
-      this.logger?.trace("findUser()");
-      await this.connect();
-      const qGen = new QueryGenerator<User>({
-        logger: this.logger,
-        scope: "sub",
-      });
+    this.logger?.trace("findUser()");
+    const qGen = new QueryGenerator<User>({
+      logger: this.logger,
+      scope: "sub",
+    });
 
-      const { query } = qGen
-        .where({ field: "userPrincipalName", action: "substrings", criteria })
-        .whereAnd({ field: "objectClass", action: "equal", criteria: "user" })
-        .whereOr({ field: "objectClass", action: "equal", criteria: "person" })
-        .whereNot({
-          field: "objectClass",
-          action: "equal",
-          criteria: "computer",
-        })
-        .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
-        .select(["displayName", "userPrincipalName"]);
+    const { query } = qGen
+      .where({ field: "userPrincipalName", action: "substrings", criteria })
+      .whereAnd({ field: "objectClass", action: "equal", criteria: "user" })
+      .whereOr({ field: "objectClass", action: "equal", criteria: "person" })
+      .whereNot({
+        field: "objectClass",
+        action: "equal",
+        criteria: "computer",
+      })
+      .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
+      .select(["displayName", "userPrincipalName"]);
 
-      const data = await this.client.queryAttributes({
-        base: this.baseDN,
-        options: {
-          attributes: options?.attributes ?? (query.attributes as string[]),
-          filter: query.toString(),
-          scope: query.scope,
-          paged: true,
-        },
-      });
-
-      return data;
-    } catch (error) {
-      writeLog(error, { stdout: true });
-    } finally {
-      this.client.unbind();
-    }
+    const data = await this.client.queryAttributes({
+      base: this.baseDN,
+      options: {
+        attributes: options?.attributes ?? (query.attributes as string[]),
+        filter: query.toString(),
+        scope: query.scope,
+        paged: true,
+      },
+    });
+    return data[0];
   }
 
-  // /** @deprecated will be remove in next major version. this functionality will be added to another package soon
-  //  * @description return array of users based on UPN
-  //  */
-  // public async findUsers(
-  //   searchCriteria: string,
-  //   options?: FindUsersInputOptions,
-  // ) {
-  //   process.emitWarning(
-  //     "deprecated",
-  //     "findUsers deprecated. this functionality will be added to another package soon",
-  //   );
-  //   this.logger?.trace("findUsers()");
-  //   const query = `userPrincipalName=*${searchCriteria}`;
-  //   await this.connect();
-  //   return findUsers({
-  //     client: this.client,
-  //     base: this.config.baseDN,
-  //     query,
-  //     attributes: options?.attributes,
-  //   });
-  // }
+  /** @description return array of found users */
+  public async findUsers(
+    criteria: string,
+    options?: FindUserInputOptions<User>,
+  ) {
+    this.logger?.trace("findUser()");
+
+    const qGen = new QueryGenerator<User>({
+      logger: this.logger,
+      scope: "sub",
+    });
+
+    const { query } = qGen
+      .where({ field: "userPrincipalName", action: "substrings", criteria })
+      .whereAnd({ field: "objectClass", action: "equal", criteria: "user" })
+      .whereOr({ field: "objectClass", action: "equal", criteria: "person" })
+      .whereNot({
+        field: "objectClass",
+        action: "equal",
+        criteria: "computer",
+      })
+      .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
+      .select(["displayName", "userPrincipalName"]);
+
+    const data = await this.client.queryAttributes({
+      base: this.baseDN,
+      options: {
+        attributes: options?.attributes ?? (query.attributes as string[]),
+        filter: query.toString(),
+        scope: query.scope,
+        paged: true,
+      },
+    });
+
+    return data;
+  }
 
   // /** @deprecated will be remove in next major version. this functionality will be added to another package soon
   //  * @description return first found group or fail
