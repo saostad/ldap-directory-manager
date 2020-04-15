@@ -6,10 +6,22 @@ import {
   generateInterfaceFiles,
   getSchemaAttributes,
   getSchemaClasses,
+  getSchemaNamingContext,
 } from "ldap-schema-ts-generator";
 
 import { Generator } from "ldap-query-generator";
 import type { Logger } from "pino";
+import path from "path";
+
+interface FindInputOptions<T = any> {
+  attributes: Array<keyof T>;
+}
+interface InitOptions {
+  /** generate schema interface. default true */
+  generateInterfaces: boolean;
+  /** use cached interfaces if exist. default true. false regenerate interfaces */
+  useCachedInterfaces: boolean;
+}
 
 export class Studio {
   private config: IClientConfig;
@@ -24,15 +36,15 @@ export class Studio {
     this.bind();
   }
 
-  public bind = async () => {
+  public async bind() {
     this.logger?.trace("bind()");
     return this.client.bind();
-  };
+  }
 
-  public unbind = () => {
+  public unbind() {
     this.logger?.trace("unbind()");
     this.client.unbind();
-  };
+  }
 
   private async connect() {
     this.logger?.trace("connect()");
@@ -43,21 +55,50 @@ export class Studio {
     return client;
   }
 
-  /**  @description return first found user
-   */
-  public async findUser(username: string, options?: FindUsersInputOptions) {
-    process.emitWarning(
-      "deprecated",
-      "findUser deprecated. this functionality will be added to another package soon",
-    );
-    this.logger?.trace("findUser()");
+  public async init(
+    { generateInterfaces, useCachedInterfaces }: InitOptions = {
+      generateInterfaces: true,
+      useCachedInterfaces: true,
+    },
+  ) {
+    if (generateInterfaces) {
+      if (!useCachedInterfaces) {
+        const options = {
+          user: this.config.bindDN,
+          pass: this.config.secret,
+          ldapServerUrl: this.config.url,
+          logger: this.logger,
+        };
+        const schemaDn = await getSchemaNamingContext({ options });
+        const objectAttributes = await getSchemaAttributes({
+          schemaDn,
+          options,
+        });
+        const objectClasses = await getSchemaClasses({ schemaDn, options });
+        await generateInterfaceFiles({
+          objectAttributes,
+          objectClasses,
+          options: {
+            indexFile: true,
+            outputFolder: path.join(
+              process.cwd(),
+              "src",
+              "generated",
+              "interfaces",
+            ),
+            usePrettier: true,
+          },
+        });
+      }
+    }
+  }
+
+  /** @description return first found user */
+  public async find<T = any>(options?: FindInputOptions<T>) {
+    this.logger?.trace("find()");
     await this.connect();
-    return findUser({
-      client: this.client,
-      base: this.config.baseDN,
-      username,
-      attributes: options.attributes,
-    });
+    const generator = new Generator<T>({ logger: this.logger });
+    return generator.select(options?.attributes ?? ["*"]);
   }
 
   // /** @deprecated will be remove in next major version. this functionality will be added to another package soon
