@@ -15,10 +15,10 @@ export async function main() {
   /** put your code below here */
   const st = new Studio({
     logger,
-    url: "ldap://ki.local:RootDFS",
+    url: process.env.AD_URI ?? "",
+    bindDN: process.env.AD_USER ?? "",
+    secret: process.env.AD_Pass ?? "",
     baseDN: "DC=ki,DC=local",
-    bindDN: "ki\\adquery",
-    secret: "3tNj7lJG56Hi^xAPGows",
   });
   const interfaceDirPath = await st.init({
     generateInterfaces: true,

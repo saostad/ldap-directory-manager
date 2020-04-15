@@ -114,11 +114,15 @@ export class Studio {
       });
 
       const { query } = qGen
-        .where({ field: "userPrincipalName", criteria: criteria })
-        .whereAnd({ field: "objectClass", criteria: "user" })
-        .whereOr({ field: "objectClass", criteria: "person" })
-        .whereNot({ field: "objectClass", criteria: "computer" })
-        .whereNot({ field: "objectClass", criteria: "group" })
+        .where({ field: "userPrincipalName", action: "substrings", criteria })
+        .whereAnd({ field: "objectClass", action: "equal", criteria: "user" })
+        .whereOr({ field: "objectClass", action: "equal", criteria: "person" })
+        .whereNot({
+          field: "objectClass",
+          action: "equal",
+          criteria: "computer",
+        })
+        .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
         .select(["displayName", "userPrincipalName"]);
 
       const data = await this.client.queryAttributes({
