@@ -10,14 +10,15 @@ import {
 } from "ldap-schema-ts-generator";
 
 import { QueryGenerator } from "ldap-query-generator";
-import type { Logger } from "pino";
 import path from "path";
-import { User } from "./generated/interfaces";
-import { writeLog } from "fast-node-logger";
+import type { Logger } from "fast-node-logger";
+import { findFirstUser, findUsers, findGroupMembers } from "./services/user";
+import {
+  findFirstGroup,
+  findGroups,
+  findGroupMembershipForUser,
+} from "./services/group";
 
-interface FindUserInputOptions<T = any> {
-  attributes: Array<keyof T>;
-}
 interface InitOptions {
   /** generate schema interface. default true */
   generateInterfaces: boolean;
@@ -25,7 +26,7 @@ interface InitOptions {
   useCachedInterfaces: boolean;
 }
 
-export class Studio {
+export class Ldap {
   private config: IClientConfig;
   private client!: Client;
   private logger?: Logger;
@@ -82,111 +83,71 @@ export class Studio {
     return outputFolder;
   }
 
-  /** @description return first found user */
   public async findFirstUser(
     criteria: string,
-    options?: FindUserInputOptions<User>,
+    options: Pick<Parameters<typeof findFirstUser>[1], "attributes">,
   ) {
-    this.logger?.trace("findUser()");
-    const qGen = new QueryGenerator<User>({
-      logger: this.logger,
-      scope: "sub",
+    return findFirstUser(criteria, {
+      attributes: options.attributes,
+      client: this.client,
+      baseDN: this.baseDN,
     });
-
-    const { query } = qGen
-      .where({ field: "userPrincipalName", action: "substrings", criteria })
-      .whereAnd({ field: "objectClass", action: "equal", criteria: "user" })
-      .whereOr({ field: "objectClass", action: "equal", criteria: "person" })
-      .whereNot({
-        field: "objectClass",
-        action: "equal",
-        criteria: "computer",
-      })
-      .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
-      .select(["displayName", "userPrincipalName"]);
-
-    const data = await this.client.queryAttributes({
-      base: this.baseDN,
-      options: {
-        attributes: options?.attributes ?? (query.attributes as string[]),
-        filter: query.toString(),
-        scope: query.scope,
-        paged: true,
-      },
-    });
-    return data[0];
   }
 
-  /** @description return array of found users */
   public async findUsers(
     criteria: string,
-    options?: FindUserInputOptions<User>,
+    options: Pick<Parameters<typeof findUsers>[1], "attributes">,
   ) {
-    this.logger?.trace("findUser()");
-
-    const qGen = new QueryGenerator<User>({
-      logger: this.logger,
-      scope: "sub",
+    return findUsers(criteria, {
+      attributes: options.attributes,
+      client: this.client,
+      baseDN: this.baseDN,
     });
-
-    const { query } = qGen
-      .where({ field: "userPrincipalName", action: "substrings", criteria })
-      .whereAnd({ field: "objectClass", action: "equal", criteria: "user" })
-      .whereOr({ field: "objectClass", action: "equal", criteria: "person" })
-      .whereNot({
-        field: "objectClass",
-        action: "equal",
-        criteria: "computer",
-      })
-      .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
-      .select(["displayName", "userPrincipalName"]);
-
-    const data = await this.client.queryAttributes({
-      base: this.baseDN,
-      options: {
-        attributes: options?.attributes ?? (query.attributes as string[]),
-        filter: query.toString(),
-        scope: query.scope,
-        paged: true,
-      },
-    });
-
-    return data;
   }
 
-  // /** @deprecated will be remove in next major version. this functionality will be added to another package soon
-  //  * @description return first found group or fail
-  //  */
-  // public async findGroup(groupName: string, options?: FindGroupsInputOptions) {
-  //   process.emitWarning(
-  //     "deprecated",
-  //     "findGroup deprecated. this functionality will be added to another package soon",
-  //   );
-  //   this.logger?.trace("findGroup()");
-  //   await this.connect();
-  //   return findGroup({
-  //     client: this.client,
-  //     base: this.config.baseDN,
-  //     groupName,
-  //     attributes: options?.attributes,
-  //   });
-  // }
+  public async findFirstGroup(
+    criteria: string,
+    { attributes }: Pick<Parameters<typeof findFirstGroup>[1], "attributes">,
+  ) {
+    return findFirstGroup(criteria, {
+      attributes,
+      client: this.client,
+      baseDN: this.baseDN,
+    });
+  }
 
-  // /** @deprecated will be remove in next major version. this functionality will be added to another package soon
-  //  * @description return array of groups
-  //  */
-  // public async getGroupMembershipForUser(
-  //   username: string,
-  //   options?: FindGroupsInputOptions,
-  // ) {
-  //   process.emitWarning("deprecated", "getGroupMembershipForUser deprecated");
-  //   this.logger?.trace("getGroupMembershipForUser()");
-  //   await this.connect();
-  //   return getGroupMembershipForUser({
-  //     client: this.client,
-  //     base: this.config.baseDN,
-  //     username,
-  //     attributes: options?.attributes,
-  //   });
-  // }
+  public async findGroups(
+    criteria: string,
+    options: Pick<Parameters<typeof findGroups>[1], "attributes">,
+  ) {
+    return findGroups(criteria, {
+      attributes: options.attributes,
+      client: this.client,
+      baseDN: this.baseDN,
+    });
+  }
+
+  public async findGroupMembershipForUser(
+    criteria: string,
+    {
+      attributes,
+    }: Pick<Parameters<typeof findGroupMembershipForUser>[1], "attributes">,
+  ) {
+    return findGroupMembershipForUser(criteria, {
+      attributes,
+      client: this.client,
+      baseDN: this.baseDN,
+    });
+  }
+
+  public async findGroupMembers(
+    criteria: string,
+    options: Pick<Parameters<typeof findGroupMembers>[1], "attributes">,
+  ) {
+    return findGroupMembers(criteria, {
+      attributes: options.attributes,
+      client: this.client,
+      baseDN: this.baseDN,
+    });
+  }
 }

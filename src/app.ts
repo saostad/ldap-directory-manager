@@ -1,7 +1,7 @@
 /** this file used to just run some internal tests while developing the package */
 import dotenv from "dotenv";
 dotenv.config();
-import { version, Studio } from "./";
+import { version, Ldap } from "./";
 
 import { createLogger, writeLog } from "fast-node-logger";
 
@@ -13,7 +13,7 @@ export async function main() {
   });
 
   /** put your code below here */
-  const st = new Studio({
+  const st = new Ldap({
     logger,
     url: process.env.AD_URI ?? "",
     bindDN: process.env.AD_USER ?? "",
@@ -25,7 +25,7 @@ export async function main() {
     useCachedInterfaces: true,
   });
 
-  const singleUser = await st.findFirstUser("*@kajimausa.com", {
+  const singleUser = await st.findFirstUser("sostad*", {
     attributes: ["displayName", "userPrincipalName"],
   });
   console.log(`File: app.ts,`, `Line: 31 => `, singleUser);
@@ -33,7 +33,27 @@ export async function main() {
   const allUsers = await st.findUsers("*@kajimausa.com", {
     attributes: ["displayName", "userPrincipalName"],
   });
-  console.log(`File: app.ts,`, `Line: 31 => `, allUsers);
+  console.log(`File: app.ts,`, `Line: 36 => `, allUsers.length);
+
+  const firstGroup = await st.findFirstGroup("KUSA_VP_ACCESS", {
+    attributes: ["cn"],
+  });
+  console.log(`File: app.ts,`, `Line: 41 => `, firstGroup);
+
+  const groups = await st.findGroups("*KUSA*", {
+    attributes: ["cn"],
+  });
+  console.log(`File: app.ts,`, `Line: 46 => `, groups.length);
+
+  const groupsOfUser = await st.findGroupMembershipForUser("sostad*", {
+    attributes: ["cn"],
+  });
+  console.log(`File: app.ts,`, `Line: 51 => `, groupsOfUser.length);
+
+  const groupsMembers = await st.findGroupMembers("KUSA_VP_ACCESS", {
+    attributes: ["cn"],
+  });
+  console.log(`File: app.ts,`, `Line: 56=> `, groupsMembers.length);
 
   await st.unbind();
 }
