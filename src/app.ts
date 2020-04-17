@@ -20,37 +20,37 @@ export async function main() {
     secret: process.env.AD_Pass ?? "",
     baseDN: "DC=ki,DC=local",
   });
-  const interfaceDirPath = await st.init({
+  const interfaceDirPath = await st.initial({
     generateInterfaces: true,
     useCachedInterfaces: true,
   });
 
-  const singleUser = await st.findFirstUser("sostad*", {
+  const singleUser = await st.userFindOne("sostad*", {
     attributes: ["displayName", "userPrincipalName"],
   });
   console.log(`File: app.ts,`, `Line: 31 => `, singleUser);
 
-  const allUsers = await st.findUsers("*@kajimausa.com", {
+  const allUsers = await st.usersFindAll("*@kajimausa.com", {
     attributes: ["displayName", "userPrincipalName"],
   });
   console.log(`File: app.ts,`, `Line: 36 => `, allUsers.length);
 
-  const firstGroup = await st.findFirstGroup("KUSA_VP_ACCESS", {
+  const firstGroup = await st.groupFindOne("KUSA_VP_ACCESS", {
     attributes: ["cn"],
   });
   console.log(`File: app.ts,`, `Line: 41 => `, firstGroup);
 
-  const groups = await st.findGroups("*KUSA*", {
+  const groups = await st.groupsFindAll("*KUSA*", {
     attributes: ["cn"],
   });
   console.log(`File: app.ts,`, `Line: 46 => `, groups.length);
 
-  const groupsOfUser = await st.findGroupMembershipForUser("sostad*", {
+  const groupsOfUser = await st.userFindGroupMembership("sostad*", {
     attributes: ["cn"],
   });
   console.log(`File: app.ts,`, `Line: 51 => `, groupsOfUser.length);
 
-  const groupsMembers = await st.findGroupMembers("KUSA_VP_ACCESS", {
+  const groupsMembers = await st.groupFindMembers("KUSA_VP_ACCESS", {
     attributes: ["cn"],
   });
   console.log(`File: app.ts,`, `Line: 56=> `, groupsMembers.length);

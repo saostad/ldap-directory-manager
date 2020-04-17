@@ -14,3 +14,7 @@ the goal of this package is to:
 ### Api Documentations
 
 for full API documentation look at [API Website](https://saostad.github.io/ldap-studio/modules/_index_.html)
+
+### TODO:
+
+- [ ] add [controls](https://tools.ietf.org/html/rfc4511#section-4.1.11) parameter to functions to provide more flexibility

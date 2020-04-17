@@ -136,14 +136,14 @@ export async function groupFindMembers(
 interface UserModifyFnInput<T = any> {
   client: Client;
   dn: string;
-  controls: any;
+  controls?: any;
   changes: ModifyChange<T>[];
 }
-export function userModify({
+export function userModifyAttribute({
   dn,
   changes,
   controls,
   client,
 }: UserModifyFnInput<User>) {
-  client.modify({ dn, changes, controls });
+  client.modifyAttribute({ dn: parseDn(dn), changes, controls });
 }

@@ -16,7 +16,7 @@ import {
   userFindOne,
   usersFindAll,
   groupFindMembers,
-  userModify,
+  userModifyAttribute,
 } from "./services/user";
 import {
   groupFindOne,
@@ -159,17 +159,14 @@ export class Ldap {
     });
   }
 
-  public async userModify() {
-    await userModify({
+  public async userModifyAttribute(
+    dn: string,
+    options: Pick<Parameters<typeof userModifyAttribute>[0], "changes">,
+  ) {
+    return userModifyAttribute({
       client: this.client,
-      controls: undefined,
-      dn: "",
-      changes: [
-        {
-          operation: "delete",
-          modification: { cn: "hello", mail: "to" },
-        },
-      ],
+      dn,
+      changes: options.changes,
     });
   }
 }

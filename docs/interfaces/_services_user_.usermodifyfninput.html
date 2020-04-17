@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>FindGroupInputOptions | ldap-studio</title>
+	<title>UserModifyFnInput | ldap-studio</title>
 	<meta name="description" content="Documentation for ldap-studio">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,13 +56,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_services_group_.html">&quot;services/group&quot;</a>
+					<a href="../modules/_services_user_.html">&quot;services/user&quot;</a>
 				</li>
 				<li>
-					<a href="_services_group_.findgroupinputoptions.html">FindGroupInputOptions</a>
+					<a href="_services_user_.usermodifyfninput.html">UserModifyFnInput</a>
 				</li>
 			</ul>
-			<h1>Interface FindGroupInputOptions&lt;T&gt;</h1>
+			<h1>Interface UserModifyFnInput&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -81,7 +81,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">FindGroupInputOptions</span>
+						<span class="target">UserModifyFnInput</span>
 					</li>
 				</ul>
 			</section>
@@ -92,9 +92,10 @@
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_services_group_.findgroupinputoptions.html#attributes" class="tsd-kind-icon">attributes</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_services_group_.findgroupinputoptions.html#basedn" class="tsd-kind-icon">baseDN</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_services_group_.findgroupinputoptions.html#client" class="tsd-kind-icon">client</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_services_user_.usermodifyfninput.html#changes" class="tsd-kind-icon">changes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_services_user_.usermodifyfninput.html#client" class="tsd-kind-icon">client</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_services_user_.usermodifyfninput.html#controls" class="tsd-kind-icon">controls</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_services_user_.usermodifyfninput.html#dn" class="tsd-kind-icon">dn</a></li>
 							</ul>
 						</section>
 					</div>
@@ -103,22 +104,12 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="attributes" class="tsd-anchor"></a>
-					<h3>attributes</h3>
-					<div class="tsd-signature tsd-kind-icon">attributes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<a name="changes" class="tsd-anchor"></a>
+					<h3>changes</h3>
+					<div class="tsd-signature tsd-kind-icon">changes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ModifyChange</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/5a1c2e7/src/services/group.ts#L11">services/group.ts:11</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="basedn" class="tsd-anchor"></a>
-					<h3>baseDN</h3>
-					<div class="tsd-signature tsd-kind-icon">baseDN<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/5a1c2e7/src/services/group.ts#L10">services/group.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/5a1c2e7/src/services/user.ts#L140">services/user.ts:140</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -128,7 +119,27 @@
 					<div class="tsd-signature tsd-kind-icon">client<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Client</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/5a1c2e7/src/services/group.ts#L9">services/group.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/5a1c2e7/src/services/user.ts#L137">services/user.ts:137</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+					<a name="controls" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> controls</h3>
+					<div class="tsd-signature tsd-kind-icon">controls<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/5a1c2e7/src/services/user.ts#L139">services/user.ts:139</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+					<a name="dn" class="tsd-anchor"></a>
+					<h3>dn</h3>
+					<div class="tsd-signature tsd-kind-icon">dn<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/5a1c2e7/src/services/user.ts#L138">services/user.ts:138</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -146,42 +157,51 @@
 					<li class=" tsd-kind-module">
 						<a href="../modules/_index_.html">&quot;index&quot;</a>
 					</li>
-					<li class="current tsd-kind-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_services_group_.html">&quot;services/group&quot;</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class="current tsd-kind-module">
 						<a href="../modules/_services_user_.html">&quot;services/user&quot;</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
+						<a href="_services_user_.finduserinputoptions.html" class="tsd-kind-icon">Find<wbr>User<wbr>Input<wbr>Options</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
-						<a href="_services_group_.findgroupinputoptions.html" class="tsd-kind-icon">Find<wbr>Group<wbr>Input<wbr>Options</a>
+						<a href="_services_user_.usermodifyfninput.html" class="tsd-kind-icon">User<wbr>Modify<wbr>FnInput</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="_services_group_.findgroupinputoptions.html#attributes" class="tsd-kind-icon">attributes</a>
+								<a href="_services_user_.usermodifyfninput.html#changes" class="tsd-kind-icon">changes</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="_services_group_.findgroupinputoptions.html#basedn" class="tsd-kind-icon">baseDN</a>
+								<a href="_services_user_.usermodifyfninput.html#client" class="tsd-kind-icon">client</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="_services_group_.findgroupinputoptions.html#client" class="tsd-kind-icon">client</a>
+								<a href="_services_user_.usermodifyfninput.html#controls" class="tsd-kind-icon">controls</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+								<a href="_services_user_.usermodifyfninput.html#dn" class="tsd-kind-icon">dn</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/_services_group_.html#groupfindone" class="tsd-kind-icon">group<wbr>Find<wbr>One</a>
+						<a href="../modules/_services_user_.html#groupfindmembers" class="tsd-kind-icon">group<wbr>Find<wbr>Members</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/_services_group_.html#groupsfindall" class="tsd-kind-icon">groups<wbr>Find<wbr>All</a>
+						<a href="../modules/_services_user_.html#userfindone" class="tsd-kind-icon">user<wbr>Find<wbr>One</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/_services_group_.html#userfindgroupmembership" class="tsd-kind-icon">user<wbr>Find<wbr>Group<wbr>Membership</a>
+						<a href="../modules/_services_user_.html#usermodifyattribute" class="tsd-kind-icon">user<wbr>Modify<wbr>Attribute</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/_services_user_.html#usersfindall" class="tsd-kind-icon">users<wbr>Find<wbr>All</a>
 					</li>
 				</ul>
 			</nav>
