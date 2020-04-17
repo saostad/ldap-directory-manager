@@ -12,11 +12,16 @@ import {
 import { QueryGenerator } from "ldap-query-generator";
 import path from "path";
 import type { Logger } from "fast-node-logger";
-import { findFirstUser, findUsers, findGroupMembers } from "./services/user";
 import {
-  findFirstGroup,
-  findGroups,
-  findGroupMembershipForUser,
+  userFindOne,
+  usersFindAll,
+  groupFindMembers,
+  userModify,
+} from "./services/user";
+import {
+  groupFindOne,
+  groupsFindAll,
+  userFindGroupMembership,
 } from "./services/group";
 
 interface InitOptions {
@@ -42,7 +47,10 @@ export class Ldap {
     this.unbind = this.client.unbind;
   }
 
-  public async init(
+  /** this is necessary to run this function first time you want to use the library.  it does:
+   * 1. generate interface files from ldap schema
+   */
+  public async initial(
     { generateInterfaces, useCachedInterfaces }: InitOptions = {
       generateInterfaces: true,
       useCachedInterfaces: true,
@@ -83,71 +91,85 @@ export class Ldap {
     return outputFolder;
   }
 
-  public async findFirstUser(
+  public async userFindOne(
     criteria: string,
-    options: Pick<Parameters<typeof findFirstUser>[1], "attributes">,
+    options: Pick<Parameters<typeof userFindOne>[1], "attributes">,
   ) {
-    return findFirstUser(criteria, {
+    return userFindOne(criteria, {
       attributes: options.attributes,
       client: this.client,
       baseDN: this.baseDN,
     });
   }
 
-  public async findUsers(
+  public async usersFindAll(
     criteria: string,
-    options: Pick<Parameters<typeof findUsers>[1], "attributes">,
+    options: Pick<Parameters<typeof usersFindAll>[1], "attributes">,
   ) {
-    return findUsers(criteria, {
+    return usersFindAll(criteria, {
       attributes: options.attributes,
       client: this.client,
       baseDN: this.baseDN,
     });
   }
 
-  public async findFirstGroup(
+  public async groupFindOne(
     criteria: string,
-    { attributes }: Pick<Parameters<typeof findFirstGroup>[1], "attributes">,
+    { attributes }: Pick<Parameters<typeof groupFindOne>[1], "attributes">,
   ) {
-    return findFirstGroup(criteria, {
+    return groupFindOne(criteria, {
       attributes,
       client: this.client,
       baseDN: this.baseDN,
     });
   }
 
-  public async findGroups(
+  public async groupsFindAll(
     criteria: string,
-    options: Pick<Parameters<typeof findGroups>[1], "attributes">,
+    options: Pick<Parameters<typeof groupsFindAll>[1], "attributes">,
   ) {
-    return findGroups(criteria, {
+    return groupsFindAll(criteria, {
       attributes: options.attributes,
       client: this.client,
       baseDN: this.baseDN,
     });
   }
 
-  public async findGroupMembershipForUser(
+  public async userFindGroupMembership(
     criteria: string,
     {
       attributes,
-    }: Pick<Parameters<typeof findGroupMembershipForUser>[1], "attributes">,
+    }: Pick<Parameters<typeof userFindGroupMembership>[1], "attributes">,
   ) {
-    return findGroupMembershipForUser(criteria, {
+    return userFindGroupMembership(criteria, {
       attributes,
       client: this.client,
       baseDN: this.baseDN,
     });
   }
 
-  public async findGroupMembers(
+  public async groupFindMembers(
     criteria: string,
-    options: Pick<Parameters<typeof findGroupMembers>[1], "attributes">,
+    options: Pick<Parameters<typeof groupFindMembers>[1], "attributes">,
   ) {
-    return findGroupMembers(criteria, {
+    return groupFindMembers(criteria, {
       attributes: options.attributes,
       client: this.client,
       baseDN: this.baseDN,
+    });
+  }
+
+  public async userModify() {
+    await userModify({
+      client: this.client,
+      controls: undefined,
+      dn: "",
+      changes: [
+        {
+          operation: "delete",
+          modification: { cn: "hello", mail: "to" },
+        },
+      ],
     });
   }
 }

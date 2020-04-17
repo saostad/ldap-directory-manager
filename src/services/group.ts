@@ -2,7 +2,7 @@ import type { Group } from "../generated/interfaces";
 import type { Client } from "ldap-ts-client";
 import { QueryGenerator } from "ldap-query-generator";
 import { logToFile as logger, writeLog } from "fast-node-logger";
-import { findFirstUser } from "./user";
+import { userFindOne } from "./user";
 import { parseDn } from "../helpers/utils";
 
 interface FindGroupInputOptions<T = any> {
@@ -12,11 +12,11 @@ interface FindGroupInputOptions<T = any> {
 }
 
 /** @description return first found group */
-export async function findFirstGroup(
+export async function groupFindOne(
   criteria: string,
   options: FindGroupInputOptions<Group>,
 ) {
-  writeLog("findFirstGroup()", { level: "trace" });
+  writeLog("groupFindOne()", { level: "trace" });
   const qGen = new QueryGenerator<Group>({
     logger,
     scope: "sub",
@@ -27,10 +27,10 @@ export async function findFirstGroup(
     .whereAnd({ field: "objectCategory", action: "equal", criteria: "group" })
     .select(["displayName"]);
 
-  const data = await options.client.queryAttributes({
+  const data = await options.client.queryAttributes<Group>({
     base: options.baseDN,
+    attributes: options?.attributes ?? query.attributes,
     options: {
-      attributes: options?.attributes ?? (query.attributes as string[]),
       filter: query.toString(),
       scope: query.scope,
       paged: true,
@@ -40,7 +40,7 @@ export async function findFirstGroup(
 }
 
 /** @description return array of groups */
-export async function findGroups(
+export async function groupsFindAll(
   criteria: string,
   options: FindGroupInputOptions<Group>,
 ) {
@@ -55,10 +55,10 @@ export async function findGroups(
     .whereAnd({ field: "objectCategory", action: "equal", criteria: "group" })
     .select(["displayName"]);
 
-  const data = await options.client.queryAttributes({
+  const data = await options.client.queryAttributes<Group>({
     base: options.baseDN,
+    attributes: options?.attributes ?? query.attributes,
     options: {
-      attributes: options?.attributes ?? (query.attributes as string[]),
       filter: query.toString(),
       scope: query.scope,
       paged: true,
@@ -68,18 +68,18 @@ export async function findGroups(
 }
 
 /** @description return array of groups that username members */
-export async function findGroupMembershipForUser(
+export async function userFindGroupMembership(
   criteria: string,
   { baseDN, client, attributes }: FindGroupInputOptions<Group>,
 ) {
-  writeLog("getGroupMembershipForUser()", { level: "trace" });
+  writeLog("userFindGroupMembership()", { level: "trace" });
 
   /** Plan:
    * 1. get user dn base on user upn
    * 2. find groups that has that dn on their member attribute
    */
 
-  const user = await findFirstUser(criteria, {
+  const user = await userFindOne(criteria, {
     baseDN,
     client,
     attributes: ["distinguishedName"],
@@ -99,10 +99,10 @@ export async function findGroupMembershipForUser(
     .whereAnd({ field: "objectClass", action: "equal", criteria: "group" })
     .select(["displayName"]);
 
-  const data = await client.queryAttributes({
+  const data = await client.queryAttributes<Group>({
     base: baseDN,
+    attributes: attributes ?? query.attributes,
     options: {
-      attributes: attributes ?? (query.attributes as string[]),
       filter: query.toString(),
       scope: query.scope,
     },
