@@ -1,9 +1,22 @@
 /** this file used to just run some internal tests while developing the package */
 import dotenv from "dotenv";
 dotenv.config();
-import { version, Ldap } from "./";
+import {
+  version,
+  initial,
+  userModifyAttribute,
+  userFindOne,
+  usersFindAll,
+  groupFindOne,
+  groupsFindAll,
+  userFindGroupMembership,
+  groupFindMembers,
+  QueryGenerator,
+} from "./";
 
 import { createLogger, writeLog } from "fast-node-logger";
+import { Group, User } from "./generated/interfaces";
+import { Client, IClientConfig } from "ldap-ts-client";
 
 export async function main() {
   /** ready to use instance of logger */
@@ -13,49 +26,86 @@ export async function main() {
   });
 
   /** put your code below here */
-  const st = new Ldap({
+  const baseDN = "DC=ki,DC=local";
+  const config: IClientConfig = {
     logger,
-    url: process.env.AD_URI ?? "",
-    bindDN: process.env.AD_USER ?? "",
-    secret: process.env.AD_Pass ?? "",
-    baseDN: "DC=ki,DC=local",
-  });
-  const interfaceDirPath = await st.initial({
+    ldapServerUrl: process.env.AD_URI ?? "",
+    user: process.env.AD_USER ?? "",
+    pass: process.env.AD_Pass ?? "",
+    baseDN,
+  };
+
+  /** generate typescript interfaces from ldap schema */
+  const interfaceDirPath = await initial({
     generateInterfaces: true,
     useCachedInterfaces: true,
+    ...config,
   });
 
-  const singleUser = await st.userFindOne("sostad*", {
-    attributes: ["displayName", "userPrincipalName"],
+  const client = new Client(config);
+
+  const singleUser = await userFindOne<User>("sostad*", {
+    attributes: [
+      "displayName",
+      "userPrincipalName",
+      "adminDisplayName",
+      "assistant",
+      "manager",
+    ],
+    client,
+    baseDN,
   });
   console.log(`File: app.ts,`, `Line: 31 => `, singleUser);
 
-  const allUsers = await st.usersFindAll("*@kajimausa.com", {
+  const allUsers = await usersFindAll<User>("*@kajimausa.com", {
+    client,
+    baseDN,
     attributes: ["displayName", "userPrincipalName"],
   });
   console.log(`File: app.ts,`, `Line: 36 => `, allUsers.length);
 
-  const firstGroup = await st.groupFindOne("KUSA_VP_ACCESS", {
+  const firstGroup = await groupFindOne("KUSA_VP_ACCESS", {
+    client,
+    baseDN,
     attributes: ["cn"],
   });
   console.log(`File: app.ts,`, `Line: 41 => `, firstGroup);
 
-  const groups = await st.groupsFindAll("*KUSA*", {
+  const groups = await groupsFindAll("*KUSA*", {
+    client,
+    baseDN,
     attributes: ["cn"],
   });
   console.log(`File: app.ts,`, `Line: 46 => `, groups.length);
 
-  const groupsOfUser = await st.userFindGroupMembership("sostad*", {
+  const groupsOfUser = await userFindGroupMembership("sostad*", {
+    client,
+    baseDN,
     attributes: ["cn"],
   });
   console.log(`File: app.ts,`, `Line: 51 => `, groupsOfUser.length);
 
-  const groupsMembers = await st.groupFindMembers("KUSA_VP_ACCESS", {
-    attributes: ["cn"],
+  const groupsMembers = await groupFindMembers<Group>("KUSA_VP_ACCESS", {
+    client,
+    baseDN,
+    attributes: ["cn", "gidNumber"],
   });
   console.log(`File: app.ts,`, `Line: 56=> `, groupsMembers.length);
 
-  await st.unbind();
+  await userModifyAttribute<User>({
+    client,
+    dn: "dc",
+    changes: [
+      {
+        operation: "add",
+        modification: {
+          mail: "user@domain.com",
+        },
+      },
+    ],
+  });
+
+  await client.unbind();
 }
 
 main().catch((err: Error) => {

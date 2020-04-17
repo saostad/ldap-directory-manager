@@ -1,6 +1,6 @@
 {
   "name": "ldap-studio",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "schema-aware, type-safe LDAP client, written in typescript to create hight-level functionalities",
   "repository": {
     "type": "git",
@@ -52,15 +52,15 @@
     "nodemon": "^2.0.3",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.4",
-    "ts-jest": "^25.3.1",
+    "ts-jest": "^25.4.0",
     "ts-node": "^8.6.2",
     "typedoc": "^0.17.4",
     "typescript": "^3.8.3"
   },
   "dependencies": {
     "fast-node-logger": "^1.4.0",
-    "ldap-query-generator": "^0.6.0",
+    "ldap-query-generator": "^0.6.2",
     "ldap-schema-ts-generator": "^2.1.2",
-    "ldap-ts-client": "^0.8.0"
+    "ldap-ts-client": "^0.9.0"
   }
 }

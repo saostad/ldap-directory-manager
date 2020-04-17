@@ -1,5 +1,4 @@
 import { writeLog, logToFile as logger } from "fast-node-logger";
-import { User } from "../generated/interfaces";
 import { QueryGenerator } from "ldap-query-generator";
 import type { Client, ModifyChange } from "ldap-ts-client";
 import { groupFindOne } from "./group";
@@ -11,12 +10,12 @@ interface FindUserInputOptions<T = any> {
   attributes: Array<keyof T>;
 }
 /** @description return first found user */
-export async function userFindOne(
+export async function userFindOne<T = any>(
   criteria: string,
-  options: FindUserInputOptions<User>,
+  options: FindUserInputOptions<T>,
 ) {
   writeLog("userFindOne()", { level: "trace" });
-  const qGen = new QueryGenerator<User>({
+  const qGen = new QueryGenerator<T>({
     logger,
     scope: "sub",
   });
@@ -33,7 +32,7 @@ export async function userFindOne(
     .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
     .select(["displayName", "userPrincipalName"]);
 
-  const data = await options.client.queryAttributes<User>({
+  const data = await options.client.queryAttributes<T>({
     base: options.baseDN,
     attributes: options?.attributes ?? query.attributes,
     options: {
@@ -46,13 +45,13 @@ export async function userFindOne(
 }
 
 /** @description return array of found users */
-export async function usersFindAll(
+export async function usersFindAll<T = any>(
   criteria: string,
-  options: FindUserInputOptions<User>,
+  options: FindUserInputOptions<T>,
 ) {
   writeLog("usersFindAll()", { level: "trace" });
 
-  const qGen = new QueryGenerator<User>({
+  const qGen = new QueryGenerator<T>({
     logger,
     scope: "sub",
   });
@@ -69,7 +68,7 @@ export async function usersFindAll(
     .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
     .select(["displayName", "userPrincipalName"]);
 
-  const data = await options.client.queryAttributes<User>({
+  const data = await options.client.queryAttributes<T>({
     base: options.baseDN,
     attributes: options?.attributes ?? query.attributes,
     options: {
@@ -83,9 +82,9 @@ export async function usersFindAll(
 }
 
 /** @description return array of found users that members of that group */
-export async function groupFindMembers(
+export async function groupFindMembers<T = any>(
   criteria: string,
-  { attributes, client, baseDN }: FindUserInputOptions<User>,
+  { attributes, client, baseDN }: FindUserInputOptions<T>,
 ) {
   writeLog("groupFindMembers()", { level: "trace" });
 
@@ -99,7 +98,7 @@ export async function groupFindMembers(
     attributes: ["distinguishedName"],
   });
 
-  const qGen = new QueryGenerator<User>({
+  const qGen = new QueryGenerator<T>({
     logger,
     scope: "sub",
   });
@@ -120,7 +119,7 @@ export async function groupFindMembers(
     .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
     .select(["displayName", "userPrincipalName"]);
 
-  const data = await client.queryAttributes<User>({
+  const data = await client.queryAttributes<T>({
     base: baseDN,
     attributes: attributes ?? query.attributes,
     options: {
@@ -133,17 +132,17 @@ export async function groupFindMembers(
   return data;
 }
 
-interface UserModifyFnInput<T = any> {
+interface UserModifyFnInput<T> {
   client: Client;
   dn: string;
   controls?: any;
   changes: ModifyChange<T>[];
 }
-export function userModifyAttribute({
+export function userModifyAttribute<T>({
   dn,
   changes,
   controls,
   client,
-}: UserModifyFnInput<User>) {
+}: UserModifyFnInput<T>) {
   client.modifyAttribute({ dn: parseDn(dn), changes, controls });
 }

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>UserModifyFnInput | ldap-studio</title>
+	<title>InitOptions | ldap-studio</title>
 	<meta name="description" content="Documentation for ldap-studio">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,32 +56,24 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_services_user_.html">&quot;services/user&quot;</a>
+					<a href="../modules/_services_generate_.html">&quot;services/generate&quot;</a>
 				</li>
 				<li>
-					<a href="_services_user_.usermodifyfninput.html">UserModifyFnInput</a>
+					<a href="_services_generate_.initoptions.html">InitOptions</a>
 				</li>
 			</ul>
-			<h1>Interface UserModifyFnInput&lt;T&gt;</h1>
+			<h1>Interface InitOptions</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-type-parameters">
-				<h3>Type parameters</h3>
-				<ul class="tsd-type-parameters">
-					<li>
-						<h4>T</h4>
-					</li>
-				</ul>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">UserModifyFnInput</span>
+						<span class="target">InitOptions</span>
 					</li>
 				</ul>
 			</section>
@@ -92,10 +84,12 @@
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_services_user_.usermodifyfninput.html#changes" class="tsd-kind-icon">changes</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_services_user_.usermodifyfninput.html#client" class="tsd-kind-icon">client</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_services_user_.usermodifyfninput.html#controls" class="tsd-kind-icon">controls</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_services_user_.usermodifyfninput.html#dn" class="tsd-kind-icon">dn</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_services_generate_.initoptions.html#generateinterfaces" class="tsd-kind-icon">generate<wbr>Interfaces</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_services_generate_.initoptions.html#ldapserverurl" class="tsd-kind-icon">ldap<wbr>Server<wbr>Url</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_services_generate_.initoptions.html#logger" class="tsd-kind-icon">logger</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_services_generate_.initoptions.html#pass" class="tsd-kind-icon">pass</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_services_generate_.initoptions.html#usecachedinterfaces" class="tsd-kind-icon">use<wbr>Cached<wbr>Interfaces</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_services_generate_.initoptions.html#user" class="tsd-kind-icon">user</a></li>
 							</ul>
 						</section>
 					</div>
@@ -104,42 +98,72 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="changes" class="tsd-anchor"></a>
-					<h3>changes</h3>
-					<div class="tsd-signature tsd-kind-icon">changes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ModifyChange</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></div>
+					<a name="generateinterfaces" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> generate<wbr>Interfaces</h3>
+					<div class="tsd-signature tsd-kind-icon">generate<wbr>Interfaces<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/3ee0d36/src/services/user.ts#L139">services/user.ts:139</a></li>
+							<li>Defined in services/generate.ts:12</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>generate schema interface. default true</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+					<a name="ldapserverurl" class="tsd-anchor"></a>
+					<h3>ldap<wbr>Server<wbr>Url</h3>
+					<div class="tsd-signature tsd-kind-icon">ldap<wbr>Server<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in services/generate.ts:17</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="client" class="tsd-anchor"></a>
-					<h3>client</h3>
-					<div class="tsd-signature tsd-kind-icon">client<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Client</span></div>
+					<a name="logger" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> logger</h3>
+					<div class="tsd-signature tsd-kind-icon">logger<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Logger</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/3ee0d36/src/services/user.ts#L136">services/user.ts:136</a></li>
+							<li>Defined in services/generate.ts:18</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="controls" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> controls</h3>
-					<div class="tsd-signature tsd-kind-icon">controls<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<a name="pass" class="tsd-anchor"></a>
+					<h3>pass</h3>
+					<div class="tsd-signature tsd-kind-icon">pass<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/3ee0d36/src/services/user.ts#L138">services/user.ts:138</a></li>
+							<li>Defined in services/generate.ts:16</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="dn" class="tsd-anchor"></a>
-					<h3>dn</h3>
-					<div class="tsd-signature tsd-kind-icon">dn<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="usecachedinterfaces" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> use<wbr>Cached<wbr>Interfaces</h3>
+					<div class="tsd-signature tsd-kind-icon">use<wbr>Cached<wbr>Interfaces<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/3ee0d36/src/services/user.ts#L137">services/user.ts:137</a></li>
+							<li>Defined in services/generate.ts:14</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>use cached interfaces if exist. default true. if set false regenerate interfaces</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+					<a name="user" class="tsd-anchor"></a>
+					<h3>user</h3>
+					<div class="tsd-signature tsd-kind-icon">user<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in services/generate.ts:15</li>
 						</ul>
 					</aside>
 				</section>
@@ -157,54 +181,48 @@
 					<li class=" tsd-kind-module">
 						<a href="../modules/_index_.html">&quot;index&quot;</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class="current tsd-kind-module">
 						<a href="../modules/_services_generate_.html">&quot;services/generate&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/_services_group_.html">&quot;services/group&quot;</a>
 					</li>
-					<li class="current tsd-kind-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_services_user_.html">&quot;services/user&quot;</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
-						<a href="_services_user_.finduserinputoptions.html" class="tsd-kind-icon">Find<wbr>User<wbr>Input<wbr>Options</a>
-					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
-						<a href="_services_user_.usermodifyfninput.html" class="tsd-kind-icon">User<wbr>Modify<wbr>FnInput</a>
+					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_services_generate_.initoptions.html" class="tsd-kind-icon">Init<wbr>Options</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="_services_user_.usermodifyfninput.html#changes" class="tsd-kind-icon">changes</a>
+								<a href="_services_generate_.initoptions.html#generateinterfaces" class="tsd-kind-icon">generate<wbr>Interfaces</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="_services_user_.usermodifyfninput.html#client" class="tsd-kind-icon">client</a>
+								<a href="_services_generate_.initoptions.html#ldapserverurl" class="tsd-kind-icon">ldap<wbr>Server<wbr>Url</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="_services_user_.usermodifyfninput.html#controls" class="tsd-kind-icon">controls</a>
+								<a href="_services_generate_.initoptions.html#logger" class="tsd-kind-icon">logger</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="_services_user_.usermodifyfninput.html#dn" class="tsd-kind-icon">dn</a>
+								<a href="_services_generate_.initoptions.html#pass" class="tsd-kind-icon">pass</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+								<a href="_services_generate_.initoptions.html#usecachedinterfaces" class="tsd-kind-icon">use<wbr>Cached<wbr>Interfaces</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+								<a href="_services_generate_.initoptions.html#user" class="tsd-kind-icon">user</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../modules/_services_user_.html#groupfindmembers" class="tsd-kind-icon">group<wbr>Find<wbr>Members</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../modules/_services_user_.html#userfindone" class="tsd-kind-icon">user<wbr>Find<wbr>One</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../modules/_services_user_.html#usermodifyattribute" class="tsd-kind-icon">user<wbr>Modify<wbr>Attribute</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../modules/_services_user_.html#usersfindall" class="tsd-kind-icon">users<wbr>Find<wbr>All</a>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/_services_generate_.html#initial" class="tsd-kind-icon">initial</a>
 					</li>
 				</ul>
 			</nav>

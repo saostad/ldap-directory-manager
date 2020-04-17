@@ -67,7 +67,122 @@
 				<a href="#ldap-studio" id="ldap-studio" style="color: inherit; text-decoration: none;">
 					<h1>LDAP Studio</h1>
 				</a>
-				<p>schema-aware, type-safe LDAP client, written in typescript to create hight-level functionalities</p>
+				<p>schema-aware, type-safe LDAP client, written in typescript to create hight-level functionalities using <a href="https://www.npmjs.com/package/ldap-ts-client">ldap-ts-client</a></p>
+				<a href="#how-to-ues" id="how-to-ues" style="color: inherit; text-decoration: none;">
+					<h3>How to ues</h3>
+				</a>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Client, IClientConfig } <span class="hljs-keyword">from</span> <span class="hljs-string">"ldap-ts-client"</span>;
+<span class="hljs-keyword">import</span> { userFindOne } <span class="hljs-keyword">from</span> <span class="hljs-string">"ldap-studio"</span>;
+
+<span class="hljs-keyword">const</span> baseDN = <span class="hljs-string">"DC=Domain,DC=Com"</span>;
+
+<span class="hljs-keyword">const</span> config: IClientConfig = {
+  ldapServerUrl: process.env.AD_URI ?? <span class="hljs-string">""</span>,
+  user: process.env.AD_USER ?? <span class="hljs-string">""</span>,
+  pass: process.env.AD_Pass ?? <span class="hljs-string">""</span>,
+  baseDN,
+};
+
+<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client(config);
+
+<span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> userFindOne(<span class="hljs-string">"username*"</span>, {
+  attributes: [
+    <span class="hljs-string">"displayName"</span>,
+    <span class="hljs-string">"userPrincipalName"</span>,
+    <span class="hljs-string">"adminDisplayName"</span>,
+    <span class="hljs-string">"assistant"</span>,
+    <span class="hljs-string">"manager"</span>,
+  ],
+  client,
+  baseDN,
+});
+<span class="hljs-built_in">console</span>.log(user);</code></pre>
+				<a href="#api-documentations" id="api-documentations" style="color: inherit; text-decoration: none;">
+					<h3>Api Documentations</h3>
+				</a>
+				<p>for full API documentation look at <a href="https://saostad.github.io/ldap-studio/modules/_index_.html">API Website</a></p>
+				<a href="#advance-uses" id="advance-uses" style="color: inherit; text-decoration: none;">
+					<h3>Advance Uses</h3>
+				</a>
+				<p>generate typescript interfaces from ldap schema.
+				(this is recommended just for first time and after each ldap schema modification)</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">const</span> config: IClientConfig = {
+  ldapServerUrl: process.env.AD_URI ?? <span class="hljs-string">""</span>,
+  user: process.env.AD_USER ?? <span class="hljs-string">""</span>,
+  pass: process.env.AD_Pass ?? <span class="hljs-string">""</span>,
+  baseDN,
+};
+<span class="hljs-keyword">const</span> interfaceDirPath = <span class="hljs-keyword">await</span> initial({
+  generateInterfaces: <span class="hljs-literal">true</span>,
+  useCachedInterfaces: <span class="hljs-literal">false</span>,
+  ...config,
+});</code></pre>
+				<p>auto complete and type check, base on ldap schema interfaces that generated at first time.</p>
+				<p>Example 1 (using <a href="https://www.npmjs.com/package/ldap-ts-client">ldap-ts-client</a>)</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Client, IClientConfig } <span class="hljs-keyword">from</span> <span class="hljs-string">"ldap-ts-client"</span>;
+<span class="hljs-keyword">import</span> { User } <span class="hljs-keyword">from</span> <span class="hljs-string">"./generated/interfaces"</span>;
+
+<span class="hljs-keyword">const</span> baseDN = <span class="hljs-string">"DC=Domain,DC=Com"</span>;
+<span class="hljs-keyword">const</span> config: IClientConfig = {
+  ldapServerUrl: process.env.AD_URI ?? <span class="hljs-string">""</span>,
+  user: process.env.AD_USER ?? <span class="hljs-string">""</span>,
+  pass: process.env.AD_Pass ?? <span class="hljs-string">""</span>,
+  baseDN,
+};
+<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client(config);
+
+<span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> userFindOne&lt;User&gt;(<span class="hljs-string">"username*"</span>, {
+  attributes: [
+    <span class="hljs-string">"displayName"</span>,
+    <span class="hljs-string">"userPrincipalName"</span>,
+    <span class="hljs-string">"adminDisplayName"</span>,
+    <span class="hljs-string">"assistant"</span>,
+    <span class="hljs-string">"manager"</span>,
+  ],
+  client,
+  baseDN,
+});
+<span class="hljs-built_in">console</span>.log(user);</code></pre>
+				<p>Example 2 (using <a href="https://www.npmjs.com/package/ldap-query-generator">ldap-query-generator</a> which will be install with package):</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { QueryGenerator } <span class="hljs-keyword">from</span> <span class="hljs-string">"ldap-query-generator"</span>;
+<span class="hljs-keyword">import</span> { Client, IClientConfig } <span class="hljs-keyword">from</span> <span class="hljs-string">"ldap-ts-client"</span>;
+<span class="hljs-keyword">import</span> { User } <span class="hljs-keyword">from</span> <span class="hljs-string">"./generated/interfaces"</span>;
+
+<span class="hljs-keyword">const</span> baseDN = <span class="hljs-string">"DC=Domain,DC=Com"</span>;
+<span class="hljs-keyword">const</span> config: IClientConfig = {
+  ldapServerUrl: process.env.AD_URI ?? <span class="hljs-string">""</span>,
+  user: process.env.AD_USER ?? <span class="hljs-string">""</span>,
+  pass: process.env.AD_Pass ?? <span class="hljs-string">""</span>,
+  baseDN,
+};
+<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client(config);
+
+<span class="hljs-keyword">const</span> qGen = <span class="hljs-keyword">new</span> QueryGenerator&lt;User&gt;({
+  logger,
+  scope: <span class="hljs-string">"sub"</span>,
+});
+
+<span class="hljs-keyword">const</span> { query } = qGen
+  .where({ field: <span class="hljs-string">"userPrincipalName"</span>, action: <span class="hljs-string">"substrings"</span>, criteria })
+  .whereAnd({ field: <span class="hljs-string">"objectClass"</span>, action: <span class="hljs-string">"equal"</span>, criteria: <span class="hljs-string">"user"</span> })
+  .whereOr({ field: <span class="hljs-string">"objectClass"</span>, action: <span class="hljs-string">"equal"</span>, criteria: <span class="hljs-string">"person"</span> })
+  .whereNot({
+    field: <span class="hljs-string">"objectClass"</span>,
+    action: <span class="hljs-string">"equal"</span>,
+    criteria: <span class="hljs-string">"computer"</span>,
+  })
+  .whereNot({ field: <span class="hljs-string">"objectClass"</span>, action: <span class="hljs-string">"equal"</span>, criteria: <span class="hljs-string">"group"</span> })
+  .select([<span class="hljs-string">"displayName"</span>, <span class="hljs-string">"userPrincipalName"</span>]);
+
+<span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> client.queryAttributes&lt;User&gt;({
+  base: baseDN,
+  attributes: query.attributes,
+  options: {
+    filter: query.toString(),
+    scope: query.scope,
+    paged: <span class="hljs-literal">true</span>,
+  },
+});</code></pre>
 				<a href="#motivations" id="motivations" style="color: inherit; text-decoration: none;">
 					<h3>Motivations:</h3>
 				</a>
@@ -76,16 +191,7 @@
 				<ul>
 					<li>Provide High level functions to interact with LDAP servers</li>
 					<li>Taking advantage of typescript type safety and auto code competition</li>
-				</ul>
-				<a href="#api-documentations" id="api-documentations" style="color: inherit; text-decoration: none;">
-					<h3>Api Documentations</h3>
-				</a>
-				<p>for full API documentation look at <a href="https://saostad.github.io/ldap-studio/modules/_index_.html">API Website</a></p>
-				<a href="#todo" id="todo" style="color: inherit; text-decoration: none;">
-					<h3>TODO:</h3>
-				</a>
-				<ul>
-					<li><input disabled="" type="checkbox"> add <a href="https://tools.ietf.org/html/rfc4511#section-4.1.11">controls</a> parameter to functions to provide more flexibility</li>
+					<li>Provide unified solution for all ldap &amp; typescript related tools</li>
 				</ul>
 			</div>
 		</div>
@@ -100,6 +206,9 @@
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/_index_.html">&quot;index&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_services_generate_.html">&quot;services/generate&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/_services_group_.html">&quot;services/group&quot;</a>
@@ -124,13 +233,11 @@
 				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 			</ul>
 		</div>
 	</div>
