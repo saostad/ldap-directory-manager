@@ -19,7 +19,7 @@ const config: IClientConfig = {
 
 const client = new Client(config);
 
-const user = await userFindOne("username*", {
+const user = await userGetOne("username*", {
   attributes: [
     "displayName",
     "userPrincipalName",
@@ -73,7 +73,7 @@ const config: IClientConfig = {
 };
 const client = new Client(config);
 
-const user = await userFindOne<User>("username*", {
+const user = await userGetOne<User>("username*", {
   attributes: [
     "displayName",
     "userPrincipalName",

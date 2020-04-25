@@ -1,20 +1,20 @@
 import { writeLog, logToFile as logger } from "fast-node-logger";
 import { QueryGenerator } from "ldap-query-generator";
 import type { Client, ModifyChange } from "ldap-ts-client";
-import { groupFindOne } from "./group";
+import { groupGetOne } from "./group";
 import { parseDn } from "../helpers/utils";
 
-interface FindUserInputOptions<T = any> {
+type GetUserInputOptions<T = any> = {
   client: Client;
   baseDN: string;
   attributes: Array<keyof T>;
-}
+};
 /** @description return first found user */
-export async function userFindOne<T = any>(
+export async function userGetOne<T = any>(
   criteria: string,
-  options: FindUserInputOptions<T>,
+  options: GetUserInputOptions<T>,
 ) {
-  writeLog("userFindOne()", { level: "trace" });
+  writeLog("userGetOne()", { level: "trace" });
   const qGen = new QueryGenerator<T>({
     logger,
     scope: "sub",
@@ -45,11 +45,11 @@ export async function userFindOne<T = any>(
 }
 
 /** @description return array of found users */
-export async function usersFindAll<T = any>(
+export async function userGetAll<T = any>(
   criteria: string,
-  options: FindUserInputOptions<T>,
+  options: GetUserInputOptions<T>,
 ) {
-  writeLog("usersFindAll()", { level: "trace" });
+  writeLog("usersGetAll()", { level: "trace" });
 
   const qGen = new QueryGenerator<T>({
     logger,
@@ -82,17 +82,17 @@ export async function usersFindAll<T = any>(
 }
 
 /** @description return array of found users that members of that group */
-export async function groupFindMembers<T = any>(
+export async function groupGetMembers<T = any>(
   criteria: string,
-  { attributes, client, baseDN }: FindUserInputOptions<T>,
+  { attributes, client, baseDN }: GetUserInputOptions<T>,
 ) {
-  writeLog("groupFindMembers()", { level: "trace" });
+  writeLog("groupGetMembers()", { level: "trace" });
 
   /**
    * 1. get group dn
    * 2. get all users that memberOf field has that dn
    */
-  const group = await groupFindOne(criteria, {
+  const group = await groupGetOne(criteria, {
     baseDN,
     client,
     attributes: ["distinguishedName"],
@@ -132,17 +132,17 @@ export async function groupFindMembers<T = any>(
   return data;
 }
 
-interface UserModifyFnInput<T> {
+type UserUpdateFnInput<T> = {
   client: Client;
   dn: string;
   controls?: any;
   changes: ModifyChange<T>[];
-}
-export function userModifyAttribute<T>({
+};
+export function userUpdate<T>({
   dn,
   changes,
   controls,
   client,
-}: UserModifyFnInput<T>) {
+}: UserUpdateFnInput<T>) {
   client.modifyAttribute({ dn: parseDn(dn), changes, controls });
 }

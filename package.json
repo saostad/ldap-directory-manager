@@ -1,6 +1,6 @@
 {
   "name": "ldap-studio",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "schema-aware, type-safe LDAP client, written in typescript to create hight-level functionalities",
   "repository": {
     "type": "git",

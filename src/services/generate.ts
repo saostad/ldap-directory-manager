@@ -7,7 +7,7 @@ import {
 } from "ldap-schema-ts-generator";
 import { Logger } from "fast-node-logger";
 
-interface InitOptions {
+type InitOptions = {
   /** generate schema interface. default true */
   generateInterfaces?: boolean;
   /** use cached interfaces if exist. default true. if set false regenerate interfaces */
@@ -16,7 +16,7 @@ interface InitOptions {
   pass: string;
   ldapServerUrl: string;
   logger?: Logger;
-}
+};
 
 /** this is necessary to run this function first time you want to use the library.  it does:
  * 1. generate interface files from ldap schema

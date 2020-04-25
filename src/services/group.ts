@@ -1,21 +1,21 @@
 import type { Client } from "ldap-ts-client";
 import { QueryGenerator } from "ldap-query-generator";
 import { logToFile as logger, writeLog } from "fast-node-logger";
-import { userFindOne } from "./user";
+import { userGetOne } from "./user";
 import { parseDn } from "../helpers/utils";
 
-export interface FindGroupInputOptions<T> {
+type GetGroupInputOptions<T> = {
   client: Client;
   baseDN: string;
   attributes: Array<keyof T>;
-}
+};
 
 /** @description return first found group */
-export async function groupFindOne<T = any>(
+export async function groupGetOne<T = any>(
   criteria: string,
-  options: FindGroupInputOptions<T>,
+  options: GetGroupInputOptions<T>,
 ) {
-  writeLog("groupFindOne()", { level: "trace" });
+  writeLog("groupGetOne()", { level: "trace" });
   const qGen = new QueryGenerator<T>({
     logger,
     scope: "sub",
@@ -39,9 +39,9 @@ export async function groupFindOne<T = any>(
 }
 
 /** @description return array of groups */
-export async function groupsFindAll<T = any>(
+export async function groupGetAll<T = any>(
   criteria: string,
-  options: FindGroupInputOptions<T>,
+  options: GetGroupInputOptions<T>,
 ) {
   writeLog("findGroups()", { level: "trace" });
   const qGen = new QueryGenerator<T>({
@@ -50,7 +50,7 @@ export async function groupsFindAll<T = any>(
   });
 
   const { query } = qGen
-    .where({ field: "cn", action: "substrings", criteria })
+    .where({ field: "cn", action: "substrings", criteria: criteria ?? "dn=*" })
     .whereAnd({ field: "objectCategory", action: "equal", criteria: "group" })
     .select(["displayName"]);
 
@@ -67,18 +67,19 @@ export async function groupsFindAll<T = any>(
 }
 
 /** @description return array of groups that username members */
-export async function userFindGroupMembership<T = any>(
+export async function userGetGroupMembership<T = any>(
   criteria: string,
-  { baseDN, client, attributes }: FindGroupInputOptions<T>,
+  { baseDN, client, attributes }: GetGroupInputOptions<T>,
 ) {
-  writeLog("userFindGroupMembership()", { level: "trace" });
+  writeLog("userGetGroupMembership()", { level: "trace" });
 
-  /** Plan:
+  /** @step Plan:
    * 1. get user dn base on user upn
    * 2. find groups that has that dn on their member attribute
    */
 
-  const user = await userFindOne(criteria, {
+  /** */
+  const user = await userGetOne(criteria, {
     baseDN,
     client,
     attributes: ["distinguishedName"],
