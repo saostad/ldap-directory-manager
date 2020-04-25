@@ -181,3 +181,5 @@ export function userUpdate<T>({
 }: UserUpdateFnInput<T>) {
   client.modifyAttribute({ dn: parseDn(dn), changes, controls });
 }
+
+// TODO userDelete
