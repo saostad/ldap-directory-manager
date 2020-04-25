@@ -38,6 +38,33 @@ export async function groupGetOne<T = any>(
   return data[0];
 }
 
+export async function groupGetByDn<T = any>(
+  dn: string,
+  options: GetGroupInputOptions<T>,
+) {
+  writeLog("groupGetByDn()", { level: "trace" });
+  const qGen = new QueryGenerator<T>({
+    logger,
+    scope: "sub",
+  });
+
+  const { query } = qGen
+    .where({ field: "cn", action: "equal", criteria: dn })
+    .whereAnd({ field: "objectCategory", action: "equal", criteria: "group" })
+    .select(["displayName"]);
+
+  const data = await options.client.queryAttributes<T>({
+    base: options.baseDN,
+    attributes: options?.attributes ?? query.attributes,
+    options: {
+      filter: query.toString(),
+      scope: query.scope,
+      paged: true,
+    },
+  });
+  return data[0];
+}
+
 /** @description return array of groups */
 export async function groupGetAll<T = any>(
   criteria: string,
