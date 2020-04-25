@@ -4,14 +4,16 @@ dotenv.config();
 import {
   version,
   initial,
-  userModifyAttribute,
-  userFindOne,
-  usersFindAll,
-  groupFindOne,
-  groupsFindAll,
-  userFindGroupMembership,
-  groupFindMembers,
+  userUpdate,
+  userGetOne,
+  userGetAll,
+  groupGetOne,
+  groupGetAll,
+  userGetGroupMembership,
+  groupGetMembers,
   QueryGenerator,
+  groupGetByDn,
+  userGetByDn,
 } from "./";
 
 import { createLogger, writeLog } from "fast-node-logger";
@@ -44,7 +46,7 @@ export async function main() {
 
   const client = new Client(config);
 
-  const singleUser = await userFindOne<User>("sostad*", {
+  const singleUser = await userGetOne<User>("sostad*", {
     attributes: [
       "displayName",
       "userPrincipalName",
@@ -57,42 +59,42 @@ export async function main() {
   });
   console.log(`File: app.ts,`, `Line: 31 => `, singleUser);
 
-  const allUsers = await usersFindAll<User>("*@kajimausa.com", {
+  const allUsers = await userGetAll<User>("*@kajimausa.com", {
     client,
     baseDN,
     attributes: ["displayName", "userPrincipalName"],
   });
   console.log(`File: app.ts,`, `Line: 36 => `, allUsers.length);
 
-  const firstGroup = await groupFindOne("KUSA_VP_ACCESS", {
+  const firstGroup = await groupGetOne("KUSA_VP_ACCESS", {
     client,
     baseDN,
     attributes: ["cn"],
   });
   console.log(`File: app.ts,`, `Line: 41 => `, firstGroup);
 
-  const groups = await groupsFindAll("*KUSA*", {
+  const groups = await groupGetAll("*KUSA*", {
     client,
     baseDN,
     attributes: ["cn"],
   });
   console.log(`File: app.ts,`, `Line: 46 => `, groups.length);
 
-  const groupsOfUser = await userFindGroupMembership("sostad*", {
+  const groupsOfUser = await userGetGroupMembership("sostad*", {
     client,
     baseDN,
     attributes: ["cn"],
   });
   console.log(`File: app.ts,`, `Line: 51 => `, groupsOfUser.length);
 
-  const groupsMembers = await groupFindMembers<Group>("KUSA_VP_ACCESS", {
+  const groupsMembers = await groupGetMembers<Group>("KUSA_VP_ACCESS", {
     client,
     baseDN,
     attributes: ["cn", "gidNumber"],
   });
   console.log(`File: app.ts,`, `Line: 56=> `, groupsMembers.length);
 
-  await userModifyAttribute<User>({
+  await userUpdate<User>({
     client,
     dn: "dc",
     changes: [

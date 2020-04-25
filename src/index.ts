@@ -1,18 +1,9 @@
-/** package version number */
-export const version = require("../package.json").version;
+/** re-export from other libraries */
 export { Client, IClientConfig } from "ldap-ts-client";
 export { QueryGenerator } from "ldap-query-generator";
+
+/** export from this library */
+export const version = require("../package.json").version;
 export { initial } from "./services/generate";
-
-export {
-  userFindOne,
-  usersFindAll,
-  groupFindMembers,
-  userModifyAttribute,
-} from "./services/user";
-
-export {
-  groupFindOne,
-  groupsFindAll,
-  userFindGroupMembership,
-} from "./services/group";
+export * from "./services/user";
+export * from "./services/group";
