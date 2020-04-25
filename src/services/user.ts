@@ -81,6 +81,41 @@ export async function userGetAll<T = any>(
   return data;
 }
 
+/** @description return first found user */
+export async function userGetByDn<T = any>(
+  dn: string,
+  options: GetUserInputOptions<T>,
+) {
+  writeLog("userGetByDn()", { level: "trace" });
+  const qGen = new QueryGenerator<T>({
+    logger,
+    scope: "sub",
+  });
+
+  const { query } = qGen
+    .where({ field: "dn", action: "equal", criteria: dn })
+    .whereAnd({ field: "objectClass", action: "equal", criteria: "user" })
+    .whereOr({ field: "objectClass", action: "equal", criteria: "person" })
+    .whereNot({
+      field: "objectClass",
+      action: "equal",
+      criteria: "computer",
+    })
+    .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
+    .select(["displayName", "userPrincipalName"]);
+
+  const data = await options.client.queryAttributes<T>({
+    base: options.baseDN,
+    attributes: options?.attributes ?? query.attributes,
+    options: {
+      filter: query.toString(),
+      scope: query.scope,
+      paged: true,
+    },
+  });
+  return data[0];
+}
+
 /** @description return array of found users that members of that group */
 export async function groupGetMembers<T = any>(
   criteria: string,
