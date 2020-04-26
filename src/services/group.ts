@@ -16,22 +16,21 @@ export async function groupGetOne<T = any>(
   options: GetGroupInputOptions<T>,
 ) {
   writeLog("groupGetOne()", { level: "trace" });
-  const qGen = new QueryGenerator<T>({
+  const qGen = new QueryGenerator({
     logger,
-    scope: "sub",
   });
 
   const { query } = qGen
     .where({ field: "cn", action: "substrings", criteria })
     .whereAnd({ field: "objectCategory", action: "equal", criteria: "group" })
-    .select(["displayName"]);
+    .select(["*"]);
 
   const data = await options.client.queryAttributes<T>({
     base: options.baseDN,
     attributes: options?.attributes ?? query.attributes,
     options: {
       filter: query.toString(),
-      scope: query.scope,
+      scope: "sub",
       paged: true,
     },
   });
@@ -43,9 +42,8 @@ export async function groupGetByDn<T = any>(
   options: GetGroupInputOptions<T>,
 ) {
   writeLog("groupGetByDn()", { level: "trace" });
-  const qGen = new QueryGenerator<T>({
+  const qGen = new QueryGenerator({
     logger,
-    scope: "sub",
   });
 
   const { query } = qGen
@@ -58,7 +56,7 @@ export async function groupGetByDn<T = any>(
     attributes: options?.attributes ?? query.attributes,
     options: {
       filter: query.toString(),
-      scope: query.scope,
+      scope: "sub",
       paged: true,
     },
   });
@@ -71,9 +69,8 @@ export async function groupGetAll<T = any>(
   options: GetGroupInputOptions<T>,
 ) {
   writeLog("findGroups()", { level: "trace" });
-  const qGen = new QueryGenerator<T>({
+  const qGen = new QueryGenerator({
     logger,
-    scope: "sub",
   });
 
   const { query } = qGen
@@ -86,7 +83,7 @@ export async function groupGetAll<T = any>(
     attributes: options?.attributes ?? query.attributes,
     options: {
       filter: query.toString(),
-      scope: query.scope,
+      scope: "sub",
       paged: true,
     },
   });
@@ -112,9 +109,8 @@ export async function userGetGroupMembership<T = any>(
     attributes: ["distinguishedName"],
   });
 
-  const qGen = new QueryGenerator<T>({
+  const qGen = new QueryGenerator({
     logger,
-    scope: "sub",
   });
 
   const { query } = qGen
@@ -131,7 +127,7 @@ export async function userGetGroupMembership<T = any>(
     attributes: attributes ?? query.attributes,
     options: {
       filter: query.toString(),
-      scope: query.scope,
+      scope: "sub",
     },
   });
   return data;

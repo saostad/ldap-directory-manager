@@ -15,9 +15,8 @@ export async function userGetOne<T = any>(
   options: GetUserInputOptions<T>,
 ) {
   writeLog("userGetOne()", { level: "trace" });
-  const qGen = new QueryGenerator<T>({
+  const qGen = new QueryGenerator({
     logger,
-    scope: "sub",
   });
 
   const { query } = qGen
@@ -37,7 +36,7 @@ export async function userGetOne<T = any>(
     attributes: options?.attributes ?? query.attributes,
     options: {
       filter: query.toString(),
-      scope: query.scope,
+      scope: "sub",
       paged: true,
     },
   });
@@ -51,9 +50,8 @@ export async function userGetAll<T = any>(
 ) {
   writeLog("usersGetAll()", { level: "trace" });
 
-  const qGen = new QueryGenerator<T>({
+  const qGen = new QueryGenerator({
     logger,
-    scope: "sub",
   });
 
   const { query } = qGen
@@ -73,7 +71,7 @@ export async function userGetAll<T = any>(
     attributes: options?.attributes ?? query.attributes,
     options: {
       filter: query.toString(),
-      scope: query.scope,
+      scope: "sub",
       paged: true,
     },
   });
@@ -87,9 +85,8 @@ export async function userGetByDn<T = any>(
   options: GetUserInputOptions<T>,
 ) {
   writeLog("userGetByDn()", { level: "trace" });
-  const qGen = new QueryGenerator<T>({
+  const qGen = new QueryGenerator({
     logger,
-    scope: "sub",
   });
 
   const { query } = qGen
@@ -109,7 +106,7 @@ export async function userGetByDn<T = any>(
     attributes: options?.attributes ?? query.attributes,
     options: {
       filter: query.toString(),
-      scope: query.scope,
+      scope: "sub",
       paged: true,
     },
   });
@@ -133,9 +130,8 @@ export async function groupGetMembers<T = any>(
     attributes: ["distinguishedName"],
   });
 
-  const qGen = new QueryGenerator<T>({
+  const qGen = new QueryGenerator({
     logger,
-    scope: "sub",
   });
 
   const { query } = qGen
@@ -159,7 +155,7 @@ export async function groupGetMembers<T = any>(
     attributes: attributes ?? query.attributes,
     options: {
       filter: query.toString(),
-      scope: query.scope,
+      scope: "sub",
       paged: true,
     },
   });
