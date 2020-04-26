@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&quot;services/user&quot; | ldap-studio</title>
-	<meta name="description" content="Documentation for ldap-studio">
+	<title>&quot;services/user&quot; | ldap-directory-manager</title>
+	<meta name="description" content="Documentation for ldap-directory-manager">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ldap-studio</a>
+					<a href="../index.html" class="title">ldap-directory-manager</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -98,7 +98,7 @@
 					<div class="tsd-signature tsd-kind-icon">Get<wbr>User<wbr>Input<wbr>Options&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>attributes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Extract</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>baseDN<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>client<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Client</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/9c61037/src/services/user.ts#L7">services/user.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/39c670b/src/services/user.ts#L7">services/user.ts:7</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -128,7 +128,7 @@
 					<div class="tsd-signature tsd-kind-icon">User<wbr>Update<wbr>FnInput&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>changes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ModifyChange</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>client<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Client</span><span class="tsd-signature-symbol">; </span>controls<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>dn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/9c61037/src/services/user.ts#L166">services/user.ts:166</a></li>
+							<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/39c670b/src/services/user.ts#L169">services/user.ts:169</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -168,7 +168,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/9c61037/src/services/user.ts#L117">services/user.ts:117</a></li>
+									<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/39c670b/src/services/user.ts#L120">services/user.ts:120</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -218,13 +218,19 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/9c61037/src/services/user.ts#L47">services/user.ts:47</a></li>
+									<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/39c670b/src/services/user.ts#L50">services/user.ts:50</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>search against UPN of users</p>
+									<ul>
+										<li>&quot;*&quot; from all users</li>
+									</ul>
+								</div>
 								<dl class="tsd-comment-tags">
-									<dt>description</dt>
-									<dd><p>return array of found users</p>
+									<dt>example</dt>
+									<dd><p><code>*@domain.com</code> for all users from domain.com in their UPN</p>
 									</dd>
 								</dl>
 							</div>
@@ -257,7 +263,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/9c61037/src/services/user.ts#L83">services/user.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/39c670b/src/services/user.ts#L86">services/user.ts:86</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -296,7 +302,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/9c61037/src/services/user.ts#L13">services/user.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/39c670b/src/services/user.ts#L13">services/user.ts:13</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -335,7 +341,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/9c61037/src/services/user.ts#L172">services/user.ts:172</a></li>
+									<li>Defined in <a href="https://github.com/saostad/ldap-studio/blob/39c670b/src/services/user.ts#L175">services/user.ts:175</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>

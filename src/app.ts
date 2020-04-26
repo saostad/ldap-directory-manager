@@ -11,7 +11,6 @@ import {
   groupGetAll,
   userGetGroupMembership,
   groupGetMembers,
-  QueryGenerator,
   groupGetByDn,
   userGetByDn,
 } from "./";

@@ -43,7 +43,10 @@ export async function userGetOne<T = any>(
   return data[0];
 }
 
-/** @description return array of found users */
+/** search against UPN of users
+ * - "*" from all users
+ * @example `*@domain.com` for all users from domain.com in their UPN
+ */
 export async function userGetAll<T = any>(
   criteria: string,
   options: GetUserInputOptions<T>,

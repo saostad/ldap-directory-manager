@@ -1,12 +1,12 @@
-# LDAP Studio
+# LDAP Directory Manager
 
-schema-aware, type-safe LDAP client, written in typescript to create hight-level functionalities using [ldap-ts-client](https://www.npmjs.com/package/ldap-ts-client)
+schema-aware, type-safe LDAP manager, written in typescript to create hight-level functionalities.
 
 ### How to ues
 
 ```ts
 import { Client, IClientConfig } from "ldap-ts-client";
-import { userFindOne } from "ldap-studio";
+import { userFindOne } from "ldap-directory-manager";
 
 const baseDN = "DC=Domain,DC=Com";
 
@@ -35,7 +35,7 @@ console.log(user);
 
 ### Api Documentations
 
-for full API documentation look at [API Website](https://saostad.github.io/ldap-studio/modules/_index_.html)
+for full API documentation look at [API Website](https://saostad.github.io/ldap-directory-manager/modules/_index_.html)
 
 ### Advance Uses
 

@@ -1,10 +1,10 @@
 {
-  "name": "ldap-studio",
-  "version": "0.5.2",
-  "description": "schema-aware, type-safe LDAP client, written in typescript to create hight-level functionalities",
+  "name": "ldap-directory-manager",
+  "version": "0.6.0",
+  "description": "schema-aware, type-safe LDAP manager, written in typescript to create hight-level functionalities",
   "repository": {
     "type": "git",
-    "url": "https://github.com/saostad/ldap-studio.git"
+    "url": "https://github.com/saostad/ldap-directory-manager.git"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -33,7 +33,8 @@
     "schema-aware",
     "client",
     "active",
-    "directory"
+    "directory",
+    "manager"
   ],
   "author": "Saeid Ostad",
   "license": "MIT",
