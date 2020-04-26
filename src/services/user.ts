@@ -7,7 +7,7 @@ import { parseDn } from "../helpers/utils";
 type GetUserInputOptions<T = any> = {
   client: Client;
   baseDN: string;
-  attributes: Array<keyof T>;
+  attributes: Array<Extract<keyof T, string>>;
 };
 /** @description return first found user */
 export async function userGetOne<T = any>(
