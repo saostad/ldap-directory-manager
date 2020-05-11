@@ -44,7 +44,7 @@ export async function userGetOne<T = any>(
 }
 
 /** search against UPN of users
- * - "*" from all users
+ * - ["*"] from all users
  * @example `*@domain.com` for all users from domain.com in their UPN
  */
 export async function userGetAll<T = any>(
