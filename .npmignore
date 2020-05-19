@@ -3,7 +3,7 @@
 *.log
 docs
 
-src/app.ts
+src
 dist/app.js
 dist/app.js.map
 dist/app.d.ts

@@ -93,7 +93,7 @@ export async function main() {
   });
   console.log(`File: app.ts,`, `Line: 56=> `, groupsMembers.length);
 
-  await userUpdate<User>({
+  const updatedUser = await userUpdate<User>({
     client,
     dn: "dc",
     changes: [
@@ -105,6 +105,7 @@ export async function main() {
       },
     ],
   });
+  console.log(`File: app.ts,`, `Line: 108 => `, updatedUser);
 
   await client.unbind();
 }
