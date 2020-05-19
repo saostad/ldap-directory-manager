@@ -172,13 +172,19 @@ type UserUpdateFnInput<T> = {
   controls?: any;
   changes: ModifyChange<T>[];
 };
-export function userUpdate<T>({
+export async function userUpdate<T>({
   dn,
   changes,
   controls,
   client,
 }: UserUpdateFnInput<T>) {
-  client.modifyAttribute({ dn: parseDn(dn), changes, controls });
+  const validatedDn = parseDn(dn);
+  await client.modifyAttribute({ dn: validatedDn, changes, controls });
+  return userGetByDn(validatedDn, {
+    client,
+    attributes: ["*"],
+    baseDN: client.baseDN,
+  });
 }
 
 // TODO userDelete

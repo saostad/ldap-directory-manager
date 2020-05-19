@@ -5,9 +5,7 @@ schema-aware, type-safe LDAP manager, written in typescript to create hight-leve
 ### How to ues
 
 ```ts
-import { Client, IClientConfig } from "ldap-ts-client";
-import { userFindOne } from "ldap-directory-manager";
-
+import { Client } from "ldap-directory-manager";
 const baseDN = "DC=Domain,DC=Com";
 
 const config: IClientConfig = {
@@ -16,17 +14,10 @@ const config: IClientConfig = {
   pass: process.env.AD_Pass ?? "",
   baseDN,
 };
-
 const client = new Client(config);
 
 const user = await userGetOne("username*", {
-  attributes: [
-    "displayName",
-    "userPrincipalName",
-    "adminDisplayName",
-    "assistant",
-    "manager",
-  ],
+  attributes: ["displayName", "userPrincipalName"],
   client,
   baseDN,
 });
@@ -43,7 +34,7 @@ generate typescript interfaces from ldap schema.
 (this is recommended just for first time and after each ldap schema modification)
 
 ```ts
-const config: IClientConfig = {
+const config = {
   ldapServerUrl: process.env.AD_URI ?? "",
   user: process.env.AD_USER ?? "",
   pass: process.env.AD_Pass ?? "",
@@ -58,10 +49,10 @@ const interfaceDirPath = await initial({
 
 auto complete and type check, base on ldap schema interfaces that generated at first time.
 
-Example 1 (using [ldap-ts-client](https://www.npmjs.com/package/ldap-ts-client))
+Example 1
 
 ```ts
-import { Client, IClientConfig } from "ldap-ts-client";
+import { Client } from "ldap-directory-manager";
 import { User } from "./generated/interfaces";
 
 const baseDN = "DC=Domain,DC=Com";
@@ -91,7 +82,7 @@ Example 2 (using [ldap-query-generator](https://www.npmjs.com/package/ldap-query
 
 ```ts
 import { QueryGenerator } from "ldap-query-generator";
-import { Client, IClientConfig } from "ldap-ts-client";
+import { Client } from "ldap-directory-manager";
 import { User } from "./generated/interfaces";
 
 const baseDN = "DC=Domain,DC=Com";
@@ -139,4 +130,3 @@ the goal of this package is to:
 
 - Provide High level functions to interact with LDAP servers
 - Taking advantage of typescript type safety and auto code competition
-- Provide unified solution for all ldap & typescript related tools
