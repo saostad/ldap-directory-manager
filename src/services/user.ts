@@ -182,9 +182,11 @@ export async function userUpdate<T>({
   controls,
   client,
 }: UserUpdateFnInput<T>) {
-  const validatedDn = parseDn(dn);
+  /**@step update user */
   await client.modifyAttribute({ dn, changes, controls });
-  return userGetByDn(validatedDn, {
+
+  /**@step return updated user */
+  return userGetByDn(dn, {
     client,
     attributes: ["*"],
     baseDN: client.baseDN,
