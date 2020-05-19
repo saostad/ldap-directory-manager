@@ -96,7 +96,7 @@
 					<div class="tsd-signature tsd-kind-icon">Get<wbr>Group<wbr>Input<wbr>Options&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>attributes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Extract</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>baseDN<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>client<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Client</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/e73dcde/src/services/group.ts#L7">services/group.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/d237760/src/services/group.ts#L7">services/group.ts:7</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -133,7 +133,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/e73dcde/src/services/group.ts#L67">services/group.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/d237760/src/services/group.ts#L65">services/group.ts:65</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -166,13 +166,13 @@
 					<a name="groupgetbydn" class="tsd-anchor"></a>
 					<h3>group<wbr>Get<wbr>ByDn</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">group<wbr>Get<wbr>ByDn&lt;T&gt;<span class="tsd-signature-symbol">(</span>dn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">: </span><a href="_services_group_.html#getgroupinputoptions" class="tsd-signature-type">GetGroupInputOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SearchEntryObject</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">group<wbr>Get<wbr>ByDn&lt;T&gt;<span class="tsd-signature-symbol">(</span>dn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Omit</span><span class="tsd-signature-symbol">&lt;</span><a href="_services_group_.html#getgroupinputoptions" class="tsd-signature-type">GetGroupInputOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"baseDN"</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SearchEntryObject</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/e73dcde/src/services/group.ts#L40">services/group.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/d237760/src/services/group.ts#L39">services/group.ts:39</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -187,7 +187,7 @@
 									<h5>dn: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>options: <a href="_services_group_.html#getgroupinputoptions" class="tsd-signature-type">GetGroupInputOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>options: <span class="tsd-signature-type">Omit</span><span class="tsd-signature-symbol">&lt;</span><a href="_services_group_.html#getgroupinputoptions" class="tsd-signature-type">GetGroupInputOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"baseDN"</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SearchEntryObject</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -204,7 +204,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/e73dcde/src/services/group.ts#L14">services/group.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/d237760/src/services/group.ts#L14">services/group.ts:14</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -243,7 +243,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/e73dcde/src/services/group.ts#L94">services/group.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/d237760/src/services/group.ts#L92">services/group.ts:92</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

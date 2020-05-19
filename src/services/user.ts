@@ -89,7 +89,7 @@ export async function userGetAll<T = any>(
 /** @description return first found user */
 export async function userGetByDn<T = any>(
   dn: string,
-  options: GetUserInputOptions<T>,
+  options: Omit<GetUserInputOptions<T>, "baseDN">,
 ) {
   writeLog("userGetByDn()", { level: "trace" });
   const qGen = new QueryGenerator({
@@ -97,8 +97,7 @@ export async function userGetByDn<T = any>(
   });
 
   const { query } = qGen
-    .where({ field: "dn", action: "equal", criteria: dn })
-    .whereAnd({ field: "objectClass", action: "equal", criteria: "user" })
+    .where({ field: "objectClass", action: "equal", criteria: "user" })
     .whereOr({ field: "objectClass", action: "equal", criteria: "person" })
     .whereNot({
       field: "objectClass",
@@ -109,11 +108,11 @@ export async function userGetByDn<T = any>(
     .select(["displayName", "userPrincipalName"]);
 
   const data = await options.client.queryAttributes<T>({
-    base: options.baseDN,
+    base: dn,
     attributes: options?.attributes ?? query.attributes,
     options: {
       filter: query.toString(),
-      scope: "sub",
+      scope: "base",
       paged: true,
     },
   });
@@ -176,6 +175,10 @@ type UserUpdateFnInput<T> = {
   controls?: any;
   changes: ModifyChange<T>[];
 };
+// TODO: add option for select return attributes instead of default "*"
+/** @description update user attributes
+ * @returns updated user
+ */
 export async function userUpdate<T>({
   dn,
   changes,
@@ -189,7 +192,6 @@ export async function userUpdate<T>({
   return userGetByDn(dn, {
     client,
     attributes: ["*"],
-    baseDN: client.baseDN,
   });
 }
 

@@ -36,10 +36,9 @@ export async function groupGetOne<T = any>(
   });
   return data[0];
 }
-
 export async function groupGetByDn<T = any>(
   dn: string,
-  options: GetGroupInputOptions<T>,
+  options: Omit<GetGroupInputOptions<T>, "baseDN">,
 ) {
   writeLog("groupGetByDn()", { level: "trace" });
   const qGen = new QueryGenerator({
@@ -47,16 +46,15 @@ export async function groupGetByDn<T = any>(
   });
 
   const { query } = qGen
-    .where({ field: "cn", action: "equal", criteria: dn })
-    .whereAnd({ field: "objectCategory", action: "equal", criteria: "group" })
+    .where({ field: "objectCategory", action: "equal", criteria: "group" })
     .select(["displayName"]);
 
   const data = await options.client.queryAttributes<T>({
-    base: options.baseDN,
+    base: dn,
     attributes: options?.attributes ?? query.attributes,
     options: {
       filter: query.toString(),
-      scope: "sub",
+      scope: "base",
       paged: true,
     },
   });

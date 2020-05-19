@@ -93,19 +93,28 @@ export async function main() {
   });
   console.log(`File: app.ts,`, `Line: 56=> `, groupsMembers.length);
 
-  const updatedUser = await userUpdate<User>({
-    client,
-    dn: "dc",
-    changes: [
-      {
-        operation: "add",
-        modification: {
-          mail: "user@domain.com",
-        },
-      },
-    ],
-  });
-  console.log(`File: app.ts,`, `Line: 108 => `, updatedUser);
+  const userDn = "CN=Ostad\\, Saeid,OU=Users,OU=KII,DC=ki,DC=local";
+  const userByDn = await userGetByDn(userDn, { client, attributes: ["*"] });
+  console.log(`File: app.ts,`, `Line: 98 => `, userByDn);
+
+  const groupDn =
+    "CN=KUSA_All_Knowbe4_Users,OU=KnowBe4,OU=Groups,DC=ki,DC=local";
+  const groupByDn = await groupGetByDn(groupDn, { client, attributes: ["*"] });
+  console.log(`File: app.ts,`, `Line: 102 => `, groupByDn);
+
+  // const updatedUser = await userUpdate<User>({
+  //   client,
+  //   dn: "dc",
+  //   changes: [
+  //     {
+  //       operation: "add",
+  //       modification: {
+  //         mail: "user@domain.com",
+  //       },
+  //     },
+  //   ],
+  // });
+  // console.log(`File: app.ts,`, `Line: 108 => `, updatedUser);
 
   await client.unbind();
 }
