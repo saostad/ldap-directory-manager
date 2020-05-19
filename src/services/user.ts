@@ -4,6 +4,10 @@ import type { Client, ModifyChange } from "ldap-ts-client";
 import { groupGetOne } from "./group";
 import { parseDn } from "../helpers/utils";
 
+/** // TODO
+ * - make baseDN optional because it already set on client
+ * - make attributes optional, if not provided return default attributes
+ */
 type GetUserInputOptions<T = any> = {
   client: Client;
   baseDN: string;
