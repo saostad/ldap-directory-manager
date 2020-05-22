@@ -130,5 +130,3 @@ export async function userGetGroupMembership<T = any>(
   });
   return data;
 }
-
-//TODO groupUpdate & groupDelete

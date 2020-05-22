@@ -91,6 +91,9 @@ export async function userGetByDn<T = any>(
   dn: string,
   options: Omit<GetUserInputOptions<T>, "baseDN">,
 ) {
+  /**@note dn is not an attribute. Only attribute types, OIDs, and names can be used in filters.
+   * When you get the manager attribute, to get the attributes for the DN that is the manager, use the value of the manager attribute as the base object in a search request. Set the scope of the search to BASE, the filter to either (&) or (objectClass=*) and request the attributes required. Then transmit than search request to the server and interpret the response. [source](https://stackoverflow.com/questions/17303967/ldap-filter-for-distinguishedname)
+   */
   writeLog("userGetByDn()", { level: "trace" });
   const qGen = new QueryGenerator({
     logger,
@@ -194,5 +197,3 @@ export async function userUpdate<T>({
     attributes: ["*"],
   });
 }
-
-// TODO userDelete
