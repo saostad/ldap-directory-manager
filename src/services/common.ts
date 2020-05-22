@@ -1,7 +1,7 @@
 /** // TODO: common functions (better to come from underlying library)
- * - deleteObject
- * - updateObject
- * - addObject
+ * - deleteEntry
+ * - updateEntry
+ * - addEntry
  * - modifyDn
  * - getByDn
  */
