@@ -1,6 +1,6 @@
 {
   "name": "ldap-directory-manager",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "schema-aware, type-safe LDAP manager, written in typescript to create hight-level functionalities",
   "repository": {
     "type": "git",

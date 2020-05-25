@@ -4,15 +4,13 @@ dotenv.config();
 import {
   version,
   initial,
-  userUpdate,
   userGetOne,
   userGetAll,
   groupGetOne,
   groupGetAll,
   userGetGroupMembership,
   groupGetMembers,
-  groupGetByDn,
-  userGetByDn,
+  userAdd,
 } from "./";
 
 import { createLogger, writeLog } from "fast-node-logger";
@@ -37,70 +35,78 @@ export async function main() {
   };
 
   /** generate typescript interfaces from ldap schema */
-  const interfaceDirPath = await initial({
-    generateInterfaces: true,
-    useCachedInterfaces: true,
-    ...config,
-  });
+  // const interfaceDirPath = await initial({
+  //   generateInterfaces: true,
+  //   useCachedInterfaces: true,
+  //   ...config,
+  // });
 
   const client = new Client(config);
 
-  const singleUser = await userGetOne<User>("sostad*", {
-    attributes: [
-      "displayName",
-      "userPrincipalName",
-      "adminDisplayName",
-      "assistant",
-      "manager",
-    ],
-    client,
-    baseDN,
-  });
-  console.log(`File: app.ts,`, `Line: 31 => `, singleUser);
+  // const singleUser = await userGetOne<User>("sostad*", {
+  //   attributes: [
+  //     "displayName",
+  //     "userPrincipalName",
+  //     "adminDisplayName",
+  //     "assistant",
+  //     "manager",
+  //   ],
+  //   client,
+  //   baseDN,
+  // });
+  // console.log(`File: app.ts,`, `Line: 31 => `, singleUser);
 
-  const allUsers = await userGetAll<User>("*@kajimausa.com", {
-    client,
-    baseDN,
-    attributes: ["displayName", "userPrincipalName"],
-  });
-  console.log(`File: app.ts,`, `Line: 36 => `, allUsers.length);
+  // const allUsers = await userGetAll<User>("*@kajimausa.com", {
+  //   client,
+  //   baseDN,
+  //   attributes: ["displayName", "userPrincipalName"],
+  // });
+  // console.log(`File: app.ts,`, `Line: 36 => `, allUsers.length);
 
-  const firstGroup = await groupGetOne("KUSA_VP_ACCESS", {
-    client,
-    baseDN,
-    attributes: ["cn"],
-  });
-  console.log(`File: app.ts,`, `Line: 41 => `, firstGroup);
+  // const firstGroup = await groupGetOne("KUSA_VP_ACCESS", {
+  //   client,
+  //   baseDN,
+  //   attributes: ["cn"],
+  // });
+  // console.log(`File: app.ts,`, `Line: 41 => `, firstGroup);
 
-  const groups = await groupGetAll("*KUSA*", {
-    client,
-    baseDN,
-    attributes: ["cn"],
-  });
-  console.log(`File: app.ts,`, `Line: 46 => `, groups.length);
+  // const groups = await groupGetAll("*KUSA*", {
+  //   client,
+  //   baseDN,
+  //   attributes: ["cn"],
+  // });
+  // console.log(`File: app.ts,`, `Line: 46 => `, groups.length);
 
-  const groupsOfUser = await userGetGroupMembership("sostad*", {
-    client,
-    baseDN,
-    attributes: ["cn"],
-  });
-  console.log(`File: app.ts,`, `Line: 51 => `, groupsOfUser.length);
+  // const groupsOfUser = await userGetGroupMembership("sostad*", {
+  //   client,
+  //   baseDN,
+  //   attributes: ["cn"],
+  // });
+  // console.log(`File: app.ts,`, `Line: 51 => `, groupsOfUser.length);
 
-  const groupsMembers = await groupGetMembers<Group>("KUSA_VP_ACCESS", {
-    client,
-    baseDN,
-    attributes: ["cn", "gidNumber"],
-  });
-  console.log(`File: app.ts,`, `Line: 56=> `, groupsMembers.length);
+  // const groupsMembers = await groupGetMembers<Group>("KUSA_VP_ACCESS", {
+  //   client,
+  //   baseDN,
+  //   attributes: ["cn", "gidNumber"],
+  // });
+  // console.log(`File: app.ts,`, `Line: 56=> `, groupsMembers.length);
 
-  const userDn = "CN=Ostad\\, Saeid,OU=Users,OU=KII,DC=ki,DC=local";
-  const userByDn = await userGetByDn(userDn, { client, attributes: ["*"] });
-  console.log(`File: app.ts,`, `Line: 98 => `, userByDn);
+  // const newUser = { company: "test" };
+  // const userAddResult = await userAdd<User>(newUser, {
+  //   client,
+  //   cn: "Test\\, User",
+  //   ou: "OU=Users,OU=KII,DC=ki,DC=local",
+  // });
+  // console.log(`File: app.ts,`, `Line: 100 => `, userAddResult);
 
-  const groupDn =
-    "CN=KUSA_All_Knowbe4_Users,OU=KnowBe4,OU=Groups,DC=ki,DC=local";
-  const groupByDn = await groupGetByDn(groupDn, { client, attributes: ["*"] });
-  console.log(`File: app.ts,`, `Line: 102 => `, groupByDn);
+  // const userDn = "CN=Ostad\\, Saeid,OU=Users,OU=KII,DC=ki,DC=local";
+  // const userByDn = await userGetByDn(userDn, { client, attributes: ["*"] });
+  // console.log(`File: app.ts,`, `Line: 98 => `, userByDn);
+
+  // const groupDn =
+  //   "CN=KUSA_All_Knowbe4_Users,OU=KnowBe4,OU=Groups,DC=ki,DC=local";
+  // const groupByDn = await groupGetByDn(groupDn, { client, attributes: ["*"] });
+  // console.log(`File: app.ts,`, `Line: 102 => `, groupByDn);
 
   // const updatedUser = await userUpdate<User>({
   //   client,

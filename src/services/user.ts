@@ -1,22 +1,21 @@
 import { writeLog, logToFile as logger } from "fast-node-logger";
 import { QueryGenerator } from "ldap-query-generator";
-import type { Client, ModifyChange } from "ldap-ts-client";
+import type { Client } from "ldap-ts-client";
 import { groupGetOne } from "./group";
 import { parseDn } from "../helpers/utils";
 
-/** // TODO
- * - make baseDN optional because it already set on client
- * - make attributes optional, if not provided return default attributes
- */
-type GetUserInputOptions<T = any> = {
+type GetUserInputOptions<User = any> = {
   client: Client;
-  baseDN: string;
-  attributes: Array<Extract<keyof T, string>>;
+  baseDN?: string;
+  attributes?: Array<Extract<keyof User, string>>;
 };
-/** @description return first found user */
-export async function userGetOne<T = any>(
+
+/** @description return first found user
+ * @note it search in userPrincipalName attribute, result can be multiple entry but it ignore those and just return first entry.
+ */
+export async function userGetOne<User = any>(
   criteria: string,
-  options: GetUserInputOptions<T>,
+  options: GetUserInputOptions<User>,
 ) {
   writeLog("userGetOne()", { level: "trace" });
   const qGen = new QueryGenerator({
@@ -35,7 +34,7 @@ export async function userGetOne<T = any>(
     .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
     .select(["displayName", "userPrincipalName"]);
 
-  const data = await options.client.queryAttributes<T>({
+  const data = await options.client.queryAttributes({
     base: options.baseDN,
     attributes: options?.attributes ?? query.attributes,
     options: {
@@ -51,9 +50,9 @@ export async function userGetOne<T = any>(
  * - ["*"] from all users
  * @example `*@domain.com` for all users from domain.com in their UPN
  */
-export async function userGetAll<T = any>(
+export async function userGetAll<User = any>(
   criteria: string,
-  options: GetUserInputOptions<T>,
+  options: GetUserInputOptions<User>,
 ) {
   writeLog("usersGetAll()", { level: "trace" });
 
@@ -73,7 +72,7 @@ export async function userGetAll<T = any>(
     .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
     .select(["displayName", "userPrincipalName"]);
 
-  const data = await options.client.queryAttributes<T>({
+  const data = await options.client.queryAttributes({
     base: options.baseDN,
     attributes: options?.attributes ?? query.attributes,
     options: {
@@ -86,46 +85,10 @@ export async function userGetAll<T = any>(
   return data;
 }
 
-/** @description return first found user */
-export async function userGetByDn<T = any>(
-  dn: string,
-  options: Omit<GetUserInputOptions<T>, "baseDN">,
-) {
-  /**@note dn is not an attribute. Only attribute types, OIDs, and names can be used in filters.
-   * When you get the manager attribute, to get the attributes for the DN that is the manager, use the value of the manager attribute as the base object in a search request. Set the scope of the search to BASE, the filter to either (&) or (objectClass=*) and request the attributes required. Then transmit than search request to the server and interpret the response. [source](https://stackoverflow.com/questions/17303967/ldap-filter-for-distinguishedname)
-   */
-  writeLog("userGetByDn()", { level: "trace" });
-  const qGen = new QueryGenerator({
-    logger,
-  });
-
-  const { query } = qGen
-    .where({ field: "objectClass", action: "equal", criteria: "user" })
-    .whereOr({ field: "objectClass", action: "equal", criteria: "person" })
-    .whereNot({
-      field: "objectClass",
-      action: "equal",
-      criteria: "computer",
-    })
-    .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
-    .select(["displayName", "userPrincipalName"]);
-
-  const data = await options.client.queryAttributes<T>({
-    base: dn,
-    attributes: options?.attributes ?? query.attributes,
-    options: {
-      filter: query.toString(),
-      scope: "base",
-      paged: true,
-    },
-  });
-  return data[0];
-}
-
 /** @description return array of found users that members of that group */
-export async function groupGetMembers<T = any>(
+export async function groupGetMembers<User = any>(
   criteria: string,
-  { attributes, client, baseDN }: GetUserInputOptions<T>,
+  { attributes, client, baseDN }: GetUserInputOptions<User>,
 ) {
   writeLog("groupGetMembers()", { level: "trace" });
 
@@ -159,7 +122,7 @@ export async function groupGetMembers<T = any>(
     .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
     .select(["displayName", "userPrincipalName"]);
 
-  const data = await client.queryAttributes<T>({
+  const data = await client.queryAttributes({
     base: baseDN,
     attributes: attributes ?? query.attributes,
     options: {
@@ -172,28 +135,40 @@ export async function groupGetMembers<T = any>(
   return data;
 }
 
-type UserUpdateFnInput<T> = {
+type UserAddFnOptions = {
+  /** DN of parent OU */
+  ou: string;
+  /** Full Name of user in format: 'LastName, FirstName' e.g. 'Doe, John' */
+  cn: string;
   client: Client;
-  dn: string;
-  controls?: any;
-  changes: ModifyChange<T>[];
 };
-// TODO: add option for select return attributes instead of default "*"
-/** @description update user attributes
- * @returns updated user
- */
-export async function userUpdate<T>({
-  dn,
-  changes,
-  controls,
-  client,
-}: UserUpdateFnInput<T>) {
-  /**@step update user */
-  await client.modifyAttribute({ dn, changes, controls });
+// TODO: use generic type User to auto-complete entry properties
+export async function userAdd<User = any>(
+  entry: { [key: string]: string | string[] },
+  { client, ou, cn }: UserAddFnOptions,
+) {
+  /**@step make sure objectClass is an array */
+  if (entry.objectClass) {
+    if (!Array.isArray(entry.objectClass)) {
+      entry.objectClass = [entry.objectClass];
+    }
+  } else {
+    entry.objectClass = [];
+  }
 
-  /**@step return updated user */
-  return userGetByDn(dn, {
-    client,
-    attributes: ["*"],
-  });
+  /**@step add necessary values for attribute objectClass */
+  if (!entry.objectClass.includes("top")) {
+    entry.objectClass.push("top");
+  }
+  if (!entry.objectClass.includes("person")) {
+    entry.objectClass.push("person");
+  }
+  if (!entry.objectClass.includes("organizationalPerson")) {
+    entry.objectClass.push("organizationalPerson");
+  }
+  if (!entry.objectClass.includes("user")) {
+    entry.objectClass.push("user");
+  }
+
+  return client.add({ entry, dn: `CN=${cn},${ou}` });
 }

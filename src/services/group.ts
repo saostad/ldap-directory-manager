@@ -6,8 +6,8 @@ import { parseDn } from "../helpers/utils";
 
 type GetGroupInputOptions<T> = {
   client: Client;
-  baseDN: string;
-  attributes: Array<Extract<keyof T, string>>;
+  baseDN?: string;
+  attributes?: Array<Extract<keyof T, string>>;
 };
 
 /** @description return first found group */
@@ -25,36 +25,12 @@ export async function groupGetOne<T = any>(
     .whereAnd({ field: "objectCategory", action: "equal", criteria: "group" })
     .select(["*"]);
 
-  const data = await options.client.queryAttributes<T>({
+  const data = await options.client.queryAttributes({
     base: options.baseDN,
     attributes: options?.attributes ?? query.attributes,
     options: {
       filter: query.toString(),
       scope: "sub",
-      paged: true,
-    },
-  });
-  return data[0];
-}
-export async function groupGetByDn<T = any>(
-  dn: string,
-  options: Omit<GetGroupInputOptions<T>, "baseDN">,
-) {
-  writeLog("groupGetByDn()", { level: "trace" });
-  const qGen = new QueryGenerator({
-    logger,
-  });
-
-  const { query } = qGen
-    .where({ field: "objectCategory", action: "equal", criteria: "group" })
-    .select(["displayName"]);
-
-  const data = await options.client.queryAttributes<T>({
-    base: dn,
-    attributes: options?.attributes ?? query.attributes,
-    options: {
-      filter: query.toString(),
-      scope: "base",
       paged: true,
     },
   });
@@ -76,7 +52,7 @@ export async function groupGetAll<T = any>(
     .whereAnd({ field: "objectCategory", action: "equal", criteria: "group" })
     .select(["displayName"]);
 
-  const data = await options.client.queryAttributes<T>({
+  const data = await options.client.queryAttributes({
     base: options.baseDN,
     attributes: options?.attributes ?? query.attributes,
     options: {
@@ -120,7 +96,7 @@ export async function userGetGroupMembership<T = any>(
     .whereAnd({ field: "objectClass", action: "equal", criteria: "group" })
     .select(["displayName"]);
 
-  const data = await client.queryAttributes<T>({
+  const data = await client.queryAttributes({
     base: baseDN,
     attributes: attributes ?? query.attributes,
     options: {
