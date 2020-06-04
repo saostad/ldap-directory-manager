@@ -2,7 +2,6 @@
 import dotenv from "dotenv";
 dotenv.config();
 import {
-  version,
   initial,
   userGetOne,
   userGetAll,
@@ -11,7 +10,8 @@ import {
   userGetGroupMembership,
   groupGetMembers,
   userAdd,
-} from "./";
+  adEntryCountryUpdate,
+} from "./index";
 
 import { createLogger, writeLog } from "fast-node-logger";
 import { Group, User } from "./generated/interfaces";
@@ -33,96 +33,117 @@ export async function main() {
     pass: process.env.AD_Pass ?? "",
     baseDN,
   };
-
-  /** generate typescript interfaces from ldap schema */
-  // const interfaceDirPath = await initial({
-  //   generateInterfaces: true,
-  //   useCachedInterfaces: true,
-  //   ...config,
-  // });
-
   const client = new Client(config);
+  try {
+    /** generate typescript interfaces from ldap schema */
+    await initial({
+      client,
+      options: {
+        generateInterfaces: false,
+        useCachedInterfaces: false,
+        generateCountryIsoCodes: false,
+        logger,
+      },
+    });
 
-  // const singleUser = await userGetOne<User>("sostad*", {
-  //   attributes: [
-  //     "displayName",
-  //     "userPrincipalName",
-  //     "adminDisplayName",
-  //     "assistant",
-  //     "manager",
-  //   ],
-  //   client,
-  //   baseDN,
-  // });
-  // console.log(`File: app.ts,`, `Line: 31 => `, singleUser);
+    const userDn = "CN=Ostad\\, Saeid,OU=Users,OU=KII,DC=ki,DC=local";
+    const updatedUser = await adEntryCountryUpdate({
+      dn: userDn,
+      client,
+      data: {
+        c: "US",
+        co: "United States of America",
+        countryCode: 840,
+      },
+    });
+    console.log(`File: app.ts,`, `Line: 59 => `, updatedUser);
 
-  // const allUsers = await userGetAll<User>("*@kajimausa.com", {
-  //   client,
-  //   baseDN,
-  //   attributes: ["displayName", "userPrincipalName"],
-  // });
-  // console.log(`File: app.ts,`, `Line: 36 => `, allUsers.length);
+    // const singleUser = await userGetOne<User>("sostad*", {
+    //   client,
+    //   baseDN,
+    //   attributes: [
+    //     "displayName",
+    //     "userPrincipalName",
+    //     "adminDisplayName",
+    //     "assistant",
+    //     "manager",
+    //     "c",
+    //     "co",
+    //     "countryCode",
+    //   ],
+    // });
+    // console.log(`File: app.ts,`, `Line: 31 => `, singleUser);
 
-  // const firstGroup = await groupGetOne("KUSA_VP_ACCESS", {
-  //   client,
-  //   baseDN,
-  //   attributes: ["cn"],
-  // });
-  // console.log(`File: app.ts,`, `Line: 41 => `, firstGroup);
+    // const allUsers = await userGetAll<User>("*@kajimausa.com", {
+    //   client,
+    //   baseDN,
+    //   attributes: ["displayName", "userPrincipalName"],
+    // });
+    // console.log(`File: app.ts,`, `Line: 36 => `, allUsers.length);
 
-  // const groups = await groupGetAll("*KUSA*", {
-  //   client,
-  //   baseDN,
-  //   attributes: ["cn"],
-  // });
-  // console.log(`File: app.ts,`, `Line: 46 => `, groups.length);
+    // const firstGroup = await groupGetOne("KUSA_VP_ACCESS", {
+    //   client,
+    //   baseDN,
+    //   attributes: ["cn"],
+    // });
+    // console.log(`File: app.ts,`, `Line: 41 => `, firstGroup);
 
-  // const groupsOfUser = await userGetGroupMembership("sostad*", {
-  //   client,
-  //   baseDN,
-  //   attributes: ["cn"],
-  // });
-  // console.log(`File: app.ts,`, `Line: 51 => `, groupsOfUser.length);
+    // const groups = await groupGetAll("*KUSA*", {
+    //   client,
+    //   baseDN,
+    //   attributes: ["cn"],
+    // });
+    // console.log(`File: app.ts,`, `Line: 46 => `, groups.length);
 
-  // const groupsMembers = await groupGetMembers<Group>("KUSA_VP_ACCESS", {
-  //   client,
-  //   baseDN,
-  //   attributes: ["cn", "gidNumber"],
-  // });
-  // console.log(`File: app.ts,`, `Line: 56=> `, groupsMembers.length);
+    // const groupsOfUser = await userGetGroupMembership("sostad*", {
+    //   client,
+    //   baseDN,
+    //   attributes: ["cn"],
+    // });
+    // console.log(`File: app.ts,`, `Line: 51 => `, groupsOfUser.length);
 
-  // const newUser = { company: "test" };
-  // const userAddResult = await userAdd<User>(newUser, {
-  //   client,
-  //   cn: "Test\\, User",
-  //   ou: "OU=Users,OU=KII,DC=ki,DC=local",
-  // });
-  // console.log(`File: app.ts,`, `Line: 100 => `, userAddResult);
+    // const groupsMembers = await groupGetMembers<Group>("KUSA_VP_ACCESS", {
+    //   client,
+    //   baseDN,
+    //   attributes: ["cn", "gidNumber"],
+    // });
+    // console.log(`File: app.ts,`, `Line: 56=> `, groupsMembers.length);
 
-  // const userDn = "CN=Ostad\\, Saeid,OU=Users,OU=KII,DC=ki,DC=local";
-  // const userByDn = await userGetByDn(userDn, { client, attributes: ["*"] });
-  // console.log(`File: app.ts,`, `Line: 98 => `, userByDn);
+    // const newUser = { company: "test" };
+    // const userAddResult = await userAdd<User>(newUser, {
+    //   client,
+    //   cn: "Test\\, User",
+    //   ou: "OU=Users,OU=KII,DC=ki,DC=local",
+    // });
+    // console.log(`File: app.ts,`, `Line: 100 => `, userAddResult);
 
-  // const groupDn =
-  //   "CN=KUSA_All_Knowbe4_Users,OU=KnowBe4,OU=Groups,DC=ki,DC=local";
-  // const groupByDn = await groupGetByDn(groupDn, { client, attributes: ["*"] });
-  // console.log(`File: app.ts,`, `Line: 102 => `, groupByDn);
+    // const userDn = "CN=Ostad\\, Saeid,OU=Users,OU=KII,DC=ki,DC=local";
+    // const userByDn = await userGetByDn(userDn, { client, attributes: ["*"] });
+    // console.log(`File: app.ts,`, `Line: 98 => `, userByDn);
 
-  // const updatedUser = await userUpdate<User>({
-  //   client,
-  //   dn: "dc",
-  //   changes: [
-  //     {
-  //       operation: "add",
-  //       modification: {
-  //         mail: "user@domain.com",
-  //       },
-  //     },
-  //   ],
-  // });
-  // console.log(`File: app.ts,`, `Line: 108 => `, updatedUser);
+    // const groupDn =
+    //   "CN=KUSA_All_Knowbe4_Users,OU=KnowBe4,OU=Groups,DC=ki,DC=local";
+    // const groupByDn = await groupGetByDn(groupDn, { client, attributes: ["*"] });
+    // console.log(`File: app.ts,`, `Line: 102 => `, groupByDn);
 
-  await client.unbind();
+    // const updatedUser = await userUpdate<User>({
+    //   client,
+    //   dn: "dc",
+    //   changes: [
+    //     {
+    //       operation: "add",
+    //       modification: {
+    //         mail: "user@domain.com",
+    //       },
+    //     },
+    //   ],
+    // });
+    // console.log(`File: app.ts,`, `Line: 108 => `, updatedUser);
+  } finally {
+    if (client.isConnected()) {
+      client.unbind();
+    }
+  }
 }
 
 main().catch((err: Error) => {

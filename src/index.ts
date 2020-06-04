@@ -2,8 +2,9 @@
 export { Client, IClientConfig, ModifyChange } from "ldap-ts-client";
 
 /** export from this library */
-export const version = require("../package.json").version;
+
 export { initial } from "./helpers/initial";
 export * from "./services/user";
 export * from "./services/group";
 export * from "./services/common";
+export * from "./services/ad-specific";

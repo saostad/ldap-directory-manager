@@ -2,15 +2,6 @@ import { Client, ModifyChange } from "ldap-ts-client";
 import { QueryGenerator } from "ldap-query-generator";
 import { writeLog, logToFile as logger } from "fast-node-logger";
 
-/** // TODO: common functions (better to come from underlying library)
- * - [x] deleteEntry
- * - [x] updateEntry
- * - [x] addEntry
- * - [x] modifyDn
- * - [x] getByDn
- */
-
-/** */
 type EntryGetByDnFnOptions<Entry = any> = {
   /** initialized client object */
   client: Client;
@@ -64,10 +55,11 @@ export async function entryUpdate<Entry = any>(
   await client.modifyAttribute({ dn, changes, controls });
 
   /**@step return updated entry */
-  return entryGetByDn(dn, {
+  const updatedEntry = await entryGetByDn(dn, {
     client,
     attributes: attributes ?? ["*"],
   });
+  return updatedEntry;
 }
 
 type EntryDeleteFnOptions = {

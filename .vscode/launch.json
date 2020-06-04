@@ -7,9 +7,10 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
-      "runtimeArgs": ["-r", "ts-node/register"],
-      "args": ["${workspaceFolder}/src/app.ts"]
+      "name": "Launch app.ts",
+      "program": "${workspaceFolder}\\src\\app.ts",
+      "preLaunchTask": "npm: tsc",
+      "outFiles": ["${workspaceFolder}\\dist\\**\\*.js"]
     }
   ]
 }
