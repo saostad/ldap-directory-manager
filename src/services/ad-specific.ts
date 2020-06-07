@@ -4,6 +4,7 @@ import { writeLog } from "fast-node-logger";
 import { entryUpdate } from "./common";
 import { Client } from "ldap-ts-client";
 import fs from "fs";
+import { promisify } from "util";
 import path from "path";
 import { variables } from "../helpers/variables";
 import {
@@ -44,30 +45,31 @@ export type CountryCodeAttributes = {
 
 /** check if file already exist, if not generate it. */
 async function makeSureJsonIsoFileExist(filePath: string): Promise<boolean> {
-  return new Promise((resolve) => {
-    fs.exists(filePath, (isFileExist) => {
-      if (!isFileExist) {
-        writeLog(`generating json file...`, { level: "info", stdout: true });
-        getCountryIsoCodes({ useCache: true }).then((countryCodes) => {
-          generateCountryIsoCodesFile({ countryCodes }).then(() => {
-            /** json code file generated! */
-            resolve(true);
-          });
-        });
-      }
-      resolve(true);
-    });
-  });
+  writeLog("makeSureJsonIsoFileExist()", { level: "trace" });
+
+  const exist = promisify(fs.exists);
+  const isFileExist = await exist(filePath);
+  if (!isFileExist) {
+    writeLog(`generating json file...`, { level: "info", stdout: true });
+    const countryCodes = await getCountryIsoCodes({ useCache: true });
+    generateCountryIsoCodesFile({ countryCodes });
+  }
+  return true;
 }
 
 async function countryCodeValidate(
   filePath: string,
   input: CountryCodeAttributes,
 ): Promise<boolean | undefined> {
+  writeLog(`countryCodeValidate()`, { level: "trace" });
   /**@step make sure file exist */
   const isExist = await makeSureJsonIsoFileExist(filePath);
+  // const isExist = true; // TODO delete me
   if (isExist) {
-    const rawData = await fs.promises.readFile(filePath, { encoding: "utf8" });
+    const rawData = await fs.promises.readFile(filePath, {
+      encoding: "utf8",
+      flag: "r",
+    });
     const processedData: CountryIsoCode[] = JSON.parse(rawData);
     const isValid = processedData.find((el) => {
       return (
@@ -77,6 +79,8 @@ async function countryCodeValidate(
       );
     });
     return !!isValid;
+  } else {
+    throw new Error(`error in reading file ${filePath}`);
   }
 }
 
@@ -104,8 +108,8 @@ export async function adEntryCountryUpdate({
   );
 
   /**@step validate input against iso-3166 country codes */
+
   const isValid = await countryCodeValidate(countryIsoCodesPath, data);
-  // const isValid = true;
 
   if (isValid) {
     const result = await entryUpdate(dn, {

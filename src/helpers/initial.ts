@@ -2,7 +2,6 @@ import {
   generateInterfaceFiles,
   getSchemaAttributes,
   getSchemaClasses,
-  getSchemaNamingContext,
   getCountryIsoCodes,
   generateCountryIsoCodesFile,
 } from "ldap-schema-ts-generator";
@@ -60,9 +59,7 @@ export async function initial({ client, options }: InitOptions) {
         objectAttributes,
         objectClasses,
         options: {
-          indexFile: true,
           outputFolder: variables.defaultInterfaceDir,
-          usePrettier: true,
         },
       });
     }

@@ -33,46 +33,47 @@ export async function main() {
     pass: process.env.AD_Pass ?? "",
     baseDN,
   };
+
   const client = new Client(config);
   try {
     /** generate typescript interfaces from ldap schema */
-    await initial({
-      client,
-      options: {
-        generateInterfaces: false,
-        useCachedInterfaces: false,
-        generateCountryIsoCodes: false,
-        logger,
-      },
-    });
-
-    const userDn = "CN=Ostad\\, Saeid,OU=Users,OU=KII,DC=ki,DC=local";
-    const updatedUser = await adEntryCountryUpdate({
-      dn: userDn,
-      client,
-      data: {
-        c: "US",
-        co: "United States of America",
-        countryCode: 840,
-      },
-    });
-    console.log(`File: app.ts,`, `Line: 59 => `, updatedUser);
-
-    // const singleUser = await userGetOne<User>("sostad*", {
+    // await initial({
     //   client,
-    //   baseDN,
-    //   attributes: [
-    //     "displayName",
-    //     "userPrincipalName",
-    //     "adminDisplayName",
-    //     "assistant",
-    //     "manager",
-    //     "c",
-    //     "co",
-    //     "countryCode",
-    //   ],
+    //   options: {
+    //     generateInterfaces: true,
+    //     useCachedInterfaces: true,
+    //     generateCountryIsoCodes: true,
+    //     logger,
+    //   },
     // });
-    // console.log(`File: app.ts,`, `Line: 31 => `, singleUser);
+
+    // const userDn = "CN=Ostad\\, Saeid,OU=Users,OU=KII,DC=ki,DC=local";
+    // const updatedUser = await adEntryCountryUpdate({
+    //   dn: userDn,
+    //   client,
+    //   data: {
+    //     c: "US",
+    //     co: "United States of America",
+    //     countryCode: 840,
+    //   },
+    // });
+    // console.log(`File: app.ts,`, `Line: 59 => `, updatedUser);
+
+    const singleUser = await userGetOne<User>("sostad*", {
+      client,
+      baseDN,
+      attributes: [
+        "displayName",
+        "userPrincipalName",
+        "adminDisplayName",
+        "assistant",
+        "manager",
+        "c",
+        "co",
+        "countryCode",
+      ],
+    });
+    console.log(`File: app.ts,`, `Line: 31 => `, singleUser);
 
     // const allUsers = await userGetAll<User>("*@kajimausa.com", {
     //   client,
@@ -140,8 +141,8 @@ export async function main() {
     // });
     // console.log(`File: app.ts,`, `Line: 108 => `, updatedUser);
   } finally {
-    if (client.isConnected()) {
-      client.unbind();
+    if (client.getConnectionStatus()) {
+      await client.unbind();
     }
   }
 }

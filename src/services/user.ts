@@ -34,11 +34,17 @@ export async function userGetOne<User = any>(
     .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
     .select(["displayName", "userPrincipalName"]);
 
+  console.log(`File: user.ts,`, `Line: 38 => `, query.toString());
+
+  const filter =
+    "&(userPrincipalName=sostad*)(&(objectClass=user))(|(objectClass=person))(!(objectClass=computer)(objectClass=group))";
+
   const data = await options.client.queryAttributes({
     base: options.baseDN,
     attributes: options?.attributes ?? query.attributes,
     options: {
       filter: query.toString(),
+      // filter,
       scope: "sub",
       paged: true,
     },

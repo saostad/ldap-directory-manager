@@ -52,14 +52,18 @@ export async function entryUpdate<Entry = any>(
 ) {
   writeLog("entryUpdate()", { level: "trace" });
   /**@step update entry */
-  await client.modifyAttribute({ dn, changes, controls });
+  const result = await client.modifyAttribute({ dn, changes, controls });
 
   /**@step return updated entry */
-  const updatedEntry = await entryGetByDn(dn, {
-    client,
-    attributes: attributes ?? ["*"],
-  });
-  return updatedEntry;
+  if (result) {
+    const updatedEntry = await entryGetByDn(dn, {
+      client,
+      attributes: attributes ?? ["*"],
+    });
+    return updatedEntry;
+  } else {
+    throw new Error(`something went wrong in updating attributes of entry.`);
+  }
 }
 
 type EntryDeleteFnOptions = {
