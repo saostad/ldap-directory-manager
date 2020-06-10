@@ -6,7 +6,7 @@ import { parseDn } from "../helpers/utils";
 
 type GetUserInputOptions<User = any> = {
   client: Client;
-  baseDN?: string;
+  baseDN: string;
   attributes?: Array<Extract<keyof User, string>>;
 };
 

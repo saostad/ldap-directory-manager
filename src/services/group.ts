@@ -6,7 +6,7 @@ import { parseDn } from "../helpers/utils";
 
 type GetGroupInputOptions<T> = {
   client: Client;
-  baseDN?: string;
+  baseDN: string;
   attributes?: Array<Extract<keyof T, string>>;
 };
 
