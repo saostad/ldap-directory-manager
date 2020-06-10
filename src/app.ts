@@ -26,7 +26,6 @@ export async function main() {
   });
 
   /** put your code below here */
-  const baseDN = "DC=ki,DC=local";
   const config: IClientConfig = {
     logger,
     ldapServerUrl: process.env.AD_URI ?? "",
@@ -61,7 +60,6 @@ export async function main() {
 
     const singleUser = await userGetOne<User>("sostad*", {
       client,
-      baseDN,
       attributes: [
         "displayName",
         "userPrincipalName",
@@ -77,35 +75,30 @@ export async function main() {
 
     const allUsers = await userGetAll<User>("*@kajimausa.com", {
       client,
-      baseDN,
       attributes: ["displayName", "userPrincipalName"],
     });
     console.log(`File: app.ts,`, `Line: 36 => `, allUsers.length);
 
     const firstGroup = await groupGetOne("KUSA_VP_ACCESS", {
       client,
-      baseDN,
       attributes: ["cn"],
     });
     console.log(`File: app.ts,`, `Line: 41 => `, firstGroup);
 
     const groups = await groupGetAll("*KUSA*", {
       client,
-      baseDN,
       attributes: ["cn"],
     });
     console.log(`File: app.ts,`, `Line: 46 => `, groups.length);
 
     const groupsOfUser = await userGetGroupMembership("sostad*", {
       client,
-      baseDN,
       attributes: ["cn"],
     });
     console.log(`File: app.ts,`, `Line: 51 => `, groupsOfUser.length);
 
     const groupsMembers = await groupGetMembers<Group>("KUSA_VP_ACCESS", {
       client,
-      baseDN,
       attributes: ["cn", "gidNumber"],
     });
     console.log(`File: app.ts,`, `Line: 56=> `, groupsMembers.length);

@@ -12,14 +12,12 @@ const config: IClientConfig = {
   ldapServerUrl: process.env.AD_URI ?? "",
   user: process.env.AD_USER ?? "",
   pass: process.env.AD_Pass ?? "",
-  baseDN,
 };
 const client = new Client(config);
 
 const user = await userGetOne("username*", {
   attributes: ["displayName", "userPrincipalName"],
   client,
-  baseDN,
 });
 console.log(user);
 ```
@@ -38,7 +36,6 @@ const config = {
   ldapServerUrl: process.env.AD_URI ?? "",
   user: process.env.AD_USER ?? "",
   pass: process.env.AD_Pass ?? "",
-  baseDN,
 };
 const interfaceDirPath = await initial({
   generateInterfaces: true,
@@ -60,7 +57,6 @@ const config: IClientConfig = {
   ldapServerUrl: process.env.AD_URI ?? "",
   user: process.env.AD_USER ?? "",
   pass: process.env.AD_Pass ?? "",
-  baseDN,
 };
 const client = new Client(config);
 
@@ -73,7 +69,6 @@ const user = await userGetOne<User>("username*", {
     "manager",
   ],
   client,
-  baseDN,
 });
 console.log(user);
 ```
@@ -90,7 +85,6 @@ const config: IClientConfig = {
   ldapServerUrl: process.env.AD_URI ?? "",
   user: process.env.AD_USER ?? "",
   pass: process.env.AD_Pass ?? "",
-  baseDN,
 };
 const client = new Client(config);
 

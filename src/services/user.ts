@@ -3,10 +3,11 @@ import { QueryGenerator } from "ldap-query-generator";
 import type { Client } from "ldap-ts-client";
 import { groupGetOne } from "./group";
 import { parseDn } from "../helpers/utils";
+import { getDefaultNamingContext } from "ldap-schema-ts-generator";
 
-type GetUserInputOptions<User = any> = {
+type GetUserInputConfigs<User = any> = {
   client: Client;
-  baseDN: string;
+  baseDn?: string;
   attributes?: Array<Extract<keyof User, string>>;
 };
 
@@ -15,9 +16,17 @@ type GetUserInputOptions<User = any> = {
  */
 export async function userGetOne<User = any>(
   criteria: string,
-  options: GetUserInputOptions<User>,
+  configs: GetUserInputConfigs<User>,
 ) {
   writeLog("userGetOne()", { level: "trace" });
+
+  let base: string;
+  if (configs.baseDn) {
+    base = configs.baseDn;
+  } else {
+    base = await getDefaultNamingContext({ client: configs.client });
+  }
+
   const qGen = new QueryGenerator({
     logger,
   });
@@ -34,17 +43,11 @@ export async function userGetOne<User = any>(
     .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
     .select(["displayName", "userPrincipalName"]);
 
-  console.log(`File: user.ts,`, `Line: 38 => `, query.toString());
-
-  const filter =
-    "&(userPrincipalName=sostad*)(&(objectClass=user))(|(objectClass=person))(!(objectClass=computer)(objectClass=group))";
-
-  const data = await options.client.queryAttributes({
-    base: options.baseDN,
-    attributes: options?.attributes ?? query.attributes,
+  const data = await configs.client.queryAttributes({
+    base,
+    attributes: configs?.attributes ?? query.attributes,
     options: {
       filter: query.toString(),
-      // filter,
       scope: "sub",
       paged: true,
     },
@@ -58,9 +61,16 @@ export async function userGetOne<User = any>(
  */
 export async function userGetAll<User = any>(
   criteria: string,
-  options: GetUserInputOptions<User>,
+  configs: GetUserInputConfigs<User>,
 ) {
   writeLog("usersGetAll()", { level: "trace" });
+
+  let base: string;
+  if (configs.baseDn) {
+    base = configs.baseDn;
+  } else {
+    base = await getDefaultNamingContext({ client: configs.client });
+  }
 
   const qGen = new QueryGenerator({
     logger,
@@ -78,9 +88,9 @@ export async function userGetAll<User = any>(
     .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
     .select(["displayName", "userPrincipalName"]);
 
-  const data = await options.client.queryAttributes({
-    base: options.baseDN,
-    attributes: options?.attributes ?? query.attributes,
+  const data = await configs.client.queryAttributes({
+    base,
+    attributes: configs?.attributes ?? query.attributes,
     options: {
       filter: query.toString(),
       scope: "sub",
@@ -94,17 +104,23 @@ export async function userGetAll<User = any>(
 /** @description return array of found users that members of that group */
 export async function groupGetMembers<User = any>(
   criteria: string,
-  { attributes, client, baseDN }: GetUserInputOptions<User>,
+  configs: GetUserInputConfigs<User>,
 ) {
   writeLog("groupGetMembers()", { level: "trace" });
 
+  let base: string;
+  if (configs.baseDn) {
+    base = configs.baseDn;
+  } else {
+    base = await getDefaultNamingContext({ client: configs.client });
+  }
   /**
    * 1. get group dn
    * 2. get all users that memberOf field has that dn
    */
   const group = await groupGetOne(criteria, {
-    baseDN,
-    client,
+    baseDn: base,
+    client: configs.client,
     attributes: ["distinguishedName"],
   });
 
@@ -128,9 +144,9 @@ export async function groupGetMembers<User = any>(
     .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
     .select(["displayName", "userPrincipalName"]);
 
-  const data = await client.queryAttributes({
-    base: baseDN,
-    attributes: attributes ?? query.attributes,
+  const data = await configs.client.queryAttributes({
+    base,
+    attributes: configs.attributes ?? query.attributes,
     options: {
       filter: query.toString(),
       scope: "sub",
@@ -141,7 +157,7 @@ export async function groupGetMembers<User = any>(
   return data;
 }
 
-type UserAddFnOptions = {
+type UserAddFnConfigs = {
   /** DN of parent OU */
   ou: string;
   /** Full Name of user in format: 'LastName, FirstName' e.g. 'Doe, John' */
@@ -151,7 +167,7 @@ type UserAddFnOptions = {
 // TODO: use generic type User to auto-complete entry properties
 export async function userAdd<User = any>(
   entry: { [key: string]: string | string[] },
-  { client, ou, cn }: UserAddFnOptions,
+  { client, ou, cn }: UserAddFnConfigs,
 ) {
   /**@step make sure objectClass is an array */
   if (entry.objectClass) {

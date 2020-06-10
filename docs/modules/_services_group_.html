@@ -73,7 +73,7 @@
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported"><a href="_services_group_.html#getgroupinputoptions" class="tsd-kind-icon">Get<wbr>Group<wbr>Input<wbr>Options</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported"><a href="_services_group_.html#getgroupinputconfigs" class="tsd-kind-icon">Get<wbr>Group<wbr>Input<wbr>Configs</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -90,12 +90,12 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 				<h2>Type aliases</h2>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
-					<a name="getgroupinputoptions" class="tsd-anchor"></a>
-					<h3>Get<wbr>Group<wbr>Input<wbr>Options</h3>
-					<div class="tsd-signature tsd-kind-icon">Get<wbr>Group<wbr>Input<wbr>Options&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>attributes<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Extract</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>baseDN<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>client<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Client</span><span class="tsd-signature-symbol"> }</span></div>
+					<a name="getgroupinputconfigs" class="tsd-anchor"></a>
+					<h3>Get<wbr>Group<wbr>Input<wbr>Configs</h3>
+					<div class="tsd-signature tsd-kind-icon">Get<wbr>Group<wbr>Input<wbr>Configs&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>attributes<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Extract</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>baseDn<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>client<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Client</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/4cce571/src/services/group.ts#L7">src/services/group.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/69ba944/src/services/group.ts#L8">src/services/group.ts:8</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -111,7 +111,7 @@
 								<h5><span class="tsd-flag ts-flagOptional">Optional</span> attributes<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Extract</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
 							</li>
 							<li class="tsd-parameter">
-								<h5>baseDN<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> base<wbr>Dn<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
 							</li>
 							<li class="tsd-parameter">
 								<h5>client<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Client</span></h5>
@@ -126,13 +126,13 @@
 					<a name="groupgetall" class="tsd-anchor"></a>
 					<h3>group<wbr>Get<wbr>All</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">group<wbr>Get<wbr>All&lt;T&gt;<span class="tsd-signature-symbol">(</span>criteria<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">: </span><a href="_services_group_.html#getgroupinputoptions" class="tsd-signature-type">GetGroupInputOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SearchEntryObject</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">group<wbr>Get<wbr>All&lt;T&gt;<span class="tsd-signature-symbol">(</span>criteria<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, configs<span class="tsd-signature-symbol">: </span><a href="_services_group_.html#getgroupinputconfigs" class="tsd-signature-type">GetGroupInputConfigs</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SearchEntryObject</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/4cce571/src/services/group.ts#L41">src/services/group.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/69ba944/src/services/group.ts#L50">src/services/group.ts:50</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -154,7 +154,7 @@
 									<h5>criteria: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>options: <a href="_services_group_.html#getgroupinputoptions" class="tsd-signature-type">GetGroupInputOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>configs: <a href="_services_group_.html#getgroupinputconfigs" class="tsd-signature-type">GetGroupInputConfigs</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SearchEntryObject</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -165,13 +165,13 @@
 					<a name="groupgetone" class="tsd-anchor"></a>
 					<h3>group<wbr>Get<wbr>One</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">group<wbr>Get<wbr>One&lt;T&gt;<span class="tsd-signature-symbol">(</span>criteria<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">: </span><a href="_services_group_.html#getgroupinputoptions" class="tsd-signature-type">GetGroupInputOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SearchEntryObject</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">group<wbr>Get<wbr>One&lt;T&gt;<span class="tsd-signature-symbol">(</span>criteria<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, configs<span class="tsd-signature-symbol">: </span><a href="_services_group_.html#getgroupinputconfigs" class="tsd-signature-type">GetGroupInputConfigs</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SearchEntryObject</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/4cce571/src/services/group.ts#L14">src/services/group.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/69ba944/src/services/group.ts#L15">src/services/group.ts:15</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -193,7 +193,7 @@
 									<h5>criteria: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>options: <a href="_services_group_.html#getgroupinputoptions" class="tsd-signature-type">GetGroupInputOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>configs: <a href="_services_group_.html#getgroupinputconfigs" class="tsd-signature-type">GetGroupInputConfigs</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SearchEntryObject</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -204,13 +204,13 @@
 					<a name="usergetgroupmembership" class="tsd-anchor"></a>
 					<h3>user<wbr>Get<wbr>Group<wbr>Membership</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">user<wbr>Get<wbr>Group<wbr>Membership&lt;T&gt;<span class="tsd-signature-symbol">(</span>criteria<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, __namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>attributes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">; </span>baseDN<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>client<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Client</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SearchEntryObject</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">user<wbr>Get<wbr>Group<wbr>Membership&lt;T&gt;<span class="tsd-signature-symbol">(</span>criteria<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, configs<span class="tsd-signature-symbol">: </span><a href="_services_group_.html#getgroupinputconfigs" class="tsd-signature-type">GetGroupInputConfigs</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SearchEntryObject</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/4cce571/src/services/group.ts#L68">src/services/group.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/69ba944/src/services/group.ts#L85">src/services/group.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -232,18 +232,7 @@
 									<h5>criteria: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>__namedParameters: <span class="tsd-signature-symbol">{ </span>attributes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">; </span>baseDN<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>client<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Client</span><span class="tsd-signature-symbol"> }</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter">
-											<h5>attributes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span></h5>
-										</li>
-										<li class="tsd-parameter">
-											<h5>baseDN<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-										</li>
-										<li class="tsd-parameter">
-											<h5>client<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Client</span></h5>
-										</li>
-									</ul>
+									<h5>configs: <a href="_services_group_.html#getgroupinputconfigs" class="tsd-signature-type">GetGroupInputConfigs</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SearchEntryObject</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -290,7 +279,7 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
-						<a href="_services_group_.html#getgroupinputoptions" class="tsd-kind-icon">Get<wbr>Group<wbr>Input<wbr>Options</a>
+						<a href="_services_group_.html#getgroupinputconfigs" class="tsd-kind-icon">Get<wbr>Group<wbr>Input<wbr>Configs</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_services_group_.html#groupgetall" class="tsd-kind-icon">group<wbr>Get<wbr>All</a>

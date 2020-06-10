@@ -3,19 +3,28 @@ import { QueryGenerator } from "ldap-query-generator";
 import { logToFile as logger, writeLog } from "fast-node-logger";
 import { userGetOne } from "./user";
 import { parseDn } from "../helpers/utils";
+import { getDefaultNamingContext } from "ldap-schema-ts-generator";
 
-type GetGroupInputOptions<T> = {
+type GetGroupInputConfigs<T> = {
   client: Client;
-  baseDN: string;
+  baseDn?: string;
   attributes?: Array<Extract<keyof T, string>>;
 };
 
 /** @description return first found group */
 export async function groupGetOne<T = any>(
   criteria: string,
-  options: GetGroupInputOptions<T>,
+  configs: GetGroupInputConfigs<T>,
 ) {
   writeLog("groupGetOne()", { level: "trace" });
+
+  let base: string;
+  if (configs.baseDn) {
+    base = configs.baseDn;
+  } else {
+    base = await getDefaultNamingContext({ client: configs.client });
+  }
+
   const qGen = new QueryGenerator({
     logger,
   });
@@ -25,9 +34,9 @@ export async function groupGetOne<T = any>(
     .whereAnd({ field: "objectCategory", action: "equal", criteria: "group" })
     .select(["*"]);
 
-  const data = await options.client.queryAttributes({
-    base: options.baseDN,
-    attributes: options?.attributes ?? query.attributes,
+  const data = await configs.client.queryAttributes({
+    base,
+    attributes: configs?.attributes ?? query.attributes,
     options: {
       filter: query.toString(),
       scope: "sub",
@@ -40,9 +49,17 @@ export async function groupGetOne<T = any>(
 /** @description return array of groups */
 export async function groupGetAll<T = any>(
   criteria: string,
-  options: GetGroupInputOptions<T>,
+  configs: GetGroupInputConfigs<T>,
 ) {
   writeLog("findGroups()", { level: "trace" });
+
+  let base: string;
+  if (configs.baseDn) {
+    base = configs.baseDn;
+  } else {
+    base = await getDefaultNamingContext({ client: configs.client });
+  }
+
   const qGen = new QueryGenerator({
     logger,
   });
@@ -52,9 +69,9 @@ export async function groupGetAll<T = any>(
     .whereAnd({ field: "objectCategory", action: "equal", criteria: "group" })
     .select(["displayName"]);
 
-  const data = await options.client.queryAttributes({
-    base: options.baseDN,
-    attributes: options?.attributes ?? query.attributes,
+  const data = await configs.client.queryAttributes({
+    base,
+    attributes: configs?.attributes ?? query.attributes,
     options: {
       filter: query.toString(),
       scope: "sub",
@@ -67,9 +84,16 @@ export async function groupGetAll<T = any>(
 /** @description return array of groups that username members */
 export async function userGetGroupMembership<T = any>(
   criteria: string,
-  { baseDN, client, attributes }: GetGroupInputOptions<T>,
+  configs: GetGroupInputConfigs<T>,
 ) {
   writeLog("userGetGroupMembership()", { level: "trace" });
+
+  let base: string;
+  if (configs.baseDn) {
+    base = configs.baseDn;
+  } else {
+    base = await getDefaultNamingContext({ client: configs.client });
+  }
 
   /** @step Plan:
    * 1. get user dn base on user upn
@@ -78,8 +102,8 @@ export async function userGetGroupMembership<T = any>(
 
   /** */
   const user = await userGetOne(criteria, {
-    baseDN,
-    client,
+    baseDn: base,
+    client: configs.client,
     attributes: ["distinguishedName"],
   });
 
@@ -96,9 +120,9 @@ export async function userGetGroupMembership<T = any>(
     .whereAnd({ field: "objectClass", action: "equal", criteria: "group" })
     .select(["displayName"]);
 
-  const data = await client.queryAttributes({
-    base: baseDN,
-    attributes: attributes ?? query.attributes,
+  const data = await configs.client.queryAttributes({
+    base,
+    attributes: configs.attributes ?? query.attributes,
     options: {
       filter: query.toString(),
       scope: "sub",
