@@ -77,12 +77,21 @@
 								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-is-not-exported"><a href="_services_user_.html#useraddfnconfigs" class="tsd-kind-icon">User<wbr>Add<wbr>FnConfigs</a></li>
 							</ul>
 						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="_services_user_.html#defaultuserattributes" class="tsd-kind-icon">default<wbr>User<wbr>Attributes</a></li>
+							</ul>
+						</section>
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_services_user_.html#groupgetmembers" class="tsd-kind-icon">group<wbr>Get<wbr>Members</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_services_user_.html#useradd" class="tsd-kind-icon">user<wbr>Add</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_services_user_.html#usergetall" class="tsd-kind-icon">user<wbr>Get<wbr>All</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_services_user_.html#usergetbyname" class="tsd-kind-icon">user<wbr>Get<wbr>ByName</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_services_user_.html#usergetbynameapproxmatch" class="tsd-kind-icon">user<wbr>Get<wbr>ByName<wbr>Approx<wbr>Match</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_services_user_.html#usergetbyusername" class="tsd-kind-icon">user<wbr>Get<wbr>ByUser<wbr>Name</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_services_user_.html#usergetone" class="tsd-kind-icon">user<wbr>Get<wbr>One</a></li>
 							</ul>
 						</section>
@@ -97,7 +106,7 @@
 					<div class="tsd-signature tsd-kind-icon">Get<wbr>User<wbr>Input<wbr>Configs&lt;User&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>attributes<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Extract</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">User</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>baseDn<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>client<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Client</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/69ba944/src/services/user.ts#L8">src/services/user.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/c9950e2/src/services/user.ts#L16">src/services/user.ts:16</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -127,7 +136,7 @@
 					<div class="tsd-signature tsd-kind-icon">User<wbr>Add<wbr>FnConfigs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>client<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Client</span><span class="tsd-signature-symbol">; </span>cn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>ou<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/69ba944/src/services/user.ts#L160">src/services/user.ts:160</a></li>
+							<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/c9950e2/src/services/user.ts#L168">src/services/user.ts:168</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -156,6 +165,19 @@
 					</div>
 				</section>
 			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="defaultuserattributes" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> default<wbr>User<wbr>Attributes</h3>
+					<div class="tsd-signature tsd-kind-icon">default<wbr>User<wbr>Attributes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [&quot;displayName&quot;,&quot;userPrincipalName&quot;,&quot;distinguishedName&quot;,&quot;cn&quot;,]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/c9950e2/src/services/user.ts#L9">src/services/user.ts:9</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
@@ -168,7 +190,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/69ba944/src/services/user.ts#L105">src/services/user.ts:105</a></li>
+									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/c9950e2/src/services/user.ts#L113">src/services/user.ts:113</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -207,7 +229,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/69ba944/src/services/user.ts#L168">src/services/user.ts:168</a></li>
+									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/c9950e2/src/services/user.ts#L176">src/services/user.ts:176</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -255,12 +277,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/69ba944/src/services/user.ts#L62">src/services/user.ts:62</a></li>
+									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/c9950e2/src/services/user.ts#L70">src/services/user.ts:70</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>search against UPN of users</p>
+									<p>search against &quot;userPrincipalName&quot; attribute of users</p>
 									<ul>
 										<li>[&quot;*&quot;] from all users</li>
 									</ul>
@@ -291,6 +313,122 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="usergetbyname" class="tsd-anchor"></a>
+					<h3>user<wbr>Get<wbr>ByName</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">user<wbr>Get<wbr>ByName&lt;User&gt;<span class="tsd-signature-symbol">(</span>cn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, configs<span class="tsd-signature-symbol">: </span><a href="_services_user_.html#getuserinputconfigs" class="tsd-signature-type">GetUserInputConfigs</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">User</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SearchEntryObject</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/c9950e2/src/services/user.ts#L254">src/services/user.ts:254</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>search against &quot;cn&quot; attribute of users</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>User</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>cn: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>configs: <a href="_services_user_.html#getuserinputconfigs" class="tsd-signature-type">GetUserInputConfigs</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">User</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SearchEntryObject</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="usergetbynameapproxmatch" class="tsd-anchor"></a>
+					<h3>user<wbr>Get<wbr>ByName<wbr>Approx<wbr>Match</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">user<wbr>Get<wbr>ByName<wbr>Approx<wbr>Match&lt;User&gt;<span class="tsd-signature-symbol">(</span>cn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, configs<span class="tsd-signature-symbol">: </span><a href="_services_user_.html#getuserinputconfigs" class="tsd-signature-type">GetUserInputConfigs</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">User</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/c9950e2/src/services/user.ts#L303">src/services/user.ts:303</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>fussy search against common name &quot;cn&quot; attribute of users</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>note</dt>
+									<dd><p>depend on number of users this can be slow process</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>User</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>cn: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>configs: <a href="_services_user_.html#getuserinputconfigs" class="tsd-signature-type">GetUserInputConfigs</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">User</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="usergetbyusername" class="tsd-anchor"></a>
+					<h3>user<wbr>Get<wbr>ByUser<wbr>Name</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">user<wbr>Get<wbr>ByUser<wbr>Name&lt;User&gt;<span class="tsd-signature-symbol">(</span>sAmAccountName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, configs<span class="tsd-signature-symbol">: </span><a href="_services_user_.html#getuserinputconfigs" class="tsd-signature-type">GetUserInputConfigs</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">User</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SearchEntryObject</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/c9950e2/src/services/user.ts#L207">src/services/user.ts:207</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>search against &quot;sAmAccountName&quot; attribute of users</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>User</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>sAmAccountName: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>configs: <a href="_services_user_.html#getuserinputconfigs" class="tsd-signature-type">GetUserInputConfigs</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">User</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SearchEntryObject</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 					<a name="usergetone" class="tsd-anchor"></a>
 					<h3>user<wbr>Get<wbr>One</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
@@ -300,7 +438,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/69ba944/src/services/user.ts#L17">src/services/user.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/saostad/ldap-directory-manager/blob/c9950e2/src/services/user.ts#L25">src/services/user.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -309,7 +447,7 @@
 									<dd><p>return first found user</p>
 									</dd>
 									<dt>note</dt>
-									<dd><p>it search in userPrincipalName attribute, result can be multiple entry but it ignore those and just return first entry.</p>
+									<dd><p>it search in &quot;userPrincipalName&quot; attribute, result can be multiple entry but it ignore those and just return first entry.</p>
 									</dd>
 								</dl>
 							</div>
@@ -377,6 +515,9 @@
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-is-not-exported">
 						<a href="_services_user_.html#useraddfnconfigs" class="tsd-kind-icon">User<wbr>Add<wbr>FnConfigs</a>
 					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_services_user_.html#defaultuserattributes" class="tsd-kind-icon">default<wbr>User<wbr>Attributes</a>
+					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_services_user_.html#groupgetmembers" class="tsd-kind-icon">group<wbr>Get<wbr>Members</a>
 					</li>
@@ -385,6 +526,15 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_services_user_.html#usergetall" class="tsd-kind-icon">user<wbr>Get<wbr>All</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="_services_user_.html#usergetbyname" class="tsd-kind-icon">user<wbr>Get<wbr>ByName</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="_services_user_.html#usergetbynameapproxmatch" class="tsd-kind-icon">user<wbr>Get<wbr>ByName<wbr>Approx<wbr>Match</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="_services_user_.html#usergetbyusername" class="tsd-kind-icon">user<wbr>Get<wbr>ByUser<wbr>Name</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_services_user_.html#usergetone" class="tsd-kind-icon">user<wbr>Get<wbr>One</a>
@@ -400,6 +550,7 @@
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
 				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>

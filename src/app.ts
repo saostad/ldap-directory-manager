@@ -12,6 +12,9 @@ import {
   userAdd,
   adEntryCountryUpdate,
   entryGetByDn,
+  userGetByUserName,
+  userGetByName,
+  userGetByNameApproxMatch,
 } from "./index";
 
 import { createLogger, writeLog } from "fast-node-logger";
@@ -46,62 +49,73 @@ export async function main() {
     //   },
     // });
 
-    const userDn = "CN=Ostad\\, Saeid,OU=Users,OU=KII,DC=ki,DC=local";
-    const updatedUser = await adEntryCountryUpdate({
-      dn: userDn,
-      client,
-      data: {
-        c: "US",
-        co: "United States of America",
-        countryCode: 840,
-      },
-    });
-    console.log(`File: app.ts,`, `Line: 59 => `, updatedUser);
+    // const userItem = await userGetByUserName("*s", { client });
+    // console.log(`File: app.ts,`, `Line: 51 => `, userItem);
 
-    const singleUser = await userGetOne<User>("sostad*", {
-      client,
-      attributes: [
-        "displayName",
-        "userPrincipalName",
-        "adminDisplayName",
-        "assistant",
-        "manager",
-        "c",
-        "co",
-        "countryCode",
-      ],
-    });
-    console.log(`File: app.ts,`, `Line: 31 => `, singleUser);
+    // const userItem2 = await userGetByName("Ostad*", { client });
+    // console.log(`File: app.ts,`, `Line: 55 => `, userItem2);
 
-    const allUsers = await userGetAll<User>("*@kajimausa.com", {
+    const userItem3 = await userGetByNameApproxMatch("Ostad Safied", {
       client,
-      attributes: ["displayName", "userPrincipalName"],
     });
-    console.log(`File: app.ts,`, `Line: 36 => `, allUsers.length);
+    console.log(`File: app.ts,`, `Line: 58 => `, userItem3);
 
-    const firstGroup = await groupGetOne("KUSA_VP_ACCESS", {
-      client,
-      attributes: ["cn"],
-    });
-    console.log(`File: app.ts,`, `Line: 41 => `, firstGroup);
+    // const userDn = "CN=Ostad\\, Saeid,OU=Users,OU=KII,DC=ki,DC=local";
+    // const updatedUser = await adEntryCountryUpdate({
+    //   dn: userDn,
+    //   client,
+    //   data: {
+    //     c: "US",
+    //     co: "United States of America",
+    //     countryCode: 840,
+    //   },
+    // });
+    // console.log(`File: app.ts,`, `Line: 59 => `, updatedUser);
 
-    const groups = await groupGetAll("*KUSA*", {
-      client,
-      attributes: ["cn"],
-    });
-    console.log(`File: app.ts,`, `Line: 46 => `, groups.length);
+    // const singleUser = await userGetOne<User>("sostad*", {
+    //   client,
+    //   attributes: [
+    //     "displayName",
+    //     "userPrincipalName",
+    //     "adminDisplayName",
+    //     "assistant",
+    //     "manager",
+    //     "c",
+    //     "co",
+    //     "countryCode",
+    //   ],
+    // });
+    // console.log(`File: app.ts,`, `Line: 31 => `, singleUser);
 
-    const groupsOfUser = await userGetGroupMembership("sostad*", {
-      client,
-      attributes: ["cn"],
-    });
-    console.log(`File: app.ts,`, `Line: 51 => `, groupsOfUser.length);
+    // const allUsers = await userGetAll<User>("*@kajimausa.com", {
+    //   client,
+    //   attributes: ["displayName", "userPrincipalName"],
+    // });
+    // console.log(`File: app.ts,`, `Line: 36 => `, allUsers.length);
 
-    const groupsMembers = await groupGetMembers<Group>("KUSA_VP_ACCESS", {
-      client,
-      attributes: ["cn", "gidNumber"],
-    });
-    console.log(`File: app.ts,`, `Line: 56=> `, groupsMembers.length);
+    // const firstGroup = await groupGetOne("KUSA_VP_ACCESS", {
+    //   client,
+    //   attributes: ["cn"],
+    // });
+    // console.log(`File: app.ts,`, `Line: 41 => `, firstGroup);
+
+    // const groups = await groupGetAll("*KUSA*", {
+    //   client,
+    //   attributes: ["cn"],
+    // });
+    // console.log(`File: app.ts,`, `Line: 46 => `, groups.length);
+
+    // const groupsOfUser = await userGetGroupMembership("sostad*", {
+    //   client,
+    //   attributes: ["cn"],
+    // });
+    // console.log(`File: app.ts,`, `Line: 51 => `, groupsOfUser.length);
+
+    // const groupsMembers = await groupGetMembers<Group>("KUSA_VP_ACCESS", {
+    //   client,
+    //   attributes: ["cn", "gidNumber"],
+    // });
+    // console.log(`File: app.ts,`, `Line: 56=> `, groupsMembers.length);
 
     // const newUser = { company: "test" };
     // const userAddResult = await userAdd<User>(newUser, {
@@ -111,16 +125,16 @@ export async function main() {
     // });
     // console.log(`File: app.ts,`, `Line: 100 => `, userAddResult);
 
-    const userByDn = await entryGetByDn(userDn, { client, attributes: ["*"] });
-    console.log(`File: app.ts,`, `Line: 98 => `, userByDn);
+    // const userByDn = await entryGetByDn(userDn, { client, attributes: ["*"] });
+    // console.log(`File: app.ts,`, `Line: 98 => `, userByDn);
 
-    const groupDn =
-      "CN=KUSA_All_Knowbe4_Users,OU=KnowBe4,OU=Groups,DC=ki,DC=local";
-    const groupByDn = await entryGetByDn(groupDn, {
-      client,
-      attributes: ["*"],
-    });
-    console.log(`File: app.ts,`, `Line: 102 => `, groupByDn);
+    // const groupDn =
+    //   "CN=KUSA_All_Knowbe4_Users,OU=KnowBe4,OU=Groups,DC=ki,DC=local";
+    // const groupByDn = await entryGetByDn(groupDn, {
+    //   client,
+    //   attributes: ["*"],
+    // });
+    // console.log(`File: app.ts,`, `Line: 102 => `, groupByDn);
 
     // const updatedUser = await userUpdate<User>({
     //   client,

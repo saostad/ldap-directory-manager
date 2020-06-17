@@ -1,9 +1,17 @@
 import { writeLog, logToFile as logger } from "fast-node-logger";
 import { QueryGenerator } from "ldap-query-generator";
-import type { Client } from "ldap-ts-client";
+import type { Client, SearchEntryObject } from "ldap-ts-client";
 import { groupGetOne } from "./group";
 import { parseDn } from "../helpers/utils";
 import { getDefaultNamingContext } from "ldap-schema-ts-generator";
+import Fuse from "fuse.js";
+
+const defaultUserAttributes = [
+  "displayName",
+  "userPrincipalName",
+  "distinguishedName",
+  "cn",
+];
 
 type GetUserInputConfigs<User = any> = {
   client: Client;
@@ -12,7 +20,7 @@ type GetUserInputConfigs<User = any> = {
 };
 
 /** @description return first found user
- * @note it search in userPrincipalName attribute, result can be multiple entry but it ignore those and just return first entry.
+ * @note it search in "userPrincipalName" attribute, result can be multiple entry but it ignore those and just return first entry.
  */
 export async function userGetOne<User = any>(
   criteria: string,
@@ -41,7 +49,7 @@ export async function userGetOne<User = any>(
       criteria: "computer",
     })
     .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
-    .select(["displayName", "userPrincipalName"]);
+    .select(defaultUserAttributes);
 
   const data = await configs.client.queryAttributes({
     base,
@@ -55,7 +63,7 @@ export async function userGetOne<User = any>(
   return data[0];
 }
 
-/** search against UPN of users
+/** search against "userPrincipalName" attribute of users
  * - ["*"] from all users
  * @example `*@domain.com` for all users from domain.com in their UPN
  */
@@ -86,7 +94,7 @@ export async function userGetAll<User = any>(
       criteria: "computer",
     })
     .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
-    .select(["displayName", "userPrincipalName"]);
+    .select(defaultUserAttributes);
 
   const data = await configs.client.queryAttributes({
     base,
@@ -142,7 +150,7 @@ export async function groupGetMembers<User = any>(
       criteria: "computer",
     })
     .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
-    .select(["displayName", "userPrincipalName"]);
+    .select(defaultUserAttributes);
 
   const data = await configs.client.queryAttributes({
     base,
@@ -193,4 +201,153 @@ export async function userAdd<User = any>(
   }
 
   return client.add({ entry, dn: `CN=${cn},${ou}` });
+}
+
+/** search against "sAmAccountName" attribute of users */
+export async function userGetByUserName<User = any>(
+  sAmAccountName: string,
+  configs: GetUserInputConfigs<User>,
+): Promise<SearchEntryObject[]> {
+  writeLog("userGetByUserName()", { level: "trace" });
+
+  let base: string;
+  if (configs.baseDn) {
+    base = configs.baseDn;
+  } else {
+    base = await getDefaultNamingContext({ client: configs.client });
+  }
+
+  const qGen = new QueryGenerator({
+    logger,
+  });
+
+  const { query } = qGen
+    .where({
+      field: "sAmAccountName",
+      action: "substrings",
+      criteria: sAmAccountName,
+    })
+    .whereAnd({ field: "objectClass", action: "equal", criteria: "user" })
+    .whereOr({ field: "objectClass", action: "equal", criteria: "person" })
+    .whereNot({
+      field: "objectClass",
+      action: "equal",
+      criteria: "computer",
+    })
+    .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
+    .select(defaultUserAttributes);
+
+  const data = await configs.client.queryAttributes({
+    base,
+    attributes: configs?.attributes ?? query.attributes,
+    options: {
+      filter: query.toString(),
+      scope: "sub",
+      paged: true,
+    },
+  });
+
+  return data;
+}
+
+/** search against "cn" attribute of users */
+export async function userGetByName<User = any>(
+  cn: string,
+  configs: GetUserInputConfigs<User>,
+): Promise<SearchEntryObject[]> {
+  writeLog("userGetByName()", { level: "trace" });
+
+  let base: string;
+  if (configs.baseDn) {
+    base = configs.baseDn;
+  } else {
+    base = await getDefaultNamingContext({ client: configs.client });
+  }
+
+  const qGen = new QueryGenerator({
+    logger,
+  });
+
+  const { query } = qGen
+    .where({
+      field: "cn",
+      action: "substrings",
+      criteria: cn,
+    })
+    .whereAnd({ field: "objectClass", action: "equal", criteria: "user" })
+    .whereOr({ field: "objectClass", action: "equal", criteria: "person" })
+    .whereNot({
+      field: "objectClass",
+      action: "equal",
+      criteria: "computer",
+    })
+    .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
+    .select(defaultUserAttributes);
+
+  const data = await configs.client.queryAttributes({
+    base,
+    attributes: configs?.attributes ?? query.attributes,
+    options: {
+      filter: query.toString(),
+      scope: "sub",
+      paged: true,
+    },
+  });
+
+  return data;
+}
+
+/** fussy search against common name "cn" attribute of users
+ * @note depend on number of users this can be slow process
+ */
+export async function userGetByNameApproxMatch<User = any>(
+  cn: string,
+  configs: GetUserInputConfigs<User>,
+) {
+  writeLog("userGetByName()", { level: "trace" });
+
+  let base: string;
+  if (configs.baseDn) {
+    base = configs.baseDn;
+  } else {
+    base = await getDefaultNamingContext({ client: configs.client });
+  }
+
+  const qGen = new QueryGenerator({
+    logger,
+  });
+
+  const { query } = qGen
+    .where({
+      field: "cn",
+      action: "present",
+      criteria: "",
+    })
+    .whereAnd({ field: "objectClass", action: "equal", criteria: "user" })
+    .whereOr({ field: "objectClass", action: "equal", criteria: "person" })
+    .whereNot({
+      field: "objectClass",
+      action: "equal",
+      criteria: "computer",
+    })
+    .whereNot({ field: "objectClass", action: "equal", criteria: "group" })
+    .select(defaultUserAttributes);
+
+  const data = await configs.client.queryAttributes({
+    base,
+    attributes: configs?.attributes ?? query.attributes,
+    options: {
+      filter: query.toString(),
+      scope: "sub",
+      paged: true,
+    },
+  });
+
+  /**@step fussy search */
+  const fuse = new Fuse(data, {
+    keys: ["cn"],
+  });
+
+  const result = fuse.search(cn).map((el) => ({ ...el.item }));
+  return result;
 }
