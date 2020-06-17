@@ -63,14 +63,19 @@ export async function userGetOne<User = any>(
   return data[0];
 }
 
+type UserGetAllFnInput<User> = {
+  criteria?: string;
+  configs: GetUserInputConfigs<User>;
+};
+
 /** search against "userPrincipalName" attribute of users
  * - ["*"] from all users
  * @example `*@domain.com` for all users from domain.com in their UPN
  */
-export async function userGetAll<User = any>(
-  criteria: string,
-  configs: GetUserInputConfigs<User>,
-) {
+export async function userGetAll<User = any>({
+  criteria,
+  configs,
+}: UserGetAllFnInput<User>) {
   writeLog("usersGetAll()", { level: "trace" });
 
   let base: string;
@@ -84,8 +89,13 @@ export async function userGetAll<User = any>(
     logger,
   });
 
+  /** if criteria not provided return all users */
   const { query } = qGen
-    .where({ field: "userPrincipalName", action: "substrings", criteria })
+    .where({
+      field: "userPrincipalName",
+      action: "substrings",
+      criteria: criteria ?? "*",
+    })
     .whereAnd({ field: "objectClass", action: "equal", criteria: "user" })
     .whereOr({ field: "objectClass", action: "equal", criteria: "person" })
     .whereNot({
