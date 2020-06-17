@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v0.13.1](https://github.com/saostad/ldap-directory-manager/compare/v0.13.0...v0.13.1)
+
+> 17 June 2020
+
+- package: fusejs updated [`42a1fc5`](https://github.com/saostad/ldap-directory-manager/commit/42a1fc54cf6a48b9ac389b92938293b7e050c49c)
+- doc: change log [`df7e07f`](https://github.com/saostad/ldap-directory-manager/commit/df7e07f21d34056f1a03e731b748bb44b0266301)
+
 #### [v0.13.0](https://github.com/saostad/ldap-directory-manager/compare/v0.12.0...v0.13.0)
 
 > 17 June 2020
