@@ -15,6 +15,7 @@ import {
   userGetByUserName,
   userGetByName,
   userGetByNameApproxMatch,
+  userAccountControlFlags,
 } from "./index";
 
 import { createLogger, writeLog } from "fast-node-logger";
@@ -49,16 +50,19 @@ export async function main() {
     //   },
     // });
 
+    const flags = userAccountControlFlags(66050);
+    console.log(`File: app.ts,`, `Line: 54 => `, flags);
+
     // const userItem = await userGetByUserName("*s", { client });
     // console.log(`File: app.ts,`, `Line: 51 => `, userItem);
 
     // const userItem2 = await userGetByName("Ostad*", { client });
     // console.log(`File: app.ts,`, `Line: 55 => `, userItem2);
 
-    const userItem3 = await userGetByNameApproxMatch("Ostad Safied", {
-      client,
-    });
-    console.log(`File: app.ts,`, `Line: 58 => `, userItem3);
+    // const userItem3 = await userGetByNameApproxMatch("Ostad Safied", {
+    //   client,
+    // });
+    // console.log(`File: app.ts,`, `Line: 58 => `, userItem3);
 
     // const userDn = "CN=Ostad\\, Saeid,OU=Users,OU=KII,DC=ki,DC=local";
     // const updatedUser = await adEntryCountryUpdate({
