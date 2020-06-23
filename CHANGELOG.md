@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v0.14.0](https://github.com/saostad/ldap-directory-manager/compare/v0.13.1...v0.14.0)
+
+> 23 June 2020
+
+- **Breaking change:** breaking: rename adEntryCountryCodeUpdate to entryCountryCodeUpdate [`f78a148`](https://github.com/saostad/ldap-directory-manager/commit/f78a148a1fa44579981add677033859148484fe2)
+- package: updated [`7e0e08b`](https://github.com/saostad/ldap-directory-manager/commit/7e0e08b4cdbeaf9d5993e0a2fec70067a65e6ae3)
+- feat: ad userAccountControlFlags added [`d5474cc`](https://github.com/saostad/ldap-directory-manager/commit/d5474ccfc2f8d00f9230e9e23571aeeb9c307629)
+
 #### [v0.13.1](https://github.com/saostad/ldap-directory-manager/compare/v0.13.0...v0.13.1)
 
 > 17 June 2020
