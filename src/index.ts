@@ -7,4 +7,4 @@ export { initial } from "./helpers/initial";
 export * from "./services/user";
 export * from "./services/group";
 export * from "./services/common";
-export * from "./services/ad-specific";
+export * from "./services/ad";

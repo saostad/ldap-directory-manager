@@ -10,12 +10,17 @@ import {
   userGetGroupMembership,
   groupGetMembers,
   userAdd,
-  adEntryCountryUpdate,
+  entryCountryUpdate,
   entryGetByDn,
   userGetByUserName,
   userGetByName,
   userGetByNameApproxMatch,
-  userAccountControlFlags,
+  userGetNotDisabled,
+  userGetDisabled,
+  userGetPasswordNeverExpires,
+  userGetPasswordNotRequired,
+  userGetLockedOut,
+  userGetByUserAccountControl,
 } from "./index";
 
 import { createLogger, writeLog } from "fast-node-logger";
@@ -50,20 +55,46 @@ export async function main() {
     //   },
     // });
 
-    const flags = userAccountControlFlags(66050);
-    console.log(`File: app.ts,`, `Line: 54 => `, flags);
+    // const activeUsers = await userGetNotDisabled({ configs: { client } });
+    // console.log(`File: app.ts,`, `Line: 54 => `, activeUsers.length);
+
+    // const disabledUsers = await userGetDisabled({
+    //   criteria: "*kcswest.com",
+    //   configs: { client },
+    // });
+    // console.log(`File: app.ts,`, `Line: 54 => `, disabledUsers.length);
+
+    // const passNeverExpireUsers = await userGetPasswordNeverExpire({
+    //   configs: { client },
+    // });
+    // console.log(`File: app.ts,`, `Line: 54 => `, passNeverExpireUsers.length);
+
+    // const lockedOutUsers = await userGetLockedOut({
+    //   criteria: "*",
+    //   configs: { client, criteriaAttribute: "cn" },
+    // });
+    // console.log(`File: app.ts,`, `Line: 54 => `, lockedOutUsers.length);
+
+    const userData = await userGetByUserAccountControl({
+      configs: { client },
+      accountControls: ["NORMAL_ACCOUNT", "ACCOUNTDISABLE"],
+      criteria: "*kbd.group",
+    });
+    console.log(`File: app.ts,`, `Line: 82 => `, userData);
+
+    // const passNotReqUsers = await userGetPasswordNotRequired({
+    //   configs: { client },
+    // });
+    // console.log(`File: app.ts,`, `Line: 54 => `, passNotReqUsers);
 
     // const userItem = await userGetByUserName("*s", { client });
     // console.log(`File: app.ts,`, `Line: 51 => `, userItem);
-
     // const userItem2 = await userGetByName("Ostad*", { client });
     // console.log(`File: app.ts,`, `Line: 55 => `, userItem2);
-
     // const userItem3 = await userGetByNameApproxMatch("Ostad Safied", {
     //   client,
     // });
     // console.log(`File: app.ts,`, `Line: 58 => `, userItem3);
-
     // const userDn = "CN=Ostad\\, Saeid,OU=Users,OU=KII,DC=ki,DC=local";
     // const updatedUser = await adEntryCountryUpdate({
     //   dn: userDn,
@@ -75,7 +106,6 @@ export async function main() {
     //   },
     // });
     // console.log(`File: app.ts,`, `Line: 59 => `, updatedUser);
-
     // const singleUser = await userGetOne<User>("sostad*", {
     //   client,
     //   attributes: [
@@ -90,37 +120,31 @@ export async function main() {
     //   ],
     // });
     // console.log(`File: app.ts,`, `Line: 31 => `, singleUser);
-
     // const allUsers = await userGetAll<User>("*@kajimausa.com", {
     //   client,
     //   attributes: ["displayName", "userPrincipalName"],
     // });
     // console.log(`File: app.ts,`, `Line: 36 => `, allUsers.length);
-
     // const firstGroup = await groupGetOne("KUSA_VP_ACCESS", {
     //   client,
     //   attributes: ["cn"],
     // });
     // console.log(`File: app.ts,`, `Line: 41 => `, firstGroup);
-
     // const groups = await groupGetAll("*KUSA*", {
     //   client,
     //   attributes: ["cn"],
     // });
     // console.log(`File: app.ts,`, `Line: 46 => `, groups.length);
-
     // const groupsOfUser = await userGetGroupMembership("sostad*", {
     //   client,
     //   attributes: ["cn"],
     // });
     // console.log(`File: app.ts,`, `Line: 51 => `, groupsOfUser.length);
-
     // const groupsMembers = await groupGetMembers<Group>("KUSA_VP_ACCESS", {
     //   client,
     //   attributes: ["cn", "gidNumber"],
     // });
     // console.log(`File: app.ts,`, `Line: 56=> `, groupsMembers.length);
-
     // const newUser = { company: "test" };
     // const userAddResult = await userAdd<User>(newUser, {
     //   client,
@@ -128,10 +152,8 @@ export async function main() {
     //   ou: "OU=Users,OU=KII,DC=ki,DC=local",
     // });
     // console.log(`File: app.ts,`, `Line: 100 => `, userAddResult);
-
     // const userByDn = await entryGetByDn(userDn, { client, attributes: ["*"] });
     // console.log(`File: app.ts,`, `Line: 98 => `, userByDn);
-
     // const groupDn =
     //   "CN=KUSA_All_Knowbe4_Users,OU=KnowBe4,OU=Groups,DC=ki,DC=local";
     // const groupByDn = await entryGetByDn(groupDn, {
@@ -139,7 +161,6 @@ export async function main() {
     //   attributes: ["*"],
     // });
     // console.log(`File: app.ts,`, `Line: 102 => `, groupByDn);
-
     // const updatedUser = await userUpdate<User>({
     //   client,
     //   dn: "dc",

@@ -1,17 +1,15 @@
-// active-directory specific functionalities
-
-import { writeLog } from "fast-node-logger";
-import { entryUpdate } from "./common";
+import { entryUpdate } from "../common";
 import { Client } from "ldap-ts-client";
 import fs from "fs";
 import { promisify } from "util";
 import path from "path";
-import { variables } from "../helpers/variables";
+import { variables } from "../../helpers/variables";
 import {
   generateCountryIsoCodesFile,
   getCountryIsoCodes,
   CountryIsoCode,
 } from "ldap-schema-ts-generator";
+import { writeLog } from "fast-node-logger";
 
 export type CountryCodeAttributes = {
   /**
@@ -84,7 +82,7 @@ async function countryCodeValidate(
   }
 }
 
-export type AdEntryCountryUpdateInput<Entry = any> = {
+export type EntryCountryUpdateInput<Entry = any> = {
   client: Client;
   dn: string;
   data: CountryCodeAttributes;
@@ -94,13 +92,13 @@ export type AdEntryCountryUpdateInput<Entry = any> = {
   };
 };
 
-export async function adEntryCountryUpdate({
+export async function entryCountryUpdate({
   dn,
   data,
   client,
   options,
-}: AdEntryCountryUpdateInput) {
-  writeLog("adEntryCountryUpdate()", { level: "trace" });
+}: EntryCountryUpdateInput) {
+  writeLog("entryCountryUpdate()", { level: "trace" });
 
   const countryIsoCodesPath = path.join(
     variables.defaultJsonDir,
