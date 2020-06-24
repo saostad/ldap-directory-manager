@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v0.15.0](https://github.com/saostad/ldap-directory-manager/compare/v0.14.1...v0.15.0)
+
+> 24 June 2020
+
+- **Breaking change:** breaking: criteria for getUser functions is optional now [`d40e950`](https://github.com/saostad/ldap-directory-manager/commit/d40e95027ac62121921024ff3bd4f12681c390f3)
+- doc: change log [`5c2c280`](https://github.com/saostad/ldap-directory-manager/commit/5c2c280478da9f2be73a8c600ac08fce01ba9e86)
+
 #### [v0.14.1](https://github.com/saostad/ldap-directory-manager/compare/v0.14.0...v0.14.1)
 
 > 23 June 2020
