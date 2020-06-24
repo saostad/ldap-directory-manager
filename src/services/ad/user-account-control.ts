@@ -171,34 +171,6 @@ export async function userGetPasswordNotRequired<User = any>({
   return data;
 }
 
-/** based on criteria return Cannot change password accounts respecting userAccountControl flags */
-export async function userGetCannotChangePassword<User = any>({
-  criteria,
-  configs,
-}: UserGetAllFnInput<User>) {
-  writeLog("userGetCannotChangePassword()", { level: "trace" });
-  const attributes = configs.attributes ?? defaultUserAttributes;
-  attributes.push("userAccountControl");
-
-  const users = await userGetAll({
-    criteria,
-    configs: {
-      ...configs,
-      attributes,
-    },
-  });
-  const data = users.filter((el) => {
-    const uac = el.userAccountControl;
-
-    const flags = analyseUserAccountControlFlags(Number(uac));
-    if (flags.includes("PASSWD_CANT_CHANGE")) {
-      return true;
-    }
-  });
-
-  return data;
-}
-
 /** based on criteria return user accounts required a home directory respecting userAccountControl flags */
 export async function userGetHomedirRequired<User = any>({
   criteria,
