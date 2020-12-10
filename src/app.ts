@@ -80,7 +80,7 @@ export async function main() {
       accountControls: ["NORMAL_ACCOUNT", "ACCOUNTDISABLE"],
       criteria: "*kbd.group",
     });
-    console.log(`File: app.ts,`, `Line: 82 => `, userData);
+    console.log(`File: app.ts,`, `Line: 82 => `, userData.length);
 
     // const passNotReqUsers = await userGetPasswordNotRequired({
     //   configs: { client },
