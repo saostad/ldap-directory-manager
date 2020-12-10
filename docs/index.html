@@ -71,18 +71,18 @@
 				<a href="#how-to-ues" id="how-to-ues" style="color: inherit; text-decoration: none;">
 					<h3>How to ues</h3>
 				</a>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Client } <span class="hljs-keyword">from</span> <span class="hljs-string">"ldap-directory-manager"</span>;
-<span class="hljs-keyword">const</span> baseDN = <span class="hljs-string">"DC=Domain,DC=Com"</span>;
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Client } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;ldap-directory-manager&quot;</span>;
+<span class="hljs-keyword">const</span> baseDN = <span class="hljs-string">&quot;DC=Domain,DC=Com&quot;</span>;
 
 <span class="hljs-keyword">const</span> config: IClientConfig = {
-  ldapServerUrl: process.env.AD_URI ?? <span class="hljs-string">""</span>,
-  user: process.env.AD_USER ?? <span class="hljs-string">""</span>,
-  pass: process.env.AD_Pass ?? <span class="hljs-string">""</span>,
+  <span class="hljs-attr">ldapServerUrl</span>: process.env.AD_URI ?? <span class="hljs-string">&quot;&quot;</span>,
+  <span class="hljs-attr">user</span>: process.env.AD_USER ?? <span class="hljs-string">&quot;&quot;</span>,
+  <span class="hljs-attr">pass</span>: process.env.AD_Pass ?? <span class="hljs-string">&quot;&quot;</span>,
 };
 <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client(config);
 
-<span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> userGetOne(<span class="hljs-string">"username*"</span>, {
-  attributes: [<span class="hljs-string">"displayName"</span>, <span class="hljs-string">"userPrincipalName"</span>],
+<span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> userGetOne(<span class="hljs-string">&quot;username*&quot;</span>, {
+  <span class="hljs-attr">attributes</span>: [<span class="hljs-string">&quot;displayName&quot;</span>, <span class="hljs-string">&quot;userPrincipalName&quot;</span>],
   client,
 });
 <span class="hljs-built_in">console</span>.log(user);</code></pre>
@@ -96,76 +96,76 @@
 				<p>generate typescript interfaces from ldap schema.
 				(this is recommended just for first time and after each ldap schema modification)</p>
 				<pre><code class="language-ts"><span class="hljs-keyword">const</span> config = {
-  ldapServerUrl: process.env.AD_URI ?? <span class="hljs-string">""</span>,
-  user: process.env.AD_USER ?? <span class="hljs-string">""</span>,
-  pass: process.env.AD_Pass ?? <span class="hljs-string">""</span>,
+  <span class="hljs-attr">ldapServerUrl</span>: process.env.AD_URI ?? <span class="hljs-string">&quot;&quot;</span>,
+  <span class="hljs-attr">user</span>: process.env.AD_USER ?? <span class="hljs-string">&quot;&quot;</span>,
+  <span class="hljs-attr">pass</span>: process.env.AD_Pass ?? <span class="hljs-string">&quot;&quot;</span>,
 };
 <span class="hljs-keyword">const</span> interfaceDirPath = <span class="hljs-keyword">await</span> initial({
-  generateInterfaces: <span class="hljs-literal">true</span>,
-  useCachedInterfaces: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">generateInterfaces</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">useCachedInterfaces</span>: <span class="hljs-literal">false</span>,
   ...config,
 });</code></pre>
 				<p>auto complete and type check, base on ldap schema interfaces that generated at first time.</p>
 				<p>Example 1</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Client } <span class="hljs-keyword">from</span> <span class="hljs-string">"ldap-directory-manager"</span>;
-<span class="hljs-keyword">import</span> { User } <span class="hljs-keyword">from</span> <span class="hljs-string">"./generated/interfaces"</span>;
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Client } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;ldap-directory-manager&quot;</span>;
+<span class="hljs-keyword">import</span> { User } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./generated/interfaces&quot;</span>;
 
-<span class="hljs-keyword">const</span> baseDN = <span class="hljs-string">"DC=Domain,DC=Com"</span>;
+<span class="hljs-keyword">const</span> baseDN = <span class="hljs-string">&quot;DC=Domain,DC=Com&quot;</span>;
 <span class="hljs-keyword">const</span> config: IClientConfig = {
-  ldapServerUrl: process.env.AD_URI ?? <span class="hljs-string">""</span>,
-  user: process.env.AD_USER ?? <span class="hljs-string">""</span>,
-  pass: process.env.AD_Pass ?? <span class="hljs-string">""</span>,
+  <span class="hljs-attr">ldapServerUrl</span>: process.env.AD_URI ?? <span class="hljs-string">&quot;&quot;</span>,
+  <span class="hljs-attr">user</span>: process.env.AD_USER ?? <span class="hljs-string">&quot;&quot;</span>,
+  <span class="hljs-attr">pass</span>: process.env.AD_Pass ?? <span class="hljs-string">&quot;&quot;</span>,
 };
 <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client(config);
 
-<span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> userGetOne&lt;User&gt;(<span class="hljs-string">"username*"</span>, {
-  attributes: [
-    <span class="hljs-string">"displayName"</span>,
-    <span class="hljs-string">"userPrincipalName"</span>,
-    <span class="hljs-string">"adminDisplayName"</span>,
-    <span class="hljs-string">"assistant"</span>,
-    <span class="hljs-string">"manager"</span>,
+<span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> userGetOne&lt;User&gt;(<span class="hljs-string">&quot;username*&quot;</span>, {
+  <span class="hljs-attr">attributes</span>: [
+    <span class="hljs-string">&quot;displayName&quot;</span>,
+    <span class="hljs-string">&quot;userPrincipalName&quot;</span>,
+    <span class="hljs-string">&quot;adminDisplayName&quot;</span>,
+    <span class="hljs-string">&quot;assistant&quot;</span>,
+    <span class="hljs-string">&quot;manager&quot;</span>,
   ],
   client,
 });
 <span class="hljs-built_in">console</span>.log(user);</code></pre>
 				<p>Example 2 (using <a href="https://www.npmjs.com/package/ldap-query-generator">ldap-query-generator</a> which will be install with package):</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { QueryGenerator } <span class="hljs-keyword">from</span> <span class="hljs-string">"ldap-query-generator"</span>;
-<span class="hljs-keyword">import</span> { Client } <span class="hljs-keyword">from</span> <span class="hljs-string">"ldap-directory-manager"</span>;
-<span class="hljs-keyword">import</span> { User } <span class="hljs-keyword">from</span> <span class="hljs-string">"./generated/interfaces"</span>;
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { QueryGenerator } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;ldap-query-generator&quot;</span>;
+<span class="hljs-keyword">import</span> { Client } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;ldap-directory-manager&quot;</span>;
+<span class="hljs-keyword">import</span> { User } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./generated/interfaces&quot;</span>;
 
-<span class="hljs-keyword">const</span> baseDN = <span class="hljs-string">"DC=Domain,DC=Com"</span>;
+<span class="hljs-keyword">const</span> baseDN = <span class="hljs-string">&quot;DC=Domain,DC=Com&quot;</span>;
 <span class="hljs-keyword">const</span> config: IClientConfig = {
-  ldapServerUrl: process.env.AD_URI ?? <span class="hljs-string">""</span>,
-  user: process.env.AD_USER ?? <span class="hljs-string">""</span>,
-  pass: process.env.AD_Pass ?? <span class="hljs-string">""</span>,
+  <span class="hljs-attr">ldapServerUrl</span>: process.env.AD_URI ?? <span class="hljs-string">&quot;&quot;</span>,
+  <span class="hljs-attr">user</span>: process.env.AD_USER ?? <span class="hljs-string">&quot;&quot;</span>,
+  <span class="hljs-attr">pass</span>: process.env.AD_Pass ?? <span class="hljs-string">&quot;&quot;</span>,
 };
 <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client(config);
 
 <span class="hljs-keyword">const</span> qGen = <span class="hljs-keyword">new</span> QueryGenerator&lt;User&gt;({
   logger,
-  scope: <span class="hljs-string">"sub"</span>,
+  <span class="hljs-attr">scope</span>: <span class="hljs-string">&quot;sub&quot;</span>,
 });
 
 <span class="hljs-keyword">const</span> { query } = qGen
-  .where({ field: <span class="hljs-string">"userPrincipalName"</span>, action: <span class="hljs-string">"substrings"</span>, criteria })
-  .whereAnd({ field: <span class="hljs-string">"objectClass"</span>, action: <span class="hljs-string">"equal"</span>, criteria: <span class="hljs-string">"user"</span> })
-  .whereOr({ field: <span class="hljs-string">"objectClass"</span>, action: <span class="hljs-string">"equal"</span>, criteria: <span class="hljs-string">"person"</span> })
+  .where({ <span class="hljs-attr">field</span>: <span class="hljs-string">&quot;userPrincipalName&quot;</span>, <span class="hljs-attr">action</span>: <span class="hljs-string">&quot;substrings&quot;</span>, criteria })
+  .whereAnd({ <span class="hljs-attr">field</span>: <span class="hljs-string">&quot;objectClass&quot;</span>, <span class="hljs-attr">action</span>: <span class="hljs-string">&quot;equal&quot;</span>, <span class="hljs-attr">criteria</span>: <span class="hljs-string">&quot;user&quot;</span> })
+  .whereOr({ <span class="hljs-attr">field</span>: <span class="hljs-string">&quot;objectClass&quot;</span>, <span class="hljs-attr">action</span>: <span class="hljs-string">&quot;equal&quot;</span>, <span class="hljs-attr">criteria</span>: <span class="hljs-string">&quot;person&quot;</span> })
   .whereNot({
-    field: <span class="hljs-string">"objectClass"</span>,
-    action: <span class="hljs-string">"equal"</span>,
-    criteria: <span class="hljs-string">"computer"</span>,
+    <span class="hljs-attr">field</span>: <span class="hljs-string">&quot;objectClass&quot;</span>,
+    <span class="hljs-attr">action</span>: <span class="hljs-string">&quot;equal&quot;</span>,
+    <span class="hljs-attr">criteria</span>: <span class="hljs-string">&quot;computer&quot;</span>,
   })
-  .whereNot({ field: <span class="hljs-string">"objectClass"</span>, action: <span class="hljs-string">"equal"</span>, criteria: <span class="hljs-string">"group"</span> })
-  .select([<span class="hljs-string">"displayName"</span>, <span class="hljs-string">"userPrincipalName"</span>]);
+  .whereNot({ <span class="hljs-attr">field</span>: <span class="hljs-string">&quot;objectClass&quot;</span>, <span class="hljs-attr">action</span>: <span class="hljs-string">&quot;equal&quot;</span>, <span class="hljs-attr">criteria</span>: <span class="hljs-string">&quot;group&quot;</span> })
+  .select([<span class="hljs-string">&quot;displayName&quot;</span>, <span class="hljs-string">&quot;userPrincipalName&quot;</span>]);
 
 <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> client.queryAttributes&lt;User&gt;({
-  base: baseDN,
-  attributes: query.attributes,
-  options: {
-    filter: query.toString(),
-    scope: query.scope,
-    paged: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">base</span>: baseDN,
+  <span class="hljs-attr">attributes</span>: query.attributes,
+  <span class="hljs-attr">options</span>: {
+    <span class="hljs-attr">filter</span>: query.toString(),
+    <span class="hljs-attr">scope</span>: query.scope,
+    <span class="hljs-attr">paged</span>: <span class="hljs-literal">true</span>,
   },
 });</code></pre>
 				<a href="#motivations" id="motivations" style="color: inherit; text-decoration: none;">
@@ -185,38 +185,41 @@
 					<li class="globals  ">
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_helpers_initial_.html">&quot;helpers/initial&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_helpers_utils_.html">&quot;helpers/utils&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_helpers_variables_.html">&quot;helpers/variables&quot;</a>
+					<li class="label tsd-is-external">
+						<span>Internals</span>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/_index_.html">&quot;index&quot;</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class="label tsd-is-external">
+						<span>Externals</span>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_helpers_initial_.html">&quot;helpers/initial&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_helpers_utils_.html">&quot;helpers/utils&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_helpers_variables_.html">&quot;helpers/variables&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_services_ad_country_code_.html">&quot;services/ad/country-<wbr>code&quot;</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_services_ad_index_.html">&quot;services/ad/index&quot;</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_services_ad_user_account_control_.html">&quot;services/ad/user-<wbr>account-<wbr>control&quot;</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_services_common_.html">&quot;services/common&quot;</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_services_group_.html">&quot;services/group&quot;</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_services_user_.html">&quot;services/user&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_typings_general_entry_.html">&quot;typings/general-<wbr>entry&quot;</a>
 					</li>
 				</ul>
 			</nav>
@@ -231,17 +234,6 @@
 	<div class="container">
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-			</ul>
 		</div>
 	</div>
 </footer>
@@ -250,6 +242,5 @@
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
