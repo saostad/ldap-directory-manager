@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v0.16.0](https://github.com/saostad/ldap-directory-manager/compare/v0.15.1...v0.16.0)
+
+> 28 December 2020
+
+- feat: added queries for computer objects [`5e80efd`](https://github.com/saostad/ldap-directory-manager/commit/5e80efd07c42459cf961630176695c12cbb5c25b)
+- doc: change log [`fc32f8c`](https://github.com/saostad/ldap-directory-manager/commit/fc32f8c1d5cb62a229a3e39990f8b8a3bf9b910f)
+
 #### [v0.15.1](https://github.com/saostad/ldap-directory-manager/compare/v0.15.0...v0.15.1)
 
 > 10 December 2020
