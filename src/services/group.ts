@@ -7,6 +7,9 @@ import { getDefaultNamingContext } from "ldap-schema-ts-generator";
 
 type GetGroupInputConfigs<T> = {
   client: Client;
+  /**A base dn is the point from where a server will search for.
+   * default is DefaultNamingContext defined in schema
+   */
   baseDn?: string;
   attributes?: Array<Extract<keyof T, string>>;
 };
@@ -51,7 +54,7 @@ export async function groupGetAll<T = any>(
   criteria: string,
   configs: GetGroupInputConfigs<T>,
 ) {
-  writeLog("findGroups()", { level: "trace" });
+  writeLog("groupGetAll()", { level: "trace" });
 
   let base: string;
   if (configs.baseDn) {
@@ -65,7 +68,7 @@ export async function groupGetAll<T = any>(
   });
 
   const { query } = qGen
-    .where({ field: "cn", action: "substrings", criteria: criteria ?? "dn=*" })
+    .where({ field: "cn", action: "substrings", criteria: criteria ?? "*" })
     .whereAnd({ field: "objectCategory", action: "equal", criteria: "group" })
     .select(["displayName"]);
 

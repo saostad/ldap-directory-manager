@@ -8,3 +8,4 @@ export * from "./services/user";
 export * from "./services/group";
 export * from "./services/common";
 export * from "./services/ad";
+export * from "./services/computer";

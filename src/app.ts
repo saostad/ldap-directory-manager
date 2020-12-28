@@ -21,6 +21,8 @@ import {
   userGetPasswordNotRequired,
   userGetLockedOut,
   userGetByUserAccountControl,
+  computerGetAll,
+  computerGetDisabled,
 } from "./index";
 
 import { createLogger, writeLog } from "fast-node-logger";
@@ -54,39 +56,42 @@ export async function main() {
     //     logger,
     //   },
     // });
-
     // const activeUsers = await userGetNotDisabled({ configs: { client } });
     // console.log(`File: app.ts,`, `Line: 54 => `, activeUsers.length);
-
     // const disabledUsers = await userGetDisabled({
     //   criteria: "*kcswest.com",
     //   configs: { client },
     // });
     // console.log(`File: app.ts,`, `Line: 54 => `, disabledUsers.length);
-
     // const passNeverExpireUsers = await userGetPasswordNeverExpire({
     //   configs: { client },
     // });
     // console.log(`File: app.ts,`, `Line: 54 => `, passNeverExpireUsers.length);
-
     // const lockedOutUsers = await userGetLockedOut({
     //   criteria: "*",
     //   configs: { client, criteriaAttribute: "cn" },
     // });
     // console.log(`File: app.ts,`, `Line: 54 => `, lockedOutUsers.length);
-
-    const userData = await userGetByUserAccountControl({
-      configs: { client },
-      accountControls: ["NORMAL_ACCOUNT", "ACCOUNTDISABLE"],
-      criteria: "*kbd.group",
-    });
-    console.log(`File: app.ts,`, `Line: 82 => `, userData.length);
-
+    // const computerData = await computerGetDisabled({
+    //   client,
+    //   attributes: ["*"],
+    // });
+    // console.log(`File: app.ts,`, `Line: 82 => `, computerData.length);
+    // const computerData = await computerGetAll({
+    //   configs: { client, attributes: ["*"] },
+    //   criteria: "kiisel002",
+    // });
+    // console.log(`File: app.ts,`, `Line: 82 => `, computerData[0]);
+    // const userData = await userGetByUserAccountControl({
+    //   configs: { client },
+    //   accountControls: ["NORMAL_ACCOUNT", "ACCOUNTDISABLE"],
+    //   criteria: "*kbd.group",
+    // });
+    // console.log(`File: app.ts,`, `Line: 82 => `, userData.length);
     // const passNotReqUsers = await userGetPasswordNotRequired({
     //   configs: { client },
     // });
     // console.log(`File: app.ts,`, `Line: 54 => `, passNotReqUsers);
-
     // const userItem = await userGetByUserName("*s", { client });
     // console.log(`File: app.ts,`, `Line: 51 => `, userItem);
     // const userItem2 = await userGetByName("Ostad*", { client });
