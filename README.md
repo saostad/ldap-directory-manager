@@ -5,7 +5,7 @@ schema-aware, type-safe LDAP manager, written in typescript to create hight-leve
 ### How to ues
 
 ```ts
-import { Client } from "ldap-directory-manager";
+import { Client, IClientConfig } from "ldap-directory-manager";
 const baseDN = "DC=Domain,DC=Com";
 
 const config: IClientConfig = {
