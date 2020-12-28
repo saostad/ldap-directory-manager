@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v0.16.1](https://github.com/saostad/ldap-directory-manager/compare/v0.16.0...v0.16.1)
+
+> 28 December 2020
+
+- doc: improved readme [`039d7ea`](https://github.com/saostad/ldap-directory-manager/commit/039d7eace33dcb652f6b64b96e01b7a79a408cbd)
+- doc: change log [`45bfccb`](https://github.com/saostad/ldap-directory-manager/commit/45bfccb056df9995b05e49c45dbd019ec96120d8)
+
 #### [v0.16.0](https://github.com/saostad/ldap-directory-manager/compare/v0.15.1...v0.16.0)
 
 > 28 December 2020
