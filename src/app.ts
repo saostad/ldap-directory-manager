@@ -45,19 +45,20 @@ export async function main() {
   };
 
   const client = new Client(config);
+
   try {
     /** generate typescript interfaces from ldap schema */
-    // await initial({
-    //   client,
-    //   options: {
-    //     generateInterfaces: true,
-    //     useCachedInterfaces: true,
-    //     generateCountryIsoCodes: true,
-    //     logger,
-    //   },
-    // });
-    // const activeUsers = await userGetNotDisabled({ configs: { client } });
-    // console.log(`File: app.ts,`, `Line: 54 => `, activeUsers.length);
+    await initial({
+      client,
+      options: {
+        generateInterfaces: true,
+        useCachedInterfaces: true,
+        generateCountryIsoCodes: true,
+        logger,
+      },
+    });
+    const activeUsers = await userGetNotDisabled({ configs: { client } });
+    console.log(`File: app.ts,`, `Line: 54 => `, activeUsers.length);
     // const disabledUsers = await userGetDisabled({
     //   criteria: "*kcswest.com",
     //   configs: { client },
@@ -182,6 +183,16 @@ export async function main() {
   } finally {
     if (client.getConnectionStatus()) {
       await client.unbind();
+      await client.destroy();
+      console.log(`connection closed.`);
+      console.log(
+        `File: app.ts,`,
+        `Line: 187 => `,
+        // @ts-expect-error
+        process._getActiveHandles(),
+        // @ts-expect-error
+        process._getActiveRequests(),
+      );
     }
   }
 }
