@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v0.16.3](https://github.com/saostad/ldap-directory-manager/compare/v0.16.2...v0.16.3)
+
+> 11 July 2022
+
+- pkg: updated [`7d12efd`](https://github.com/saostad/ldap-directory-manager/commit/7d12efd0744b14d8a9a931fe360c4090e73a0726)
+- doc: change log [`44a1221`](https://github.com/saostad/ldap-directory-manager/commit/44a12214859d6e739e14c2b049ad3a8520ce5beb)
+
 #### [v0.16.2](https://github.com/saostad/ldap-directory-manager/compare/v0.16.1...v0.16.2)
 
 > 2 March 2021
