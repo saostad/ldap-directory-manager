@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v0.16.4](https://github.com/saostad/ldap-directory-manager/compare/v0.16.3...v0.16.4)
+
+> 14 July 2022
+
+- fix: input type for groupGetAll function [`042db20`](https://github.com/saostad/ldap-directory-manager/commit/042db20e6678281b58b0a8cfd040c6ac63d96e53)
+- doc: change log [`ea2eee7`](https://github.com/saostad/ldap-directory-manager/commit/ea2eee7be3e0a670298dae3b4235332ad324a22f)
+
 #### [v0.16.3](https://github.com/saostad/ldap-directory-manager/compare/v0.16.2...v0.16.3)
 
 > 11 July 2022
