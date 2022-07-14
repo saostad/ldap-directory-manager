@@ -179,7 +179,7 @@ export async function userGetLockedOut<User = any>({
   return data;
 }
 
-/** @description return array of found users that members of that group */
+/** @description return array of users that members of that group */
 export async function groupGetMembers<User = any>(
   criteria: string,
   configs: GetUserInputConfigs<User>,

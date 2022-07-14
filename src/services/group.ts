@@ -49,11 +49,15 @@ export async function groupGetOne<T = any>(
   return data[0];
 }
 
+type GroupGetAll<T> = {
+  criteria?: string;
+  configs: GetGroupInputConfigs<T>;
+};
 /** @description return array of groups */
-export async function groupGetAll<T = any>(
-  criteria: string,
-  configs: GetGroupInputConfigs<T>,
-) {
+export async function groupGetAll<T = any>({
+  configs,
+  criteria,
+}: GroupGetAll<T>) {
   writeLog("groupGetAll()", { level: "trace" });
 
   let base: string;
