@@ -33,7 +33,6 @@ export async function main() {
   /** ready to use instance of logger */
   const logger = await createLogger({
     level: "trace",
-    prettyPrint: { colorize: true, translateTime: " yyyy-mm-dd HH:MM:ss" },
   });
 
   /** put your code below here */
