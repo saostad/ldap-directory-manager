@@ -1,6 +1,6 @@
 {
   "name": "ldap-directory-manager",
-  "version": "0.16.7",
+  "version": "0.16.8",
   "description": "schema-aware, type-safe LDAP manager, written in typescript to create hight-level functionalities",
   "repository": {
     "type": "git",
@@ -66,10 +66,10 @@
   },
   "dependencies": {
     "@types/ldapjs": "^2.2.3",
-    "fast-node-logger": "^3.0.2",
+    "fast-node-logger": "^3.0.3",
     "fuse.js": "^6.6.2",
-    "ldap-query-generator": "^0.8.6",
-    "ldap-schema-ts-generator": "^4.0.13",
-    "ldap-ts-client": "^0.14.7"
+    "ldap-query-generator": "^0.8.7",
+    "ldap-schema-ts-generator": "^4.0.14",
+    "ldap-ts-client": "^0.14.8"
   }
 }

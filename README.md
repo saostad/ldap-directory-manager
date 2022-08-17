@@ -24,7 +24,7 @@ console.log(user);
 
 ### Api Documentations
 
-[Full API documentation](https://saostad.github.io/ldap-directory-manager/modules/_index_.html)
+[Full API documentation](https://saostad.github.io/ldap-directory-manager/)
 
 ### Advance Uses
 
